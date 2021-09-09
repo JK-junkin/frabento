@@ -4,14 +4,15 @@
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of frabento is to ...
+`frabento` provides assets for FRA's job using R language.
 
 ## Installation
 
-You can install the released version of frabento from [CRAN](https://CRAN.R-project.org) with:
+You can install the released version of frabento from this repository.
 
 ``` r
-install.packages("frabento")
+install.package("devtools")
+devtools::install_github("JK-junkin/frabento")
 ```
 
 ## Example
