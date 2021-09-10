@@ -19,7 +19,7 @@ coord_panel_ranges(panel_ranges, expand = TRUE, default = FALSE, clip = "on")
 ggproto object
 }
 \description{
-facet作図後にパネルごとに異なるcoordinateを適用する関数
+個々のパネルの座標を調整する.
 }
 \details{
 DETAILS

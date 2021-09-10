@@ -6,8 +6,8 @@
 \usage{
 label_repl2blank(
   nskip = 1,
-  first = TRUE,
-  last = TRUE,
+  first = FALSE,
+  last = FALSE,
   inverse = FALSE,
   ptime = FALSE,
   ftime = "\%Y-\%m-\%d"
@@ -16,9 +16,9 @@ label_repl2blank(
 \arguments{
 \item{nskip}{何個置きに空白文字にするか, Default: 1.}
 
-\item{first}{1個目の値を空白にしない, Default: TRUE}
+\item{first}{1個目の値を空白にする, Default: FALSE. TRUEで強制的に空白にする. inverse = TRUE の時はTRUEで強制的に値を与える.}
 
-\item{last}{最後の値を空白にしない, Default: TRUE}
+\item{last}{最後の値を空白にする, Default: FALSE. TRUEで強制的に空白にする. inverse = TRUE の時はTRUEで強制的に値を与える.}
 
 \item{inverse}{空白と非空白を逆転させる, Default: FALSE}
 
@@ -45,3 +45,4 @@ if(interactive()){
 \seealso{
 \code{\link[scales]{character(0)}}
 }
+\keyword{force_all}

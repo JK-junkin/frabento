@@ -2,6 +2,7 @@
 # frabento
 
 <!-- badges: start -->
+[![Codecov test coverage](https://codecov.io/gh/JK-junkin/frabento/branch/main/graph/badge.svg)](https://codecov.io/gh/JK-junkin/frabento?branch=main)
 <!-- badges: end -->
 
 `frabento` provides assets for FRA's job using R language.

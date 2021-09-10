@@ -22,6 +22,9 @@ Default: "var". 目盛り調整の際は "axis" を選ぶ. 詳しくは examples
 \description{
 2軸グラフを描く時は左軸の数値にスケーリングし, 右軸の目盛りを調整する必要があります.
 }
+\details{
+See example.
+}
 \examples{
 \dontrun{
 if(interactive()){
