@@ -1,3 +1,5 @@
 ^data-raw$
 ^LICENSE\.md$
 ^codecov\.yml$
+^\.travis\.yml$
+^\.github$

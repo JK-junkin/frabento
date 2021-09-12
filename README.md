@@ -3,6 +3,8 @@
 
 <!-- badges: start -->
 [![Codecov test coverage](https://codecov.io/gh/JK-junkin/frabento/branch/main/graph/badge.svg)](https://codecov.io/gh/JK-junkin/frabento?branch=main)
+[![Travis build status](https://travis-ci.com/JK-junkin/frabento.svg?branch=main)](https://travis-ci.com/JK-junkin/frabento)
+[![R-CMD-check](https://github.com/JK-junkin/frabento/workflows/R-CMD-check/badge.svg)](https://github.com/JK-junkin/frabento/actions)
 <!-- badges: end -->
 
 `frabento` provides assets for FRA's job using R language.
