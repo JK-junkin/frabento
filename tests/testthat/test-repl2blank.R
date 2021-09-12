@@ -1,6 +1,4 @@
-# setwd("~/git/frabento")
-devtools::load_all("~/git/frabento")
-# library(frabento)
+library(frabento)
 
 test_that("when input vector is character vector", {
     expect_equal(repl2blank(letters[1:3]),                                            c("a", "", "c"))
