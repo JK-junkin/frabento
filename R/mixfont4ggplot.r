@@ -47,7 +47,8 @@ mixFonts <- function(string, asciifont = "Arial", mbytefont = "MS Gothic") {
     spans <- foreach::foreach(l = moles, m = fmly, .combine = "paste0") %do% {
         htmltools::span(l, style = paste0("font-family:\'", m, "\'"))
     }
-    return(spans)
+
+    as.character(spans)
 }
 
 #' @export 
