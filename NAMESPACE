@@ -2,10 +2,10 @@
 
 export("%>%")
 export(coord_panel_ranges)
-export(label_mixFonts)
+export(label_mixfonts)
 export(label_repl2blank)
 export(makeXlColAlphabet)
-export(mixFonts)
+export(mixfonts)
 export(repl2blank)
 export(va_resc)
 importFrom(foreach,"%do%")

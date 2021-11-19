@@ -13,12 +13,12 @@
 #'  library(ggtext)
 #'
 #'  # EXAMPLE1
-#'  mixFonts(c("シラス込み0歳魚", "\nシラスを除く\nカタクチイワシ0歳魚"))
+#'  mixfonts(c("シラス込み0歳魚", "\nシラスを除く\nカタクチイワシ0歳魚"))
 #'
 #'  # EXAMPLE2
 #'  ggplot(women) +
 #'      geom_point(aes(x = height, y = weight)) +
-#'      labs(x = mixFonts("身長\n(inch)", asciifont = "Times New Roman")) +
+#'      labs(x = mixfonts("身長\n(inch)", asciifont = "Times New Roman")) +
 #'      theme_linedraw(base_family = "MS Gothic") +
 #'      theme(axis.title.x.bottom = element_markdown())
 #'  }
@@ -27,12 +27,12 @@
 #'  \code{\link[stringr]{str_split}},\code{\link[stringr]{str_replace}}
 #'  \code{\link[foreach]{foreach}},\code{\link[foreach]{\%do\%}}
 #'  \code{\link[htmltools]{builder}}
-#' @rdname mixFonts
+#' @rdname mixfonts
 #' @export 
 #' @importFrom stringr str_split str_replace_all
 #' @importFrom foreach foreach %do%
 #' @importFrom htmltools span
-mixFonts <- function(strs, asciifont = "Arial", mbytefont = "MS Gothic") {
+mixfonts <- function(strs, asciifont = "Arial", mbytefont = "MS Gothic") {
     foreach::foreach(s = strs, .combine = "c") %do% {
         atoms <- stringr::str_split(s, pattern = "", simplify = FALSE) %>%
             unlist()
@@ -59,6 +59,6 @@ mixFonts <- function(strs, asciifont = "Arial", mbytefont = "MS Gothic") {
 }
 
 #' @export 
-label_mixFonts <- function(asciifont = "Arial", mbytefont = "MS Gothic") {
-    function(x) mixFonts(x, asciifont, mbytefont)
+label_mixfonts <- function(asciifont = "Arial", mbytefont = "MS Gothic") {
+    function(x) mixfonts(x, asciifont, mbytefont)
 }
