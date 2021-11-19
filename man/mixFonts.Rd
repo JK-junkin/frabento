@@ -4,10 +4,10 @@
 \alias{mixFonts}
 \title{To display two font families in a single character string on ggplot title and labels}
 \usage{
-mixFonts(string, asciifont = "Arial", mbytefont = "MS Gothic")
+mixFonts(strs, asciifont = "Arial", mbytefont = "MS Gothic")
 }
 \arguments{
-\item{string}{A character string to be converted}
+\item{strs}{A vector of character to be converted}
 
 \item{asciifont}{ASCII font family, Default: 'Arial'}
 
@@ -21,18 +21,28 @@ This function has been made to cope with VERY VERY specific
 demand in Japanese domestic Stock assessment.
 }
 \details{
-See also \code{ggtext} package
+This function is supposed to be used with \code{element_markdown()} in \code{ggtext} package
 }
 \examples{
 \dontrun{
 if(interactive()){
+ library(ggplot2)
+ library(ggtext)
+
  # EXAMPLE1
- mixFonts("<br>シラスを除く<br>カタクチイワシ0歳魚")
+ mixFonts(c("シラス込み0歳魚", "\nシラスを除く\nカタクチイワシ0歳魚"))
+
+ # EXAMPLE2
+ ggplot(women) +
+     geom_point(aes(x = height, y = weight)) +
+     labs(x = mixFonts("身長\n(inch)", asciifont = "Times New Roman")) +
+     theme_linedraw(base_family = "MS Gothic") +
+     theme(axis.title.x.bottom = element_markdown())
  }
 }
 }
 \seealso{
-\code{\link[stringr]{str_split}}
-\code{\link[foreach]{foreach}}
+\code{\link[stringr]{str_split}},\code{\link[stringr]{str_replace}}
+\code{\link[foreach]{foreach}},\code{\link[foreach]{\%do\%}}
 \code{\link[htmltools]{builder}}
 }
