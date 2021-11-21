@@ -2,8 +2,8 @@
 # frabento
 
 <!-- badges: start -->
-[![Codecov test coverage](https://codecov.io/gh/JK-junkin/frabento/branch/main/graph/badge.svg)](https://codecov.io/gh/JK-junkin/frabento?branch=main)
-[![Travis build status](https://travis-ci.com/JK-junkin/frabento.svg?branch=main)](https://travis-ci.com/JK-junkin/frabento)
+[![Codecov test coverage](https://codecov.io/gh/JK-junkin/frabento/branch/dev/graph/badge.svg)](https://codecov.io/gh/JK-junkin/frabento?branch=dev)
+[![Travis build status](https://travis-ci.com/JK-junkin/frabento.svg?branch=dev)](https://travis-ci.com/JK-junkin/frabento)
 [![R-CMD-check](https://github.com/JK-junkin/frabento/workflows/R-CMD-check/badge.svg)](https://github.com/JK-junkin/frabento/actions)
 <!-- badges: end -->
 
@@ -14,7 +14,7 @@
 You can install the released version of frabento from this repository.
 
 ``` r
-install.package("devtools")
+install.packages("devtools")
 devtools::install_github("JK-junkin/frabento")
 ```
 
