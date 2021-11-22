@@ -4,7 +4,7 @@
 \alias{makeXlColAlphabet}
 \title{Making Microsoft Excel's alphabet column names}
 \usage{
-makeXlColAlphabet(nchar = 2L, len = 26L + nchar, start = 1L)
+makeXlColAlphabet(nchar = 2L, len = NULL, start = 1L)
 }
 \arguments{
 \item{nchar}{A number of combined characters, Default: 2}

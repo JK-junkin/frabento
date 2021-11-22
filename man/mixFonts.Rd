@@ -14,7 +14,7 @@ mixfonts(strs, asciifont = "Arial", mbytefont = "MS Gothic")
 \item{mbytefont}{Multi byte font family, Default: 'MS Gothic'}
 }
 \value{
-An HTML <span> tag string.
+An HTML \emph{span} tag string.
 }
 \description{
 This function has been made to cope with VERY VERY specific

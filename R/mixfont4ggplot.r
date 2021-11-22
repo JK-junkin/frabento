@@ -4,7 +4,7 @@
 #' @param strs A vector of character to be converted
 #' @param asciifont ASCII font family, Default: 'Arial'
 #' @param mbytefont Multi byte font family, Default: 'MS Gothic'
-#' @return An HTML <span> tag string.
+#' @return An HTML _span_ tag string.
 #' @details This function is supposed to be used with `element_markdown()` in `ggtext` package
 #' @examples 
 #' \dontrun{
