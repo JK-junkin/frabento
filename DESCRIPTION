@@ -26,5 +26,3 @@ Imports:
     foreach,
     htmltools,
     dplyr
-Remotes:
-    Gedevan-Aleksizde/fontregisterer
