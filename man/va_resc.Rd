@@ -4,23 +4,29 @@
 \alias{va_resc}
 \title{2軸グラフ用の数値調整関数}
 \usage{
-va_resc(v, lim1, lim2, scale_which = c("var", "axis")[1])
+va_resc(v, lim1 = NULL, lim2 = NULL, scale_which = "var", return_lims = FALSE)
 }
 \arguments{
 \item{v}{Values to plot. 描画したい数値のベクトル.}
 
-\item{lim1}{Limits of 1st y-axis. 左軸に対してplotしたい値の範囲.}
+\item{lim1}{Limit(s) of 1st (left-hand) y-axis. 左軸に対してplotしたい変数の範囲 (要素数2) またはvector (要素数3以上).
+vectorを指定した場合は range(lim1) となる. また, 正数であれば最大値のみの指定も可能 (最小値は0となる).
+NULLの場合は range(v) となる. Default: NULL}
 
-\item{lim2}{Limits of 2nd y-axis. 右軸に対してplotしたい値の範囲.}
+\item{lim2}{Limit(s) of 2nd (right-hand) y-axis. 右軸に対してplotしたい変数の範囲 (要素数2) またはvector (要素数3以上).
+vectorを指定した場合は range(lim2) となる. また, 正数であれば最大値のみの指定も可能 (最小値は0となる).
+NULLの場合は range(v) となる. Default: NULL}
 
-\item{scale_which}{左軸に合わせて数値を変換するか, 右軸の目盛りを変換するか.
-Default: "var". 目盛り調整の際は "axis" を選ぶ. 詳しくは examples を参照.}
+\item{scale_which}{A string. 右軸 (2nd y-axis) に対して描画したい変数を左軸にスケーリングする場合は\code{var},
+右軸の目盛りを変換する場合は\code{axis}. Default: "var".}
+
+\item{return_lims}{Logical. 変換後の数値の代わりに範囲を標準 (message) 出力する, Default: FALSE}
 }
 \value{
-変換された数値
+変換後の数値
 }
 \description{
-2軸グラフを描く時は左軸の数値にスケーリングし, 右軸の目盛りを調整する必要があります.
+2軸グラフを描く時は左軸に値をスケーリングし, 右軸は目盛り数値を調整する.
 }
 \details{
 See example.
@@ -28,7 +34,19 @@ See example.
 \examples{
 \dontrun{
 if(interactive()){
- #EXAMPLE1
+#EXAMPLE1
+lh <- range(faithful$waiting)
+rh <- range(faithful$eruptions)
+
+faithful \%>\%
+    tidyr::pivot_longer(cols = dplyr::everything()) \%>\%
+    dplyr::mutate(val = ifelse(name == "eruptions", 
+                               va_resc(value, lh, rh, "var"), value)) \%>\%
+    ggplot(aes(x = as.integer(rownames(.)), group = name)) +
+    geom_line(aes(y = val, color = name), size = 0.3) +
+    scale_y_continuous(name = "waiting",
+                       sec.axis = sec_axis(~ va_resc(., lh, rh, "axis"),
+                                           name = "eruptions"))
  }
 }
 }
