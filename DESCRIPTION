@@ -1,13 +1,13 @@
 Package: frabento
-Title: What the Package Does (One Line, Title Case)
+Title: Provide assets for fra's job.
 Version: 0.1.0
 Authors@R: 
-    person(given = "First",
-           family = "Last",
+    person(given = "Junji",
+           family = "Kinoshita",
            role = c("aut", "cre"),
-           email = "first.last@example.com",
+           email = "j.kinoshita8802@gmail.com",
            comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: What the package does (one paragraph).
+Description: This package aims to provide functions to overcome (top-down) demands trivial but annoying.
 License: GPL (>= 3)
 Encoding: UTF-8
 LazyData: true
@@ -26,3 +26,5 @@ Imports:
     foreach,
     htmltools,
     dplyr
+Remotes:
+    Gedevan-Aleksizde/fontregisterer
