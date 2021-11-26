@@ -16,6 +16,8 @@ RoxygenNote: 7.1.2
 Suggests: 
     covr,
     ggtext,
+    knitr,
+    rmarkdown,
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
 Imports: 
@@ -27,3 +29,4 @@ Imports:
     htmltools,
     dplyr
 URL: https://github.com/JK-junkin/frabento
+VignetteBuilder: knitr
