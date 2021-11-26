@@ -26,3 +26,4 @@ Imports:
     foreach,
     htmltools,
     dplyr
+URL: https://pkgdown.r-lib.org, https://github.com/r-lib/pkgdown
