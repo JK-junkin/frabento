@@ -5,3 +5,4 @@
 .DS_Store
 data-raw/prepare-pkg.R
 inst/doc
+docs
