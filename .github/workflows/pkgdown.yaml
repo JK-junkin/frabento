@@ -23,7 +23,7 @@ jobs:
 
       - uses: r-lib/actions/setup-r-dependencies@v1
         with:
-          extra-packages: pkgdown, hadley/emo, Gedevan-Aleksizde/fontregisterer
+          extra-packages: pkgdown, Gedevan-Aleksizde/fontregisterer, ggtext, tidyverse, patchwork,,hadley/emo 
           needs: website
 
       - name: Deploy package
