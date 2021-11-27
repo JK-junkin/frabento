@@ -1,4 +1,4 @@
-#' @title 2軸グラフ用の数値調整関数
+#' @title Values and 2nd Axis Rescaler
 #' @description 2軸グラフを描く時は左軸に値をスケーリングし, 右軸は目盛り数値を調整する.
 #' @param v Values to plot. 描画したい数値のベクトル.
 #' @param lim1 Limit(s) of 1st (left-hand) y-axis. 左軸に対してplotしたい変数の範囲 (要素数2) またはvector (要素数3以上).

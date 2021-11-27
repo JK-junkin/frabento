@@ -2,7 +2,7 @@
 % Please edit documentation in R/va_resc.r
 \name{va_resc}
 \alias{va_resc}
-\title{2軸グラフ用の数値調整関数}
+\title{Values and 2nd Axis Rescaler}
 \usage{
 va_resc(v, lim1 = NULL, lim2 = NULL, scale_which = "var", return_lims = FALSE)
 }
