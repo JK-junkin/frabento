@@ -73,7 +73,7 @@ gm3 <- gm + labs(y = mixfonts("CPUE (/1000網)",
                               mbyte = "ToppanBunkyuMidashiGothicStdN-ExtraBold"))
 
 # patchwork
-g1 + g2 + g3 + plot_layout(ncol = 3)
+gm1 + gm2 + gm3 + plot_layout(ncol = 3)
 ```
 
 文字列の折り返しもできます. 
