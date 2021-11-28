@@ -1,0 +1,113 @@
+---
+title: "ggplot: 飛び石軸ラベルの作成"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{ggplot: 飛び石軸ラベルの作成}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.width = 15/2.54,
+  dpi = 96
+)
+```
+
+## はじめに
+- `ggplot2` で作図していると, 軸の目盛りマーク (ticks) は欲しいけどラベルはいらない,
+  という場面に出くわすかと思います. (たとえば[ここ](https://stackoverflow.com/questions/14490071/adding-minor-tick-marks-to-the-x-axis-in-ggplot2-with-no-labels))
+- そこで, この処理を簡単にする関数 `frabento::label_repl2blank()` を作ってみました.
+
+**【重要】**  
+`ggh4x`という素晴らしい `r emo::ji("package")` がCRANにありました. これを使いましょう!  
+https://teunbrand.github.io/ggh4x/articles/PositionGuides.html
+
+
+## 使用例
+```{r setup, echo = -6, eval = -1, message = FALSE}
+devtools::install_github("Gedevan-Aleksizde/fontregisterer", upgrade = "never")
+library(frabento)       # このパッケージ
+library(tidyverse)      # ggplot2とtidyなデータハンドリング
+library(patchwork)      # ggplotを簡単, キレイにレイアウト 
+library(ggh4x)          # この関数よりもスマートかつエレガントに解決
+library(emo)
+```
+
+### 基本的な使用例
+```{r ex1, fig.asp = 5/10, fig.width = 20/2.54, message = FALSE}
+theme_set(theme_linedraw(base_family = "Helvetica") + 
+          theme(aspect.ratio = 1/4,
+                panel.grid = element_blank()))
+
+# Rのtreering (年輪) データを使う
+(dat <- tibble::tibble(year =  -6000:1979, haba = treering))
+
+# まずはラベルがごみごみしたx軸の例
+g0 <- ggplot(data = dat, aes(x = year, y = haba)) +
+    geom_line(size = 0.2) +
+    scale_x_continuous(breaks = seq(-6000, 2000, by = 200)) +
+    labs(title = "ごみごみX")
+
+# x軸のラベルを飛び石にする
+g1 <- g0 + 
+    scale_x_continuous(breaks = seq(-6000, 2000, by = 200),
+                       labels = label_repl2blank(nskip = 4)) +
+    labs(title = "飛び石X")
+
+# patchwork
+g0 / g1 
+```
+
+#### 中身解説
+
+`label_repl2blank()` は中で `repl2blank()` が動いています. 具体的な働き方を下記に示します.
+
+```{r}
+(example_vector <- 2011:2020)
+
+# デフォルト (引数に何も指定しない)
+repl2blank(example_vector)
+
+# nskip を 変える 
+repl2blank(example_vector, nskip = 2)
+
+# first を 変える (一番初めの要素をブランクに)
+repl2blank(example_vector, first = TRUE)
+
+# last を 変える (一番最後の要素をブランクに): この場合は元からブランク
+repl2blank(example_vector, last = TRUE)
+
+# inverse を 変える (ブランクと非ブランクが反転する)
+repl2blank(example_vector, inverse = TRUE)
+
+# inverse と first を変える (inverseが優先される)
+repl2blank(example_vector, inverse = TRUE, first = TRUE)
+
+# inverse と last を変える (inverseが優先される)
+repl2blank(example_vector, inverse = TRUE, last = TRUE)
+
+# inverse と first と last を変える (inverseが優先される)
+repl2blank(example_vector, inverse = TRUE, first = TRUE, last = TRUE)
+
+```
+
+### 留意事項
+- `label_repl2blank()` は `sf`クラスのデータを`geom_sf()`で描画した時はうまく動作しないようです.
+  現状, このバグに対応する予定はありません.
+
+### 参考情報
+#### ggh4x
+```{r, fig.asp = 4/10, message = FALSE}
+g0 + scale_x_continuous(breaks = seq(-6000, 2000, by = 1000),
+                        minor_breaks = seq(-6000, 2000, by = 200),
+                        guide = "axis_minor") +
+    theme(axis.ticks.length.x = unit(0.2, "cm"),
+          ggh4x.axis.ticks.length.minor = rel(0.5)) +
+    labs(title = "ggh4x")
+```
+
+ん〜〜〜！！！スマートかつエレガント！！！
+
