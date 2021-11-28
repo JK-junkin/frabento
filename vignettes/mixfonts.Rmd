@@ -1,8 +1,8 @@
 ---
-title: "ggplot:ASCIIとマルチバイト文字の混在表記"
+title: "ggplot: ASCIIとマルチバイト文字の混在表記"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{ggplot:ASCIIとマルチバイト文字の混在表記}
+  %\VignetteIndexEntry{ggplot: ASCIIとマルチバイト文字の混在表記}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -20,8 +20,10 @@ knitr::opts_chunk$set(
 - 世間的には (?) 特殊な事例かもしれませんが, `ggplot2` で作図を行う時, 
   英数字と日本語が混ざったラベル—例えば**CPUE (/1000網)**—のフォントを英数字と日本語で
   別にしてください, という指摘を受けることがあります.
-- ggplotのタイトルや軸ラベル, 凡例ラベルのフォントをそれぞれ個別に指定することはできますが,
-  例えば凡例ラベル内で複数のフォントを混在させるのは少し手間がかかります.
+- ggplotにおける図タイトルや軸ラベル, 凡例ラベル等のそれぞれのフォントは,
+  `ggplot2::theme()`等を使って個別に変更することができます. しかし, **一つの文字列内**で
+  複数のフォントを混在させるのは, かなりの手間がかかります. 
+- そこで, その手間を少しでも楽にするために作成したのが `mixfonts()` です.
 
 ## 使用例
 ```{r setup, echo = -7, eval = -1, message = FALSE}
@@ -39,7 +41,8 @@ library(emo)
 マルチバイト文字フォントを**MS Gothic**にしています.
 
 ```{r eg1, fig.asp = 1/2}
-theme_set(theme_linedraw(base_family = "MS Gothic"))
+theme_set(theme_linedraw(base_family = "MS Gothic") +
+          theme(aspect.ratio = 1/1)) # アスペクト(縦横)比
 
 # 仮想データ作成
 dat <- tibble::tibble(cpue = rnorm(n = 30, mean = 500, sd = 35),
@@ -49,8 +52,7 @@ dat <- tibble::tibble(cpue = rnorm(n = 30, mean = 500, sd = 35),
 g <- ggplot(data = dat, aes(x = year, y = cpue)) +
     geom_path() + geom_point() +
     labs(x = "年", y = "CPUE (/1000網)") +
-    theme(axis.title.y = element_text(color = "blue"),
-          aspect.ratio = 1/1) # アスペクト (縦横) 比
+    theme(axis.title.y = element_text(color = "blue"))
 
 # mixfontsを使うと
 gm <- g + labs(y = mixfonts("CPUE (/1000網)")) +
@@ -92,7 +94,7 @@ gm4 + plot_spacer() + g_ + g__ + plot_layout(ncol = 2, byrow = TRUE)
 ```
 
 ### 使用例2: 凡例
-```{r eg4, fig.asp = 8/10, fig.width = 12/2.54}
+```{r eg4, fig.asp = 8/10, fig.width = 15/2.54}
 # 仮想データ
 d2 <- tibble::tibble(cpue = c(rnorm(n = 30, mean = 300, sd = 25),
                               rnorm(n = 30, mean = 500, sd = 35)),
@@ -121,6 +123,5 @@ p0 + pm1 + plot_spacer() + pm2 + plot_layout(ncol = 2, byrow = TRUE)
 ```
 
 ### 参考情報
-- ここで紹介した `frabento::mixfonts()`は[stack overflow](https://stackoverflow.com/questions/52852882/use-different-font-sizes-for-different-portions-of-text-in-ggplot2-title) の投稿を参考に作成した関数です.
-- `ggtext` `r emo::ji("package")` のみの使用では長ったらしくなる`<span>`タグの付与を簡略化し,
-  タイピングコストを下げる目的で作りました.
+- 類似した問題は [stack overflow](https://stackoverflow.com/questions/52852882/use-different-font-sizes-for-different-portions-of-text-in-ggplot2-title) においてすでに解決策が提示されています. これにインスピレーションを受け,
+  この関数を作成しました.
