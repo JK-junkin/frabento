@@ -2,25 +2,31 @@
 % Please edit documentation in R/va_resc.r
 \name{va_resc}
 \alias{va_resc}
-\title{Values and 2nd Axis Rescaler}
+\title{Values and second Axis RESCaler}
 \usage{
-va_resc(v, lim1 = NULL, lim2 = NULL, scale_which = "var", return_lims = FALSE)
+va_resc(
+  v,
+  lh_lim = NULL,
+  rh_lim = NULL,
+  scale_which = "var",
+  return_lims = FALSE
+)
 }
 \arguments{
 \item{v}{Values to plot. 描画したい数値のベクトル.}
 
-\item{lim1}{Limit(s) of 1st (left-hand) y-axis. 左軸に対してplotしたい変数の範囲 (要素数2) またはvector (要素数3以上).
-vectorを指定した場合は range(lim1) となる. また, 正数であれば最大値のみの指定も可能 (最小値は0となる).
-NULLの場合は range(v) となる. Default: NULL}
+\item{lh_lim}{Limit(s) of 1st (left-hand) y-axis. 左軸の範囲 (要素数2) またはvector (要素数3以上).
+vectorを指定した場合は range(lh_lim) となる. また, 正数であれば最大値, 負数であれば最小値のみの指定も可能 (もう一方の値は0となる).
+NULLの場合は range(v, na.rm = TRUE) となる. Default: NULL}
 
-\item{lim2}{Limit(s) of 2nd (right-hand) y-axis. 右軸に対してplotしたい変数の範囲 (要素数2) またはvector (要素数3以上).
-vectorを指定した場合は range(lim2) となる. また, 正数であれば最大値のみの指定も可能 (最小値は0となる).
-NULLの場合は range(v) となる. Default: NULL}
+\item{rh_lim}{Limit(s) of 2nd (right-hand) y-axis. 右軸の範囲 (要素数2) またはvector (要素数3以上).
+vectorを指定した場合は range(rh_lim) となる. また, 正数であれば最大値のみの指定も可能 (最小値は0となる).
+NULLの場合は range(v, na.rm = TRUE) となる. Default: NULL}
 
 \item{scale_which}{A string. 右軸 (2nd y-axis) に対して描画したい変数を左軸にスケーリングする場合は\code{var},
-右軸の目盛りを変換する場合は\code{axis}. Default: "var".}
+右軸の目盛り値をスケーリングする場合は\code{axis}. Default: "var".}
 
-\item{return_lims}{Logical. 変換後の数値の代わりに範囲を標準 (message) 出力する, Default: FALSE}
+\item{return_lims}{Logical. 変換後の数値の代わりに範囲を出力する (matrix型), Default: FALSE}
 }
 \value{
 変換後の数値
