@@ -1,0 +1,9 @@
+pandoc: 2.16.2
+pkgdown: 1.6.1
+pkgdown_sha: ~
+articles:
+  mixfonts: mixfonts.html
+  repl2blank: repl2blank.html
+  va_resc: va_resc.html
+last_built: 2021-11-28T15:38Z
+
