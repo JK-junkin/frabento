@@ -1,8 +1,8 @@
 ---
-title: "ggplotでASCIIとマルチバイト文字を混在させる"
+title: "ggplot:ASCIIとマルチバイト文字の混在表記"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{ggplotでASCIIとマルチバイト文字を混在させる}
+  %\VignetteIndexEntry{ggplot:ASCIIとマルチバイト文字の混在表記}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -22,11 +22,9 @@ knitr::opts_chunk$set(
   別にしてください, という指摘を受けることがあります.
 - ggplotのタイトルや軸ラベル, 凡例ラベルのフォントをそれぞれ個別に指定することはできますが,
   例えば凡例ラベル内で複数のフォントを混在させるのは少し手間がかかります.
-- ここで紹介する`frabento::mixfonts()`は[stack overflow](https://stackoverflow.com/questions/52852882/use-different-font-sizes-for-different-portions-of-text-in-ggplot2-title) の投稿を参考に作成した関数です.
-  `ggtext` `r emo::ji("package")` のみの使用では長ったらしくなる`<span>`タグの付与を簡略化して, タイピングコストを下げられます.
 
 ## 使用例
-```{r setup, echo = -7, eval = -1}
+```{r setup, echo = -7, eval = -1, message = FALSE}
 devtools::install_github("Gedevan-Aleksizde/fontregisterer", upgrade = "never")
 library(frabento)       # このパッケージ
 library(fontregisterer) # フォントの利用を楽にするため
@@ -85,7 +83,8 @@ gm4 <- gm + labs(y = mixfonts("A海区における\n大中型まき網漁業の\
 # mixfont() を使わなくても折り返しはできるが, フォントは混在できない.
 g_  <- g + labs(y = "A海区における\n大中型まき網漁業の\nCPUE (/1000網)")
 
-# フォントを変更すると日本語部分が豆腐化 --> 上書したフォントが優勢になる.
+# フォントを変更すると日本語部分が豆腐化※ --> 上書したフォントが優勢になる.
+# ※ GitHub Pages上では日本語部分が補完されて表示されているかもしれません.
 g__ <- g_ + theme(axis.title.y = element_text(family = "Arial"))
 
 # patchwork
@@ -93,3 +92,35 @@ gm4 + plot_spacer() + g_ + g__ + plot_layout(ncol = 2, byrow = TRUE)
 ```
 
 ### 使用例2: 凡例
+```{r eg4, fig.asp = 8/10, fig.width = 12/2.54}
+# 仮想データ
+d2 <- tibble::tibble(cpue = c(rnorm(n = 30, mean = 300, sd = 25),
+                              rnorm(n = 30, mean = 500, sd = 35)),
+                     year = rep(seq(1990, length.out = 30, by = 1), times = 2),
+                     age  = rep(c("0歳魚", "1歳魚+"), each = 30))
+
+p0 <- ggplot(data = d2, aes(x = year, y = cpue, group = age)) +
+    geom_path(aes(color = age)) +
+    theme(legend.text = element_text(color = "blue")) +
+    labs(title = "混在させない")
+
+pm1 <- ggplot(data = d2, aes(x = year, y = cpue, group = age)) +
+    geom_path(aes(color = age)) +
+    scale_color_discrete(labels = label_mixfonts()) +
+    theme(legend.text = ggtext::element_markdown(color = "blue")) +
+    labs(title = "混在 by label_mixfonts()")
+
+pm2 <- ggplot(data = d2, aes(x = year, y = cpue, group = age)) +
+    geom_path(aes(color = age)) +
+    scale_color_discrete(labels = mixfonts(c("0歳魚", "1歳魚以上"))) +
+    theme(legend.text = ggtext::element_markdown(color = "blue")) +
+    labs(title = "混在 by mixfonts()")
+
+# patchwork
+p0 + pm1 + plot_spacer() + pm2 + plot_layout(ncol = 2, byrow = TRUE)
+```
+
+### 参考情報
+- ここで紹介した `frabento::mixfonts()`は[stack overflow](https://stackoverflow.com/questions/52852882/use-different-font-sizes-for-different-portions-of-text-in-ggplot2-title) の投稿を参考に作成した関数です.
+- `ggtext` `r emo::ji("package")` のみの使用では長ったらしくなる`<span>`タグの付与を簡略化し,
+  タイピングコストを下げる目的で作りました.
