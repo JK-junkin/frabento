@@ -1,0 +1,143 @@
+---
+title: "ggplot: 2軸グラフの数値調整"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{ggplot: 2軸グラフの数値調整}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.width = 15/2.54,
+  dpi = 96
+)
+```
+
+## はじめに
+- たまにな事例かもしれませんが, `ggplot2` で2軸グラフの作図を行いたい時があります.
+- ggplot2のversion 2.2.0 からは `sec_axis()` が導入され, `cowplot` `r emo::ji("package")`
+  などを使わなくても2軸グラフが描けるようになりました. ただ, 2軸グラフの描画にはクセがあり,
+  **右軸に対してプロットしたい数値の変換**と**右軸目盛り数値の変換**をユーザ側で
+  行う必要があります (下記の参考情報セクションも参照ください).
+- そこで, この2段階の数値変換を楽にする関数 `frabento::va_resc()` を作ってみました.
+
+## 使用例
+```{r setup, echo = -7, eval = -1, message = FALSE}
+devtools::install_github("Gedevan-Aleksizde/fontregisterer", upgrade = "never")
+library(frabento)       # このパッケージ
+library(tidyverse)      # ggplot2とtidyなデータハンドリング
+library(patchwork)      # ggplotを簡単, キレイにレイアウト 
+library(fontregisterer) # フォントの利用を楽にするため
+library(ggtext)         # element_markdown() を使うため
+library(emo)
+```
+
+### 基本的な使用例
+**目的** データセット`cars` (Speed and Stopping Distances of Cars) を例に,
+左軸にSpeed (変数名speed), 右軸にDistances (変数名dist) をプロットする. 
+
+```{r ex1, fig.asp = 5/10}
+theme_set(theme_linedraw(base_family = "Helvetica") + theme(aspect.ratio = 1/1))
+
+# cars はこんな感じのデータ
+head(cars, n = 3); tail(cars, n = 3)
+
+# 【大事】各変数の範囲を知る
+(lh <- range(cars$speed, na.rm = TRUE))
+(rh <- range(cars$dist, na.rm = TRUE))
+
+# 作図のためデータを変形
+cars_longformat <- cars %>%
+    tibble::rownames_to_column(var = "ID") %>%
+    tidyr::pivot_longer(cols = -"ID", names_to = "name", values_to = "val")
+
+# 比較用に素の値をプロット (1軸グラフ)
+g0 <- cars_longformat %>%
+    ggplot(aes(x = as.integer(ID), y = val, group = name)) +
+    geom_line(aes(color = name)) +
+    labs(x = "Observation ID", title = "素の値")
+
+# 2軸プロット
+g1 <- cars_longformat %>%
+    # distの値を左軸に合わせてリスケール
+    dplyr::mutate(val_resc = if_else(name == "dist",
+                                     va_resc(val, lh_lim = lh, rh_lim = rh, "var"),
+                                     val)) %>%
+    ggplot(aes(x = as.integer(ID), y = val_resc, group = name)) +
+    geom_line(aes(color = name)) +
+    scale_y_continuous(name = "Speed",
+                       # 右軸の目盛り数値をリスケール
+                       sec.axis = sec_axis(~ va_resc(., lh, rh, "axis"),
+                                           breaks = c(2, 85, 120), # 確認用
+                                           name = "Distances")) +
+    labs(x = "Observation ID", title = "各変数の最小・最大値")
+
+# patchwork
+g0 + g1 + plot_layout(ncol = 2, guides = "collect")
+```
+
+最大値 (基本的に**正**値を想定) または最小値 (基本的に**負**値を想定) のみの指定もできます.
+この場合, もう一方の値は自動的に 0 となります.  
+また, 任意の範囲指定も可能です.
+```{r ex2, fig.asp = 8/10, fig.width = 16/2.54, warning = FALSE}
+# 各変数の最大値
+(lhmax <- max(lh))
+(rhmax <- max(rh))
+
+g2 <- cars_longformat %>%
+    dplyr::mutate(val_resc = if_else(name == "dist",
+                                     va_resc(val, lhmax, rhmax, "var"),
+                                     val)) %>%
+    ggplot(aes(x = as.integer(ID), y = val_resc, group = name)) +
+    geom_line(aes(color = name)) +
+    scale_y_continuous(name = "Speed",
+                       sec.axis = sec_axis(~ va_resc(., lhmax, rhmax, "axis"),
+                                           breaks = c(2, 85, 120), # 確認用
+                                           name = "Distances")) +
+    labs(x = "Observation ID", title = "各変数の最大値")
+
+# 任意の最大値
+lhmax_arb <- 50
+rhmax_arb <- 150
+
+g3 <- cars_longformat %>%
+    dplyr::mutate(val_resc = if_else(name == "dist",
+                                     va_resc(val, lhmax_arb, rhmax_arb, "var"),
+                                     val)) %>%
+    ggplot(aes(x = as.integer(ID), y = val_resc, group = name)) +
+    geom_line(aes(color = name)) +
+    scale_y_continuous(name = "Speed",
+                       sec.axis = sec_axis(~ va_resc(., lhmax_arb, rhmax_arb, "axis"),
+                                           breaks = c(2, 85, 120), # 確認用
+                                           name = "Distances")) +
+    labs(x = "Observation ID", title = "任意の最大値") +
+    coord_cartesian(ylim = c(NA, lhmax_arb))
+
+# 任意の範囲
+lh_arb <- c(10, 30)
+rh_arb <- c(50, 100)
+
+g4 <- cars_longformat %>%
+    dplyr::mutate(val_resc = if_else(name == "dist",
+                                     va_resc(val, lh_arb, rh_arb, "var"),
+                                     val)) %>%
+    ggplot(aes(x = as.integer(ID), y = val_resc, group = name)) +
+    geom_line(aes(color = name)) +
+    scale_y_continuous(name = "Speed",
+                       sec.axis = sec_axis(~ va_resc(., lh_arb, rh_arb, "axis"),
+                                           breaks = c(rh_arb, 85), # 確認用
+                                           name = "Distances")) +
+    labs(x = "Observation ID", title = "任意の範囲") +
+    coord_cartesian(ylim = lh_arb)
+
+# patchwork
+g2 + g3 + g4 + plot_layout(ncol = 2, guides = "collect", byrow = TRUE)
+```
+
+### 参考情報
+- [このブログ](https://blog.statsbeginner.net/entry/2020/09/08/181536)を参考に作成しました.
+    - [このサイト](https://walkintheforest.net/r-ggplot-2nd-axis/)も多分同じ人.
+
