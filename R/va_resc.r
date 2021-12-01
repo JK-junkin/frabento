@@ -67,11 +67,11 @@ va_resc <- function(v, lh_lim = NULL, rh_lim = NULL,
     y1_range  <- lh_lim[2] - lh_lim[1]
     y2_range  <- rh_lim[2] - rh_lim[1]
 
-    if (scale_which == "var") { # 右軸にプロットする変数を想定
+    if (scale_which == "var") { # assume the variable plotted to Right Hand axis
         to_zero   <- v - rh_lim[1]
         scaled    <- to_zero * (y1_range / y2_range)
         from_zero <- scaled + lh_lim[1]
-    } else {                    # 左軸を右軸にスケーリング
+    } else {                    # scale RH axis
         to_zero   <- v - lh_lim[1]
         scaled    <- to_zero * (y2_range / y1_range)
         from_zero <- scaled + rh_lim[1]
