@@ -2,7 +2,7 @@
 % Please edit documentation in R/repl2blank.r
 \name{label_repl2blank}
 \alias{label_repl2blank}
-\title{軸ラベルを一定間隔でブランクに置き換える関数を返す}
+\title{Label character vector with blanks at a certain interval}
 \usage{
 label_repl2blank(
   nskip = 1,
@@ -38,7 +38,15 @@ ggplot作図の際に軸ラベルの一部を空白にすることで minor brea
 \examples{
 \dontrun{
 if(interactive()){
- #EXAMPLE1
+library(dplyr)
+library(tibble)
+library(ggplot2)
+
+tibble::tibble(year =  -6000:1979, haba = treering) \%>\%
+    ggplot(aes(x = year, y = haba)) +
+    geom_line(size = 0.2) +
+    scale_x_continuous(breaks = seq(-6000, 2000, by = 200),
+                       labels = label_repl2blank(nskip = 4))
  }
 }
 }

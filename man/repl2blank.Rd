@@ -2,7 +2,7 @@
 % Please edit documentation in R/repl2blank.r
 \name{repl2blank}
 \alias{repl2blank}
-\title{軸ラベルを一定間隔でブランクに置き換える関数}
+\title{Replace string elements to blank at a certain interval}
 \usage{
 repl2blank(vec, nskip = 1, first = FALSE, last = FALSE, inverse = FALSE)
 }
@@ -21,7 +21,7 @@ repl2blank(vec, nskip = 1, first = FALSE, last = FALSE, inverse = FALSE)
 A character vector
 }
 \description{
-当初はggplot作図の際に軸ラベルの一部を空白にすることで minor break のようにみせかけるために作成.
+ggplot作図の際に軸ラベルの一部を空白にすることで minor break のようにみせかける.
 }
 \details{
 例をご覧ください.
