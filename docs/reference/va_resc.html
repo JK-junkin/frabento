@@ -145,7 +145,7 @@
   <span class='va'>v</span>,
   lh_lim <span class='op'>=</span> <span class='cn'>NULL</span>,
   rh_lim <span class='op'>=</span> <span class='cn'>NULL</span>,
-  scale_which <span class='op'>=</span> <span class='st'>"var"</span>,
+  scale_which <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"var"</span>, <span class='st'>"axis"</span><span class='op'>)</span>,
   return_lims <span class='op'>=</span> <span class='cn'>FALSE</span>
 <span class='op'>)</span></pre>
 
@@ -170,8 +170,11 @@ NULLの場合は range(v, na.rm = TRUE) となる. Default: NULL</p></td>
     </tr>
     <tr>
       <th>scale_which</th>
-      <td><p>A string. 右軸 (2nd y-axis) に対して描画したい変数を左軸にスケーリングする場合は<code>var</code>,
-右軸の目盛り値をスケーリングする場合は<code>axis</code>. Default: "var".</p></td>
+      <td><p>One of the following:</p><dl>
+<dt><code>"var"</code></dt><dd><p>右軸 (2nd y-axis) に対して描画したい変数を左軸にスケーリングする場合に使用.</p></dd>
+<dt><code>"axis"</code></dt><dd><p>右軸の目盛り値をスケーリングする場合に使用.</p></dd>
+
+</dl></td>
     </tr>
     <tr>
       <th>return_lims</th>
@@ -192,7 +195,6 @@ NULLの場合は range(v, na.rm = TRUE) となる. Default: NULL</p></td>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><span class='r-in'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span></span>
 <span class='r-in'><span class='kw'>if</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span><span class='op'>{</span></span>
-<span class='r-in'><span class='co'>#EXAMPLE1</span></span>
 <span class='r-in'><span class='va'>lh</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/range.html'>range</a></span><span class='op'>(</span><span class='va'>faithful</span><span class='op'>$</span><span class='va'>waiting</span><span class='op'>)</span></span>
 <span class='r-in'><span class='va'>rh</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/range.html'>range</a></span><span class='op'>(</span><span class='va'>faithful</span><span class='op'>$</span><span class='va'>eruptions</span><span class='op'>)</span></span>
 <span class='r-in'></span>
@@ -200,7 +202,7 @@ NULLの場合は range(v, na.rm = TRUE) となる. Default: NULL</p></td>
 <span class='r-in'>    <span class='fu'>tidyr</span><span class='fu'>::</span><span class='fu'><a href='https://tidyr.tidyverse.org/reference/pivot_longer.html'>pivot_longer</a></span><span class='op'>(</span>cols <span class='op'>=</span> <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://tidyselect.r-lib.org/reference/everything.html'>everything</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span> <span class='op'><a href='%>%.html'>%&gt;%</a></span></span>
 <span class='r-in'>    <span class='fu'>dplyr</span><span class='fu'>::</span><span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>val <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/ifelse.html'>ifelse</a></span><span class='op'>(</span><span class='va'>name</span> <span class='op'>==</span> <span class='st'>"eruptions"</span>, </span>
 <span class='r-in'>                               <span class='fu'>va_resc</span><span class='op'>(</span><span class='va'>value</span>, <span class='va'>lh</span>, <span class='va'>rh</span>, <span class='st'>"var"</span><span class='op'>)</span>, <span class='va'>value</span><span class='op'>)</span><span class='op'>)</span> <span class='op'><a href='%>%.html'>%&gt;%</a></span></span>
-<span class='r-in'>    <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/integer.html'>as.integer</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>rownames</a></span><span class='op'>(</span><span class='va'>.</span><span class='op'>)</span><span class='op'>)</span>, group <span class='op'>=</span> <span class='va'>name</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span></span>
+<span class='r-in'>    <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/integer.html'>as.integer</a></span><span class='op'>(</span><span class='fu'><a href='https://tibble.tidyverse.org/reference/rownames.html'>rownames</a></span><span class='op'>(</span><span class='va'>.</span><span class='op'>)</span><span class='op'>)</span>, group <span class='op'>=</span> <span class='va'>name</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span></span>
 <span class='r-in'>    <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_path.html'>geom_line</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>y <span class='op'>=</span> <span class='va'>val</span>, color <span class='op'>=</span> <span class='va'>name</span><span class='op'>)</span>, size <span class='op'>=</span> <span class='fl'>0.3</span><span class='op'>)</span> <span class='op'>+</span></span>
 <span class='r-in'>    <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/scale_continuous.html'>scale_y_continuous</a></span><span class='op'>(</span>name <span class='op'>=</span> <span class='st'>"waiting"</span>,</span>
 <span class='r-in'>                       sec.axis <span class='op'>=</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/sec_axis.html'>sec_axis</a></span><span class='op'>(</span><span class='op'>~</span> <span class='fu'>va_resc</span><span class='op'>(</span><span class='va'>.</span>, <span class='va'>lh</span>, <span class='va'>rh</span>, <span class='st'>"axis"</span><span class='op'>)</span>,</span>
