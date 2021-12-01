@@ -8,7 +8,7 @@ va_resc(
   v,
   lh_lim = NULL,
   rh_lim = NULL,
-  scale_which = "var",
+  scale_which = c("var", "axis"),
   return_lims = FALSE
 )
 }
@@ -23,8 +23,10 @@ NULLの場合は range(v, na.rm = TRUE) となる. Default: NULL}
 vectorを指定した場合は range(rh_lim) となる. また, 正数であれば最大値のみの指定も可能 (最小値は0となる).
 NULLの場合は range(v, na.rm = TRUE) となる. Default: NULL}
 
-\item{scale_which}{A string. 右軸 (2nd y-axis) に対して描画したい変数を左軸にスケーリングする場合は\code{var},
-右軸の目盛り値をスケーリングする場合は\code{axis}. Default: "var".}
+\item{scale_which}{One of the following: \describe{
+\item{\code{"var"}}{右軸 (2nd y-axis) に対して描画したい変数を左軸にスケーリングする場合に使用.}
+\item{\code{"axis"}}{右軸の目盛り値をスケーリングする場合に使用.}
+}}
 
 \item{return_lims}{Logical. 変換後の数値の代わりに範囲を出力する (matrix型), Default: FALSE}
 }
@@ -40,7 +42,6 @@ See example.
 \examples{
 \dontrun{
 if(interactive()){
-#EXAMPLE1
 lh <- range(faithful$waiting)
 rh <- range(faithful$eruptions)
 
