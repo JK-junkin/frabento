@@ -33,6 +33,7 @@
 #' @importFrom foreach foreach %do%
 #' @importFrom htmltools span
 mixfonts <- function(strs, asciifont = "Arial", mbytefont = "MS Gothic") {
+    s <- a <- i <- j <- k <- l <- m <- NULL # for R CMD CHECK
     foreach::foreach(s = strs, .combine = "c") %do% {
         atoms <- stringr::str_split(s, pattern = "", simplify = FALSE) %>%
             unlist()

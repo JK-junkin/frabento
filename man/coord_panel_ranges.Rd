@@ -27,7 +27,34 @@ DETAILS
 \examples{
 \dontrun{
 if(interactive()){
+library(frabento)
+library(ggplot2)
+library(dplyr)
+library(patchwork)
  #EXAMPLE1
+theme_set(theme_linedraw(base_family = "Helvetica", base_line_size = 0.3) +
+          theme(aspect.ratio = 1/1))
+
+# base plot
+g <- iris \%>\%
+    ggplot(aes(x = Sepal.Length, y = Sepal.Width)) +
+    geom_point(aes(color = Species)) +
+    geom_rect(data = .  \%>\% dplyr::filter(Species == "versicolor"),
+              xmin = 5.5, xmax = 6.5, ymin = 2.5, ymax = 3,
+              color = "red", size = 1, fill = NA) +
+    facet_wrap(~ Species, scale = "free", ncol = 2, dir = "h") +
+    theme(legend.position = c(0.75, 0.25))
+
+# zoom in versicolor panel (this is second panel)
+gz <- g + coord_panel_ranges(panel_ranges = list(
+    list(NULL),
+    list(x = c(5.4, 6.6), y = c(2.4, 3.1)),
+    list(NULL)
+    ))
+
+# patchwork
+g | gz
+
  }
 }
 }

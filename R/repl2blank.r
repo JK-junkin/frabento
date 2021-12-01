@@ -54,8 +54,6 @@ repl2blank <-
 #'  #EXAMPLE1
 #'  }
 #' }
-#' @seealso
-#'  \code{\link[scales]{character(0)}}
 #' @rdname label_repl2blank
 #' @keywords force_all
 #' @export

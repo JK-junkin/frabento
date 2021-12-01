@@ -9,6 +9,8 @@
 #' \dontrun{
 #' if(interactive()){
 #'  #EXAMPLE1
+#' makeXlColAlphabet(nchar = 1)
+#' makeXlColAlphabet(len = 10, start = 3)
 #'  }
 #' }
 #' @seealso 
@@ -16,8 +18,10 @@
 #' @rdname makeXlColAlphabet
 #' @importFrom foreach foreach
 #' @importFrom dplyr case_when
+#' @importFrom utils head tail
 #' @export 
 makeXlColAlphabet <- function(nchar = 2L, len = NULL, start = 1L) {
+
     if(nchar <= 0) stop("'nchar' should be greater than or equal to (GTE) 1.")
     if(nchar > 3) stop("'nchar' greater than (GT) 3 is not supported.")
     if(start < 1) stop("'start' should be greater than 0.")
@@ -28,6 +32,7 @@ makeXlColAlphabet <- function(nchar = 2L, len = NULL, start = 1L) {
                                 nchar == 3 ~ 26^1 + 26^2 + 26^3 - start + 1)
     }
 
+    i <- NULL # for R CMD CHECK: no visible binding for global variable
     x <- foreach::foreach(i = seq_len(nchar), .combine = "c") %do% {
         do.call(paste0, expand.grid(rep(list(LETTERS), i))[rev(seq_len(i))])
     }

@@ -42,7 +42,4 @@ if(interactive()){
  }
 }
 }
-\seealso{
-\code{\link[scales]{character(0)}}
-}
 \keyword{force_all}

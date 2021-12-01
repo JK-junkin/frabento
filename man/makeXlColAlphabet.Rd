@@ -26,6 +26,8 @@ DETAILS
 \dontrun{
 if(interactive()){
  #EXAMPLE1
+makeXlColAlphabet(nchar = 1)
+makeXlColAlphabet(len = 10, start = 3)
  }
 }
 }
