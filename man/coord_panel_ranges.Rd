@@ -2,7 +2,7 @@
 % Please edit documentation in R/coord_panel_ranges.r
 \name{coord_panel_ranges}
 \alias{coord_panel_ranges}
-\title{任意のfacetパネルの座標調整}
+\title{Zoom in or out for specific facet panels}
 \usage{
 coord_panel_ranges(panel_ranges, expand = TRUE, default = FALSE, clip = "on")
 }
@@ -11,15 +11,26 @@ coord_panel_ranges(panel_ranges, expand = TRUE, default = FALSE, clip = "on")
 
 \item{expand}{Add margin to each axes or an axis, Default: TRUE}
 
-\item{default}{PARAM_DESCRIPTION, Default: FALSE}
+\item{default}{Is this the default coordinate system? If \code{FALSE} (the default),
+then replacing this coordinate system with another one creates a message alerting
+the user that the coordinate system is being replaced. If \code{TRUE}, that warning
+is suppressed. NOTE: This argument explanation was cited from ggplot2::coord_cartesian}
 
-\item{clip}{PARAM_DESCRIPTION, Default: 'on'}
+\item{clip}{Should drawing be clipped to the extent of the plot panel? A
+setting of \code{"on"} (the default) means yes, and a setting of \code{"off"}
+means no. In most cases, the default of \code{"on"} should not be changed,
+as setting \code{clip = "off"} can cause unexpected results. It allows
+drawing of data points anywhere on the plot, including in the plot margins. If
+limits are set via \code{xlim} and \code{ylim} and some data points fall outside those
+limits, then those data points may show up in places such as the axes, the
+legend, the plot title, or the plot margins. NOTE: This argument explanation
+was cited from ggplot2::coord_cartesian}
 }
 \value{
 ggproto object
 }
 \description{
-.パネルごとに異なるcoordinateを適用する.
+任意のfacetパネルをズームする.
 }
 \details{
 DETAILS
@@ -27,31 +38,31 @@ DETAILS
 \examples{
 \dontrun{
 if(interactive()){
-library(ggplot2)
-library(dplyr)
-library(frabento)
-
-theme_set(theme_linedraw(base_family = "Helvetica", base_line_size = 0.3) +
-          theme(aspect.ratio = 1/1, legend.position = c(0.75, 0.25))
-
-ggplot(iris, aes(x = Sepal.Length, y = Sepal.Width)) +
-    geom_point(aes(color = Species)) +
-    geom_rect(data = .  \%>\% dplyr::filter(Species == "versicolor"),
-              xmin = 5.5, xmax = 6.5, ymin = 2.5, ymax = 3,
-              color = "red", size = 1, fill = NA) +
-    facet_wrap(~ Species, scale = "free", ncol = 2) +
-    coord_panel_ranges(panel_ranges = list(
-        list(NULL),
-        list(x = c(5.4, 6.6), y = c(2.4, 3.1)),
-        list(NULL)
-    ))
+ library(ggplot2)
+ library(dplyr)
+ library(frabento)
+ 
+ theme_set(theme_linedraw(base_family = "Helvetica", base_line_size = 0.3) +
+           theme(aspect.ratio = 1/1, legend.position = c(0.75, 0.25)))
+ 
+ ggplot(iris, aes(x = Sepal.Length, y = Sepal.Width)) +
+     geom_point(aes(color = Species)) +
+     geom_rect(data = .  \%>\% dplyr::filter(Species == "versicolor"),
+               xmin = 5.5, xmax = 6.5, ymin = 2.5, ymax = 3,
+               color = "red", size = 1, fill = NA) +
+     facet_wrap(~ Species, scale = "free", ncol = 2) +
+     coord_panel_ranges(panel_ranges = list(
+         list(NULL),
+         list(x = c(5.4, 6.6), y = c(2.4, 3.1)),
+         list(NULL)
+     ))
  }
 }
 }
 \references{
-\url{https://andburch.github.io/ggplot_facets/}
+\url{https://andburch.github.io/ggplot_facets}
 \url{https://stackoverflow.com/questions/63550588/ggplot2coord-cartesian-on-facets}
 }
 \seealso{
-\code{\link[ggplot2]{ggproto}}
+\code{\link[ggplot2]{ggproto}},\code{\link[ggplot2]{coord_cartesian}}
 }
