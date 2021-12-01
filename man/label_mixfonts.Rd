@@ -2,7 +2,7 @@
 % Please edit documentation in R/mixfonts.r
 \name{label_mixfonts}
 \alias{label_mixfonts}
-\title{Label mixed-fonts strings in ggplot}
+\title{Label mixed-fonts HTML strings}
 \usage{
 label_mixfonts(asciifont = "Arial", mbytefont = "MS Gothic")
 }
@@ -15,7 +15,7 @@ label_mixfonts(asciifont = "Arial", mbytefont = "MS Gothic")
 \code{mixfonts} function
 }
 \description{
-Label mixed-fonts strings in ggplot
+Label mixed-fonts HTML strings
 }
 \details{
 See vignettees("mixfonts")
@@ -23,7 +23,23 @@ See vignettees("mixfonts")
 \examples{
 \dontrun{
 if(interactive()){
- #EXAMPLE1
+ library(ggplot2)
+ library(dplyr)
+ library(tibble)
+ library(ggtext)
+ library(frabento)
+
+ tibble::tibble(cpue = c(rnorm(n = 30, mean = 300, sd = 25),
+                         rnorm(n = 30, mean = 500, sd = 35)),
+                year = rep(seq(1990, length.out = 30, by = 1), times = 2),
+                age  = rep(c("0歳魚", "1歳魚+"), each = 30)) \%>\%
+     ggplot(aes(x = year, y = cpue, group = age)) +
+     geom_path(aes(color = age)) +
+     scale_color_discrete(labels = label_mixfonts()) +
+     theme(legend.text = element_markdown(color = "blue"))
  }
 }
+}
+\seealso{
+\code{\link[ggtext]{element_markdown}}
 }

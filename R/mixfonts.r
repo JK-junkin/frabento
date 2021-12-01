@@ -1,6 +1,6 @@
-#' @title Make character vector with different two-font families in ggplot
+#' @title Unify ascii and multibyte fonts into a string
 #' @description Put ASCII font family character(s) and multibyte font family
-#' character(s) in a single string like graph plotted in Excel.
+#' character(s) into a single string for use in ggplot.
 #' @param strs A vector of character to be converted
 #' @param asciifont ASCII font family, Default: 'Arial'
 #' @param mbytefont Multi byte font family, Default: 'MS Gothic'
@@ -9,18 +9,7 @@
 #' @examples 
 #' \dontrun{
 #' if(interactive()){
-#'  library(ggplot2)
-#'  library(ggtext)
-#'
-#'  # EXAMPLE1
-#'  mixfonts(c("シラス込み0歳魚", "\nシラスを除く\nカタクチイワシ0歳魚"))
-#'
-#'  # EXAMPLE2
-#'  ggplot(women) +
-#'      geom_point(aes(x = height, y = weight)) +
-#'      labs(x = mixfonts("身長\n(inch)", asciifont = "Times New Roman")) +
-#'      theme_linedraw(base_family = "MS Gothic") +
-#'      theme(axis.title.x.bottom = element_markdown())
+#'  mixfonts(c("全0歳魚", "仔魚を含まない\n0歳魚"))
 #'  }
 #' }
 #' @seealso 
@@ -59,15 +48,30 @@ mixfonts <- function(strs, asciifont = "Arial", mbytefont = "MS Gothic") {
     }
 }
 
-#' @title Label mixed-fonts strings in ggplot
+#' @title Label mixed-fonts HTML strings
 #' @param asciifont ASCII font family, Default: 'Arial'
 #' @param mbytefont Multi byte font family, Default: 'MS Gothic'
 #' @return `mixfonts` function
 #' @details See vignettees("mixfonts")
+#' @seealso
+#'  \code{\link[ggtext]{element_markdown}}
 #' @examples 
 #' \dontrun{
 #' if(interactive()){
-#'  #EXAMPLE1
+#'  library(ggplot2)
+#'  library(dplyr)
+#'  library(tibble)
+#'  library(ggtext)
+#'  library(frabento)
+#'
+#'  tibble::tibble(cpue = c(rnorm(n = 30, mean = 300, sd = 25),
+#'                          rnorm(n = 30, mean = 500, sd = 35)),
+#'                 year = rep(seq(1990, length.out = 30, by = 1), times = 2),
+#'                 age  = rep(c("0歳魚", "1歳魚+"), each = 30)) %>%
+#'      ggplot(aes(x = year, y = cpue, group = age)) +
+#'      geom_path(aes(color = age)) +
+#'      scale_color_discrete(labels = label_mixfonts()) +
+#'      theme(legend.text = element_markdown(color = "blue"))
 #'  }
 #' }
 #' @rdname label_mixfonts

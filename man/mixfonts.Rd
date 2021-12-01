@@ -2,7 +2,7 @@
 % Please edit documentation in R/mixfonts.r
 \name{mixfonts}
 \alias{mixfonts}
-\title{Make character vector with different two-font families in ggplot}
+\title{Unify ascii and multibyte fonts into a string}
 \usage{
 mixfonts(strs, asciifont = "Arial", mbytefont = "MS Gothic")
 }
@@ -18,7 +18,7 @@ Character vector of HTML \emph{span} tag.
 }
 \description{
 Put ASCII font family character(s) and multibyte font family
-character(s) in a single string like graph plotted in Excel.
+character(s) into a single string for use in ggplot.
 }
 \details{
 This function is supposed to be used with \code{element_markdown()} in \code{ggtext} package
@@ -26,18 +26,7 @@ This function is supposed to be used with \code{element_markdown()} in \code{ggt
 \examples{
 \dontrun{
 if(interactive()){
- library(ggplot2)
- library(ggtext)
-
- # EXAMPLE1
- mixfonts(c("シラス込み0歳魚", "\nシラスを除く\nカタクチイワシ0歳魚"))
-
- # EXAMPLE2
- ggplot(women) +
-     geom_point(aes(x = height, y = weight)) +
-     labs(x = mixfonts("身長\n(inch)", asciifont = "Times New Roman")) +
-     theme_linedraw(base_family = "MS Gothic") +
-     theme(axis.title.x.bottom = element_markdown())
+ mixfonts(c("全0歳魚", "仔魚を含まない\n0歳魚"))
  }
 }
 }
