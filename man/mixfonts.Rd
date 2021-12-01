@@ -2,7 +2,7 @@
 % Please edit documentation in R/mixfonts.r
 \name{mixfonts}
 \alias{mixfonts}
-\title{To display two font families in a single character string on ggplot title and labels}
+\title{Make character vector with different two-font families in ggplot}
 \usage{
 mixfonts(strs, asciifont = "Arial", mbytefont = "MS Gothic")
 }
@@ -14,11 +14,11 @@ mixfonts(strs, asciifont = "Arial", mbytefont = "MS Gothic")
 \item{mbytefont}{Multi byte font family, Default: 'MS Gothic'}
 }
 \value{
-An HTML \emph{span} tag string.
+Character vector of HTML \emph{span} tag.
 }
 \description{
-This function has been made to cope with VERY VERY specific
-demand in Japanese domestic Stock assessment.
+Put ASCII font family character(s) and multibyte font family
+character(s) in a single string like graph plotted in Excel.
 }
 \details{
 This function is supposed to be used with \code{element_markdown()} in \code{ggtext} package

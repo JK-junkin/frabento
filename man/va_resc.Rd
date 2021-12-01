@@ -58,6 +58,4 @@ faithful \%>\%
 }
 \references{
 \url{https://blog.statsbeginner.net/entry/2020/09/08/181536}
-\url{https://knknkn.hatenablog.com/entry/2019/02/27/204913"}
-\url{https://notchained.hatenablog.com/entry/2016/10/02/011204"}
 }
