@@ -9,12 +9,18 @@ repo:
 destinatio: docs
 
 reference:
-- title: Return value
+- title: Use with facet_*
   desc: >
 - contents:
-  - -starts_with("label_")
+  - starts_with("coord_")
 
-- title: Return function
+- title: Use in scale_*()
   desc: >
 - contents:
   - starts_with("label_")
+
+- title: Return values
+  desc: >
+- contents:
+  - -starts_with("label_")
+  - -starts_with("coord_")
