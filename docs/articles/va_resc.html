@@ -54,6 +54,9 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
+      <a href="../articles/coord_panel_ranges.html">ggplot: ファセットグラフのパネル別ズーム</a>
+    </li>
+    <li>
       <a href="../articles/mixfonts.html">ggplot: ASCIIとマルチバイト文字の混在表記</a>
     </li>
     <li>
@@ -91,7 +94,7 @@
       <h1 data-toc-skip>ggplot: 2軸グラフの数値調整</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/JK-junkin/frabento/blob/master/R/vignettes/va_resc.Rmd"><code>R/vignettes/va_resc.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/JK-junkin/frabento/blob/HEAD/vignettes/va_resc.Rmd"><code>vignettes/va_resc.Rmd</code></a></small>
       <div class="hidden name"><code>va_resc.Rmd</code></div>
 
     </div>
@@ -111,12 +114,12 @@
 <h2 class="hasAnchor">
 <a href="#%E4%BD%BF%E7%94%A8%E4%BE%8B" class="anchor"></a>使用例</h2>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co">## devtools::install_github("Gedevan-Aleksizde/fontregisterer", upgrade = "never")</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/JK-junkin/frabento">frabento</a></span><span class="op">)</span>       <span class="co"># このパッケージ</span>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/JK-junkin/frabento">frabento</a></span><span class="op">)</span>       <span class="co"># このパッケージ</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span>      <span class="co"># ggplot2とtidyなデータハンドリング</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://patchwork.data-imaginist.com">patchwork</a></span><span class="op">)</span>      <span class="co"># ggplotを簡単, キレイにレイアウト</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">fontregisterer</span><span class="op">)</span> <span class="co"># フォントの利用を楽にするため</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://wilkelab.org/ggtext/">ggtext</a></span><span class="op">)</span>         <span class="co"># element_markdown() を使うため</span></code></pre></div>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://wilkelab.org/ggtext/">ggtext</a></span><span class="op">)</span>         <span class="co"># element_markdown() を使うため</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/teunbrand/ggh4x">ggh4x</a></span><span class="op">)</span>          <span class="co"># Hacks for ggplot2</span></code></pre></div>
 <div id="基本的な使用例" class="section level3">
 <h3 class="hasAnchor">
 <a href="#%E5%9F%BA%E6%9C%AC%E7%9A%84%E3%81%AA%E4%BD%BF%E7%94%A8%E4%BE%8B" class="anchor"></a>基本的な使用例</h3>
@@ -233,14 +236,63 @@
 <h3 class="hasAnchor">
 <a href="#%E5%8F%82%E8%80%83%E6%83%85%E5%A0%B1" class="anchor"></a>参考情報</h3>
 <ul>
-<li>
-<a href="https://blog.statsbeginner.net/entry/2020/09/08/181536">このブログ</a>を参考に作成しました.
-<ul>
-<li>
-<a href="https://walkintheforest.net/r-ggplot-2nd-axis/">このサイト</a>も多分同じ人.</li>
+<li><p><a href="https://blog.statsbeginner.net/entry/2020/09/08/181536">このブログ</a>を参考に作成しました. <a href="https://walkintheforest.net/r-ggplot-2nd-axis/">このサイト</a>も多分同じ人.</p></li>
+<li><p><strong>【注目】</strong> <code>ggh4x</code>が<a href="https://teunbrand.github.io/ggh4x/reference/help_secondary.html">別の解法</a>を実装しています. <code>geom_*()</code>を重ねて使う必要があるみたいなので, 用途に応じて使い分けるのが良さそうです.</p></li>
 </ul>
-</li>
-</ul>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># --&gt; ggh4x::help_secondary()</span>
+
+<span class="co"># default = range</span>
+<span class="va">sec_range</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/ggh4x/man/help_secondary.html">help_secondary</a></span><span class="op">(</span><span class="va">cars</span>, <span class="va">speed</span>, <span class="va">dist</span>, method <span class="op">=</span> <span class="st">"range"</span>,
+                            name <span class="op">=</span> <span class="st">"Distances"</span>, breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">85</span>, <span class="fl">120</span><span class="op">)</span><span class="op">)</span> <span class="co"># 確認用</span>
+
+<span class="va">gh1</span> <span class="op">&lt;-</span> <span class="va">cars</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span>
+    <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/rownames.html">rownames_to_column</a></span><span class="op">(</span>var <span class="op">=</span> <span class="st">"ID"</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/integer.html">as.integer</a></span><span class="op">(</span><span class="va">ID</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">speed</span><span class="op">)</span>, colour <span class="op">=</span> <span class="st">"blue"</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">sec_range</span><span class="op">$</span><span class="fu">proj</span><span class="op">(</span><span class="va">dist</span><span class="op">)</span><span class="op">)</span>, colour <span class="op">=</span> <span class="st">"red"</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_y_continuous</a></span><span class="op">(</span>sec.axis <span class="op">=</span> <span class="va">sec_range</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Observation ID"</span>, title <span class="op">=</span> <span class="st">"ggh4x:range"</span><span class="op">)</span>
+
+<span class="co"># max</span>
+<span class="va">sec_max</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/ggh4x/man/help_secondary.html">help_secondary</a></span><span class="op">(</span><span class="va">cars</span>, <span class="va">speed</span>, <span class="va">dist</span>, method <span class="op">=</span> <span class="st">"max"</span>,
+                          name <span class="op">=</span> <span class="st">"Distances"</span>, breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">85</span>, <span class="fl">120</span><span class="op">)</span><span class="op">)</span> <span class="co"># 確認用</span>
+
+<span class="va">gh2</span> <span class="op">&lt;-</span> <span class="va">cars</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span>
+    <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/rownames.html">rownames_to_column</a></span><span class="op">(</span>var <span class="op">=</span> <span class="st">"ID"</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/integer.html">as.integer</a></span><span class="op">(</span><span class="va">ID</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">speed</span><span class="op">)</span>, colour <span class="op">=</span> <span class="st">"blue"</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">sec_max</span><span class="op">$</span><span class="fu">proj</span><span class="op">(</span><span class="va">dist</span><span class="op">)</span><span class="op">)</span>, colour <span class="op">=</span> <span class="st">"red"</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_y_continuous</a></span><span class="op">(</span>sec.axis <span class="op">=</span> <span class="va">sec_max</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Observation ID"</span>, title <span class="op">=</span> <span class="st">"ggh4x:max"</span><span class="op">)</span>
+
+<span class="co"># fit lm(primary ~ secondary)</span>
+<span class="va">sec_fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/ggh4x/man/help_secondary.html">help_secondary</a></span><span class="op">(</span><span class="va">cars</span>, <span class="va">speed</span>, <span class="va">dist</span>, method <span class="op">=</span> <span class="st">"fit"</span>,
+                          name <span class="op">=</span> <span class="st">"Distances"</span>, breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">85</span>, <span class="fl">120</span><span class="op">)</span><span class="op">)</span> <span class="co"># 確認用</span>
+
+<span class="va">gh3</span> <span class="op">&lt;-</span> <span class="va">cars</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span>
+    <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/rownames.html">rownames_to_column</a></span><span class="op">(</span>var <span class="op">=</span> <span class="st">"ID"</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/integer.html">as.integer</a></span><span class="op">(</span><span class="va">ID</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">speed</span><span class="op">)</span>, colour <span class="op">=</span> <span class="st">"blue"</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">sec_fit</span><span class="op">$</span><span class="fu">proj</span><span class="op">(</span><span class="va">dist</span><span class="op">)</span><span class="op">)</span>, colour <span class="op">=</span> <span class="st">"red"</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_y_continuous</a></span><span class="op">(</span>sec.axis <span class="op">=</span> <span class="va">sec_fit</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Observation ID"</span>, title <span class="op">=</span> <span class="st">"ggh4x:fit"</span><span class="op">)</span>
+
+<span class="co"># ccf</span>
+<span class="va">sec_ccf</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/ggh4x/man/help_secondary.html">help_secondary</a></span><span class="op">(</span><span class="va">cars</span>, <span class="va">speed</span>, <span class="va">dist</span>, method <span class="op">=</span> <span class="st">"ccf"</span>,
+                          name <span class="op">=</span> <span class="st">"Distances"</span>, breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">85</span>, <span class="fl">120</span><span class="op">)</span><span class="op">)</span> <span class="co"># 確認用</span>
+
+<span class="va">gh4</span> <span class="op">&lt;-</span> <span class="va">cars</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span>
+    <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/rownames.html">rownames_to_column</a></span><span class="op">(</span>var <span class="op">=</span> <span class="st">"ID"</span><span class="op">)</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/integer.html">as.integer</a></span><span class="op">(</span><span class="va">ID</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">speed</span><span class="op">)</span>, colour <span class="op">=</span> <span class="st">"blue"</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">sec_ccf</span><span class="op">$</span><span class="fu">proj</span><span class="op">(</span><span class="va">dist</span><span class="op">)</span><span class="op">)</span>, colour <span class="op">=</span> <span class="st">"red"</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_y_continuous</a></span><span class="op">(</span>sec.axis <span class="op">=</span> <span class="va">sec_ccf</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Observation ID"</span>, title <span class="op">=</span> <span class="st">"ggh4x:ccf"</span><span class="op">)</span>
+
+<span class="co"># patchwork</span>
+<span class="va">gh1</span> <span class="op">+</span> <span class="va">gh2</span> <span class="op">+</span> <span class="va">gh3</span> <span class="op">+</span> <span class="va">gh4</span> <span class="op">+</span> <span class="fu"><a href="https://patchwork.data-imaginist.com/reference/plot_layout.html">plot_layout</a></span><span class="op">(</span>ncol <span class="op">=</span> <span class="fl">2</span>, byrow <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+<p><img src="va_resc_files/figure-html/unnamed-chunk-2-1.png" width="453.543307086614"></p>
 </div>
 </div>
   </div>

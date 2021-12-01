@@ -54,6 +54,9 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
+      <a href="../articles/coord_panel_ranges.html">ggplot: ファセットグラフのパネル別ズーム</a>
+    </li>
+    <li>
       <a href="../articles/mixfonts.html">ggplot: ASCIIとマルチバイト文字の混在表記</a>
     </li>
     <li>
@@ -91,7 +94,7 @@
       <h1 data-toc-skip>ggplot: 飛び石軸ラベルの作成</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/JK-junkin/frabento/blob/master/R/vignettes/repl2blank.Rmd"><code>R/vignettes/repl2blank.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/JK-junkin/frabento/blob/HEAD/vignettes/repl2blank.Rmd"><code>vignettes/repl2blank.Rmd</code></a></small>
       <div class="hidden name"><code>repl2blank.Rmd</code></div>
 
     </div>
@@ -105,8 +108,10 @@
 <li>
 <code>ggplot2</code> で作図していると, 軸の目盛りマーク (ticks) は欲しいけどラベルはいらない, という場面に出くわすかと思います. (たとえば<a href="https://stackoverflow.com/questions/14490071/adding-minor-tick-marks-to-the-x-axis-in-ggplot2-with-no-labels">ここ</a>)</li>
 <li>そこで, この処理を簡単にする関数 <code><a href="../reference/label_repl2blank.html">frabento::label_repl2blank()</a></code> を作ってみました.</li>
+<li>
+<strong>【重要】</strong><code>ggh4x</code>という素晴らしい 📦 がCRANにありました. これを使いましょう！<br><a href="https://teunbrand.github.io/ggh4x/articles/PositionGuides.html" class="uri">https://teunbrand.github.io/ggh4x/articles/PositionGuides.html</a>
+</li>
 </ul>
-<p><strong>【重要】</strong><br><code>ggh4x</code>という素晴らしい 📦 がCRANにありました. これを使いましょう!<br><a href="https://teunbrand.github.io/ggh4x/articles/PositionGuides.html" class="uri">https://teunbrand.github.io/ggh4x/articles/PositionGuides.html</a></p>
 </div>
 <div id="使用例" class="section level2">
 <h2 class="hasAnchor">
@@ -203,7 +208,7 @@
 <a href="#%E7%95%99%E6%84%8F%E4%BA%8B%E9%A0%85" class="anchor"></a>留意事項</h3>
 <ul>
 <li>
-<code><a href="../reference/label_repl2blank.html">label_repl2blank()</a></code> は <code>sf</code>クラスのデータを<code><a href="https://ggplot2.tidyverse.org/reference/ggsf.html">geom_sf()</a></code>で描画した時はうまく動作しないようです. 現状, このバグに対応する予定はありません.</li>
+<code><a href="../reference/label_repl2blank.html">label_repl2blank()</a></code> は <code>sf</code>クラスのデータを<code><a href="https://ggplot2.tidyverse.org/reference/ggsf.html">geom_sf()</a></code>で描画した時はうまく動作しないようです. 現状, このバグ対応は未定です.</li>
 </ul>
 </div>
 <div id="参考情報" class="section level3">
@@ -219,8 +224,8 @@
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>axis.ticks.length.x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grid/unit.html">unit</a></span><span class="op">(</span><span class="fl">0.2</span>, <span class="st">"cm"</span><span class="op">)</span>,
           ggh4x.axis.ticks.length.minor <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html">rel</a></span><span class="op">(</span><span class="fl">0.5</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"ggh4x"</span><span class="op">)</span></code></pre></div>
-<p><img src="repl2blank_files/figure-html/unnamed-chunk-3-1.png" width="566.929133858268"></p>
-<p>ん〜〜〜！！！スマートかつエレガント！！！</p>
+<p><img src="repl2blank_files/figure-html/ggh4x-1.png" width="566.929133858268"></p>
+<p>スマートかつエレガント！！！</p>
 </div>
 </div>
 </div>

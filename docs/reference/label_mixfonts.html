@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>軸ラベルを一定間隔でブランクに置き換える関数を返す — label_repl2blank • frabento</title>
+<title>Label mixed-fonts strings in ggplot — label_mixfonts • frabento</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,8 @@
 
 
 
-<meta property="og:title" content="軸ラベルを一定間隔でブランクに置き換える関数を返す — label_repl2blank" />
-<meta property="og:description" content="ggplot作図の際に軸ラベルの一部を空白にすることで minor break のようにみせかける." />
+<meta property="og:title" content="Label mixed-fonts strings in ggplot — label_mixfonts" />
+<meta property="og:description" content="Label mixed-fonts strings in ggplot" />
 
 
 
@@ -132,62 +132,36 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>軸ラベルを一定間隔でブランクに置き換える関数を返す</h1>
-    <small class="dont-index">Source: <a href='https://github.com/JK-junkin/frabento/blob/HEAD/R/repl2blank.r'><code>R/repl2blank.r</code></a></small>
-    <div class="hidden name"><code>label_repl2blank.Rd</code></div>
+    <h1>Label mixed-fonts strings in ggplot</h1>
+    <small class="dont-index">Source: <a href='https://github.com/JK-junkin/frabento/blob/HEAD/R/mixfonts.r'><code>R/mixfonts.r</code></a></small>
+    <div class="hidden name"><code>label_mixfonts.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>ggplot作図の際に軸ラベルの一部を空白にすることで minor break のようにみせかける.</p>
+    <p>Label mixed-fonts strings in ggplot</p>
     </div>
 
-    <pre class="usage"><span class='fu'>label_repl2blank</span><span class='op'>(</span>
-  nskip <span class='op'>=</span> <span class='fl'>1</span>,
-  first <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  last <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  inverse <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  ptime <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  ftime <span class='op'>=</span> <span class='st'>"%Y-%m-%d"</span>
-<span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>label_mixfonts</span><span class='op'>(</span>asciifont <span class='op'>=</span> <span class='st'>"Arial"</span>, mbytefont <span class='op'>=</span> <span class='st'>"MS Gothic"</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>nskip</th>
-      <td><p>何個置きに空白文字にするか, Default: 1.</p></td>
+      <th>asciifont</th>
+      <td><p>ASCII font family, Default: 'Arial'</p></td>
     </tr>
     <tr>
-      <th>first</th>
-      <td><p>1個目の値を空白にする, Default: FALSE. TRUEで強制的に空白にする. inverse = TRUE の時はTRUEで強制的に値を与える.</p></td>
-    </tr>
-    <tr>
-      <th>last</th>
-      <td><p>最後の値を空白にする, Default: FALSE. TRUEで強制的に空白にする. inverse = TRUE の時はTRUEで強制的に値を与える.</p></td>
-    </tr>
-    <tr>
-      <th>inverse</th>
-      <td><p>空白と非空白を逆転させる, Default: FALSE</p></td>
-    </tr>
-    <tr>
-      <th>ptime</th>
-      <td><p>Parse date-time type vector, Default: FALSE</p></td>
-    </tr>
-    <tr>
-      <th>ftime</th>
-      <td><p>Format of date-time, Default: '%Y-%m-%d'</p></td>
+      <th>mbytefont</th>
+      <td><p>Multi byte font family, Default: 'MS Gothic'</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A function</p>
+    <p><code>mixfonts</code> function</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>例をご覧ください.</p>
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
-    <div class='dont-index'><p><code>character(0)</code></p></div>
+    <p>See vignettees("mixfonts")</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><span class='r-in'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span></span>
