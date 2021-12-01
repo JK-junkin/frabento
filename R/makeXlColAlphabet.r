@@ -8,13 +8,13 @@
 #' @examples 
 #' \dontrun{
 #' if(interactive()){
-#'  #EXAMPLE1
 #' makeXlColAlphabet(nchar = 1)
 #' makeXlColAlphabet(len = 10, start = 3)
 #'  }
 #' }
 #' @seealso 
 #'  \code{\link[foreach]{foreach}}
+#'  \code{\link[dplyr]{case_when}}
 #' @rdname makeXlColAlphabet
 #' @importFrom foreach foreach
 #' @importFrom dplyr case_when
