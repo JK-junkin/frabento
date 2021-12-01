@@ -8,20 +8,16 @@
 
 `frabento` provides assets for FRA's job using R language.
 
-## Installation
+## インストール
 
-You can install the released version of `frabento` from this repository.
+このページ (リポジトリ) から`frabento`パッケージの開発およびリリースバージョンを取得できます.
 
 ``` r
+# installation
 install.packages("devtools")
 devtools::install_github("JK-junkin/frabento@dev")
-```
 
-## Example
-
-This is a basic example which shows you how to solve a common problem:
-
-``` r
+# load package
 library(frabento)
 ```
 
