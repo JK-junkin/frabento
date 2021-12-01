@@ -1,0 +1,79 @@
+---
+title: "ggplot: ファセットグラフのパネル別ズーム"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{ggplot: ファセットグラフのパネル別ズーム}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.width = 15/2.54,
+  dpi = 96
+)
+```
+
+## はじめに
+- `ggplot2` でファセットグラフを描いた際, このパネルだけズームしたい, と思うことがあります.
+- そこで, ファセットグラフの任意のパネルをズームする関数 `frabento::coord_panel_ranges()` を作ってみました.
+- なお, この関数はWEB上にあった[記事1](https://andburch.github.io/ggplot_facets/)と
+  [記事2](https://stackoverflow.com/questions/63550588/ggplot2coord-cartesian-on-facets)を参考にほぼそのまま転用したものとなります.
+  ご承知おきください.
+
+
+## 使用例
+```{r setup, echo = 2:4, eval = -c(1), message = FALSE}
+devtools::install_github("Gedevan-Aleksizde/fontregisterer", upgrade = "never")
+library(frabento)       # このパッケージ
+library(tidyverse)      # ggplot2とtidyなデータハンドリング
+library(patchwork)      # ggplotを簡単, キレイにレイアウト
+library(fontregisterer) # フォントの利用を楽にするため
+library(ggtext)         # element_markdown() を使うため
+library(emo)            # 絵文字
+library(pkgdown)        # このpackageのwebsiteを手軽に作成
+library(ggh4x)          # Hacks for ggplot!
+```
+
+### 基本的な使用例
+データセット`iris` (Edgar Anderson's Iris Data) を例に, ファセットグラフを
+描いてみます.
+
+```{r ex1, fig.asp = 5/10, fig.width = 20/2.54}
+theme_set(theme_linedraw(base_family = "Helvetica", base_line_size = 0.3) +
+          theme(aspect.ratio = 1/1))
+
+# base plot
+g <- iris %>%
+    ggplot(aes(x = Sepal.Length, y = Sepal.Width)) +
+    geom_point(aes(color = Species)) +
+    geom_rect(data = .  %>% dplyr::filter(Species == "versicolor"),
+              xmin = 5.5, xmax = 6.5, ymin = 2.5, ymax = 3,
+              color = "red", size = 1, fill = NA) +
+    facet_wrap(~ Species, scale = "free", ncol = 2, dir = "h") +
+    theme(legend.position = c(0.75, 0.25))
+
+# zoom in versicolor panel (this is second panel)
+gz <- g + coord_panel_ranges(panel_ranges = list(
+    list(NULL),
+    list(x = c(5.4, 6.6), y = c(2.4, 3.1)),
+    list(NULL)
+    ))
+
+# patchwork
+g | gz
+```
+
+### 参考情報
+- **【注目！】** `ggh4x` が[別の解法](https://teunbrand.github.io/ggh4x/reference/facetted_pos_scales.html)を実装しています.
+
+```{r, fig.asp = 10/10, fig.width = 10/2.54}
+g + ggh4x::facetted_pos_scales(
+    x = list(Species == "versicolor" ~ scale_x_continuous(limits = c(5.5, 6.5),
+                                                          expand = expansion(add = c(0.1, 0.1)))),
+    y = list(Species == "versicolor" ~ scale_y_continuous(limits = c(2.5, 3.0),
+                                                          expand = expansion(add = c(0.1, 0.1))))
+  )
+```

@@ -20,9 +20,7 @@ knitr::opts_chunk$set(
 - `ggplot2` で作図していると, 軸の目盛りマーク (ticks) は欲しいけどラベルはいらない,
   という場面に出くわすかと思います. (たとえば[ここ](https://stackoverflow.com/questions/14490071/adding-minor-tick-marks-to-the-x-axis-in-ggplot2-with-no-labels))
 - そこで, この処理を簡単にする関数 `frabento::label_repl2blank()` を作ってみました.
-
-**【重要】**  
-`ggh4x`という素晴らしい `r emo::ji("package")` がCRANにありました. これを使いましょう!  
+- **【重要】**`ggh4x`という素晴らしい `r emo::ji("package")` がCRANにありました. これを使いましょう！  
 https://teunbrand.github.io/ggh4x/articles/PositionGuides.html
 
 
@@ -65,7 +63,7 @@ g0 / g1
 
 `label_repl2blank()` は中で `repl2blank()` が動いています. 具体的な働き方を下記に示します.
 
-```{r}
+```{r inside-label_repl2blank}
 (example_vector <- 2011:2020)
 
 # デフォルト (引数に何も指定しない)
@@ -96,11 +94,11 @@ repl2blank(example_vector, inverse = TRUE, first = TRUE, last = TRUE)
 
 ### 留意事項
 - `label_repl2blank()` は `sf`クラスのデータを`geom_sf()`で描画した時はうまく動作しないようです.
-  現状, このバグに対応する予定はありません.
+  現状, このバグ対応は未定です.
 
 ### 参考情報
 #### ggh4x
-```{r, fig.asp = 4/10, message = FALSE}
+```{r ggh4x, fig.asp = 4/10, message = FALSE}
 g0 + scale_x_continuous(breaks = seq(-6000, 2000, by = 1000),
                         minor_breaks = seq(-6000, 2000, by = 200),
                         guide = "axis_minor") +
@@ -109,5 +107,5 @@ g0 + scale_x_continuous(breaks = seq(-6000, 2000, by = 1000),
     labs(title = "ggh4x")
 ```
 
-ん〜〜〜！！！スマートかつエレガント！！！
+スマートかつエレガント！！！
 

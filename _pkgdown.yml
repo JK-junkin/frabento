@@ -1,2 +1,20 @@
-url: ~
+repo:
+  branch: dev
+  url:
+    home: https://github.com/JK-junkin/frabento/
+    source: https://github.com/JK-junkin/frabento/blob/HEAD/
+    issue: https://github.com/JK-junkin/frabento/issues/
+    user: https://github.com/
 
+destinatio: docs
+
+reference:
+- title: Return value
+  desc: >
+- contents:
+  - -starts_with("label_")
+
+- title: Return function
+  desc: >
+- contents:
+  - starts_with("label_")

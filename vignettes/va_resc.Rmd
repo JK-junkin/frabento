@@ -25,14 +25,16 @@ knitr::opts_chunk$set(
 - そこで, この2段階の数値変換を楽にする関数 `frabento::va_resc()` を作ってみました.
 
 ## 使用例
-```{r setup, echo = -7, eval = -1, message = FALSE}
+```{r setup, echo = 2:7, eval = -c(1), message = FALSE}
 devtools::install_github("Gedevan-Aleksizde/fontregisterer", upgrade = "never")
 library(frabento)       # このパッケージ
 library(tidyverse)      # ggplot2とtidyなデータハンドリング
 library(patchwork)      # ggplotを簡単, キレイにレイアウト 
 library(fontregisterer) # フォントの利用を楽にするため
 library(ggtext)         # element_markdown() を使うため
+library(ggh4x)          # Hacks for ggplot2
 library(emo)
+library(pkgdown)
 ```
 
 ### 基本的な使用例
@@ -139,5 +141,66 @@ g2 + g3 + g4 + plot_layout(ncol = 2, guides = "collect", byrow = TRUE)
 
 ### 参考情報
 - [このブログ](https://blog.statsbeginner.net/entry/2020/09/08/181536)を参考に作成しました.
-    - [このサイト](https://walkintheforest.net/r-ggplot-2nd-axis/)も多分同じ人.
+  [このサイト](https://walkintheforest.net/r-ggplot-2nd-axis/)も多分同じ人.
+
+- **【注目】** `ggh4x`が[別の解法](https://teunbrand.github.io/ggh4x/reference/help_secondary.html)を実装しています.
+  `geom_*()`を重ねて使う必要があるみたいなので, 用途に応じて使い分けるのが良さそうです.
+
+```{r, fig.asp = 1/1, fig.width = 12/2.54}
+# --> ggh4x::help_secondary()
+
+# default = range
+sec_range <- help_secondary(cars, speed, dist, method = "range",
+                            name = "Distances", breaks = c(2, 85, 120)) # 確認用
+
+gh1 <- cars %>%
+    tibble::rownames_to_column(var = "ID") %>%
+    ggplot(aes(x = as.integer(ID))) +
+    geom_line(aes(y = speed), colour = "blue") +
+    geom_line(aes(y = sec_range$proj(dist)), colour = "red") +
+    scale_y_continuous(sec.axis = sec_range) +
+    labs(x = "Observation ID", title = "ggh4x:range")
+
+# max
+sec_max <- help_secondary(cars, speed, dist, method = "max",
+                          name = "Distances", breaks = c(2, 85, 120)) # 確認用
+
+gh2 <- cars %>%
+    tibble::rownames_to_column(var = "ID") %>%
+    ggplot(aes(x = as.integer(ID))) +
+    geom_line(aes(y = speed), colour = "blue") +
+    geom_line(aes(y = sec_max$proj(dist)), colour = "red") +
+    scale_y_continuous(sec.axis = sec_max) +
+    labs(x = "Observation ID", title = "ggh4x:max")
+
+# fit lm(primary ~ secondary)
+sec_fit <- help_secondary(cars, speed, dist, method = "fit",
+                          name = "Distances", breaks = c(2, 85, 120)) # 確認用
+
+gh3 <- cars %>%
+    tibble::rownames_to_column(var = "ID") %>%
+    ggplot(aes(x = as.integer(ID))) +
+    geom_line(aes(y = speed), colour = "blue") +
+    geom_line(aes(y = sec_fit$proj(dist)), colour = "red") +
+    scale_y_continuous(sec.axis = sec_fit) +
+    labs(x = "Observation ID", title = "ggh4x:fit")
+
+# ccf
+sec_ccf <- help_secondary(cars, speed, dist, method = "ccf",
+                          name = "Distances", breaks = c(2, 85, 120)) # 確認用
+
+gh4 <- cars %>%
+    tibble::rownames_to_column(var = "ID") %>%
+    ggplot(aes(x = as.integer(ID))) +
+    geom_line(aes(y = speed), colour = "blue") +
+    geom_line(aes(y = sec_ccf$proj(dist)), colour = "red") +
+    scale_y_continuous(sec.axis = sec_ccf) +
+    labs(x = "Observation ID", title = "ggh4x:ccf")
+
+# patchwork
+gh1 + gh2 + gh3 + gh4 + plot_layout(ncol = 2, byrow = TRUE)
+```
+
+
+
 
