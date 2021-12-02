@@ -2,16 +2,16 @@
 % Please edit documentation in R/makeXlColAlphabet.r
 \name{makeXlColAlphabet}
 \alias{makeXlColAlphabet}
-\title{Making Microsoft Excel's alphabet column names}
+\title{Make Microsoft Excel's alphabet column names}
 \usage{
 makeXlColAlphabet(nchar = 2L, len = NULL, start = 1L)
 }
 \arguments{
 \item{nchar}{A number of combined characters, Default: 2}
 
-\item{len}{Length (size) of the output vector, Default: 26L + nchar}
+\item{len}{Length (size) of the output vector, Default: NULL}
 
-\item{start}{Index at start, Default: 1. For example, when 'start' = 1 (default) is "A"; 'start' = 2 is "B".}
+\item{start}{Index at start, Default: 1. When 'start' = 1 (default) is "A"; 'start' = 2 is "B", for example.}
 }
 \value{
 A character vector.
@@ -20,7 +20,7 @@ A character vector.
 Genarate a character vector such as "A" "B" ... "AA" "AB" ... "ZZZ".
 }
 \details{
-DETAILS
+No description.
 }
 \examples{
 \dontrun{
