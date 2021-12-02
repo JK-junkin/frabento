@@ -1,10 +1,10 @@
-#' @title Making Microsoft Excel's alphabet column names
+#' @title Make Microsoft Excel's alphabet column names
 #' @description Genarate a character vector such as "A" "B" ... "AA" "AB" ... "ZZZ".
 #' @param nchar A number of combined characters, Default: 2
-#' @param len Length (size) of the output vector, Default: 26L + nchar
-#' @param start Index at start, Default: 1. For example, when 'start' = 1 (default) is "A"; 'start' = 2 is "B".
+#' @param len Length (size) of the output vector, Default: NULL
+#' @param start Index at start, Default: 1. When 'start' = 1 (default) is "A"; 'start' = 2 is "B", for example.
 #' @return A character vector.
-#' @details DETAILS
+#' @details No description.
 #' @examples 
 #' \dontrun{
 #' if(interactive()){
