@@ -1,5 +1,5 @@
 Package: frabento
-Title: FRAgmentary BENri TOols (assets)
+Title: FRAgmentary BENri TOols
 Version: 0.1.0
 Authors@R: 
     person(given = "Junji",
@@ -7,7 +7,7 @@ Authors@R:
            role = c("aut", "cre"),
            email = "j.kinoshita8802@gmail.com",
            comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: This package aims to provide assets to overcome demands trivial but annoying.
+Description: This package provides assets to overcome demands trivial but annoying.
 License: GPL (>= 3)
 Encoding: UTF-8
 LazyData: true
