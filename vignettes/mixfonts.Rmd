@@ -12,7 +12,8 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
   fig.width = 10/2.54,
-  dpi = 96
+  dpi = 96,
+  dev = "ragg_png"
 )
 ```
 
@@ -23,16 +24,20 @@ knitr::opts_chunk$set(
 - ggplotにおける図タイトルや軸ラベル, 凡例ラベル等のそれぞれのフォントは,
   `ggplot2::theme()`等を使って個別に変更することができます. しかし, **一つの文字列内**で
   複数のフォントを混在させるのは, かなりの手間がかかります. 
-- そこで, その手間を少しでも楽にするために作成したのが `mixfonts()` です.
+- そこで, その手間を少しでも楽にするために作成したのが `mixfonts()` です.  
+
+**【重要】** `ragg` `r emo::ji("package")` がフォント混在の問題を解決してくれるかもしれません！  
+下記の参考情報をご覧ください. いい仕事をしてくれる方々に心よりの感謝！！
 
 ## 使用例
-```{r setup, echo = -7, eval = -1, message = FALSE}
+```{r setup, echo = 1:7, eval = -1, message = FALSE}
 devtools::install_github("Gedevan-Aleksizde/fontregisterer", upgrade = "never")
 library(frabento)       # このパッケージ
 library(fontregisterer) # フォントの利用を楽にするため
 library(ggtext)         # element_markdown() を使うため
 library(tidyverse)      # ggplot2とtidyなデータハンドリング
 library(patchwork)      # ggplotを簡単, キレイにレイアウト 
+library(ragg)           # Great raster 
 library(emo)
 ```
 
@@ -60,7 +65,6 @@ gm <- g + labs(y = mixfonts("CPUE (/1000網)")) +
 
 # use patchwork
 g | gm
-
 ```
 
 フォントを変更してみます. `fontregisterer` `r emo::ji("package")` が威力を発揮します.
@@ -125,3 +129,20 @@ p0 + pm1 + plot_spacer() + pm2 + plot_layout(ncol = 2, byrow = TRUE)
 ### 参考情報
 - 類似した問題は [stack overflow](https://stackoverflow.com/questions/52852882/use-different-font-sizes-for-different-portions-of-text-in-ggplot2-title) においてすでに解決策が提示されています. これにインスピレーションを受け,
   この関数を作成しました.
+
+- [**ragg**の紹介ブログ](https://www.tidyverse.org/blog/2021/02/modern-text-features/): 
+  fallbackのフォントをどう指定したらよいかがわかりませんが, 指定できるのであれば
+  これ以上のパッケージはないと思います. 今後の動向に注目です.
+
+```{r ragg, fig.width = 10/2.54}
+# 豆腐化した文字をfallback (最後の拠り所) で補完する
+fallback_text <- "This is English, この文は日本語です 🚀"
+
+ggplot() + theme(aspect.ratio = 1/2)
+    geom_text(aes(x = 0, y = 1, label = fallback_text, family = "Arial"),
+              size = 3.5)
+```
+
+- [fontregistererの作者のページ](https://ill-identified.hatenablog.com/entry/2021/09/10/231230)
+  に日本語フォント周りの情報が色々まとまっています.
+
