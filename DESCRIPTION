@@ -1,5 +1,5 @@
 Package: frabento
-Title: Provide assets for FRA's job
+Title: FRAgmentary BENri TOols (assets)
 Version: 0.1.0
 Authors@R: 
     person(given = "Junji",
@@ -7,7 +7,7 @@ Authors@R:
            role = c("aut", "cre"),
            email = "j.kinoshita8802@gmail.com",
            comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: This package aims to provide functions to overcome (top-down) demands trivial but annoying.
+Description: This package aims to provide assets to overcome demands trivial but annoying.
 License: GPL (>= 3)
 Encoding: UTF-8
 LazyData: true
@@ -18,21 +18,22 @@ Remotes:
     hadley/emo
 Suggests: 
     covr,
-    ggtext,
-    patchwork,
     ggh4x,
-    tidyverse,
+    ggtext,
     knitr,
+    patchwork,
+    ragg,
     rmarkdown,
-    testthat (>= 3.0.0)
+    testthat (>= 3.0.0),
+    tidyverse
 Config/testthat/edition: 3
 Imports: 
-    magrittr,
-    ggplot2,
-    scales,
-    stringr,
+    dplyr,
     foreach,
+    ggplot2,
     htmltools,
-    dplyr
+    magrittr,
+    scales,
+    stringr
 URL: https://github.com/JK-junkin/frabento
 VignetteBuilder: knitr
