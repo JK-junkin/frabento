@@ -6,11 +6,12 @@
 [![R-CMD-check](https://github.com/JK-junkin/frabento/workflows/R-CMD-check/badge.svg)](https://github.com/JK-junkin/frabento/actions)
 <!-- badges: end -->
 
-`frabento` provides assets for FRA's job using R language.
+`frabento` provides fragmentary assets for R language mainly in ggplot visualization.
+The package name is an abbreviation of FRAgmentary BENri TOols. (いちおう FRA も掛けてます)
 
 ## インストール
 
-このページ (リポジトリ) から`frabento`パッケージの開発およびリリースバージョンを取得できます.
+このページ (リポジトリ) から開発版およびリリース版を取得できます.
 
 ``` r
 # installation
