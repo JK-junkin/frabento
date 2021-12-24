@@ -9,7 +9,7 @@ repo:
 destinatio: docs
 
 reference:
-- title: Use with facet_*
+- title: Use with facet_*()
   desc: >
 - contents:
   - starts_with("coord_")
@@ -22,5 +22,4 @@ reference:
 - title: Return values
   desc: >
 - contents:
-  - -starts_with("label_")
-  - -starts_with("coord_")
+  - -starts_with("coord_|label_")
