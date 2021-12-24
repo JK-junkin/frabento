@@ -134,7 +134,7 @@ p0 + pm1 + plot_spacer() + pm2 + plot_layout(ncol = 2, byrow = TRUE)
   fallbackのフォントをどう指定したらよいかがわかりませんが, 指定できるのであれば
   これ以上のパッケージはないと思います. 今後の動向に注目です.
 
-```{r ragg, fig.width = 10/2.54}
+```{r ragg, fig.width = 10/2.54, fig.asp = 1/2}
 # 豆腐化した文字をfallback (最後の拠り所) で補完する
 fallback_text <- "This is English, この文は日本語です 🚀"
 
