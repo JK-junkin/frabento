@@ -16,4 +16,6 @@ test_that("makeXlColAlphabet()", {
     expect_message(makeXlColAlphabet(len = 10, start = 2), "B, C, ..., J, K are gonna return.")
     expect_message(makeXlColAlphabet(len = 10, start = "B"), "B, C, ..., J, K are gonna return.")
     expect_message(makeXlColAlphabet(len = 10, start = "b"), "B, C, ..., J, K are gonna return.")
+
+    expect_equal(makeXlColAlphabet(fl = TRUE), c("A", "ZZ"), ignore_attr = TRUE)
 })

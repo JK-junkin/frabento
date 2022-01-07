@@ -3,9 +3,10 @@
 #' @param nchar A number of combined characters, Default: 2
 #' @param len Length (size) of the output vector, Default: NULL
 #' @param start Index or character at start, Default: 1 (is 'A'). `start` larger than `len` will return NA.
+#' @param fl show only first and last character, Default: FALSE
 #' @return A character vector.
 #' @details No description.
-#' @examples 
+#' @examples
 #' \dontrun{
 #' if(interactive()){
 #' makeXlColAlphabet(nchar = 1)
@@ -21,7 +22,7 @@
 #' @importFrom dplyr case_when
 #' @importFrom utils head tail
 #' @export 
-makeXlColAlphabet <- function(nchar = 2L, len = NULL, start = 1L) {
+makeXlColAlphabet <- function(nchar = 2L, len = NULL, start = 1L, fl = FALSE) {
 
     i <- NULL # for R CMD CHECK: no visible binding for global variable
     x <- foreach::foreach(i = seq_len(nchar), .combine = "c") %do% {
@@ -31,7 +32,7 @@ makeXlColAlphabet <- function(nchar = 2L, len = NULL, start = 1L) {
     if(nchar <= 0) stop("'nchar' should be greater than or equal to (GTE) 1.")
     if(nchar > 3) stop("'nchar' greater than (GT) 3 is not supported.")
 
-    if(is.character(start)) start <- stringr::str_which(toupper(start), x) 
+    if(is.character(start)) start <- stringr::str_which(toupper(start), x)
     if(start < 1) stop("'start' should be greater than 0.")
 
     if(is.null(len)) {
@@ -43,7 +44,12 @@ makeXlColAlphabet <- function(nchar = 2L, len = NULL, start = 1L) {
     res <- x[start:(len + start - 1L)]
     message(paste(head(res, n = 2), collapse = ", "), ", ..., ",
             paste(tail(res, n = 2), collapse = ", "), " are gonna return.")
-    return(res)
+
+    if(fl) {
+        return(c(head(res, n = 1), tail(res, n = 1)))
+    } else {
+        return(res)
+    }
 }
 
 # sinew::makeOxygen(makeXlColAlphabet)
