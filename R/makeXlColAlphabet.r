@@ -42,12 +42,11 @@ makeXlColAlphabet <- function(nchar = 2L, len = NULL, start = 1L, fl = FALSE) {
     }
 
     res <- x[start:(len + start - 1L)]
-    message(paste(head(res, n = 2), collapse = ", "), ", ..., ",
-            paste(tail(res, n = 2), collapse = ", "), " are gonna return.")
-
     if(fl) {
         return(c(head(res, n = 1), tail(res, n = 1)))
     } else {
+        message(paste(head(res, n = 2), collapse = ", "), ", ..., ",
+                paste(tail(res, n = 2), collapse = ", "), " are gonna return.")
         return(res)
     }
 }
