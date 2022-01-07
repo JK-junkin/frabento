@@ -11,7 +11,7 @@
 #' if(interactive()){
 #' makeXlColAlphabet(nchar = 1)
 #' makeXlColAlphabet(len = 10, start = 3)
-#' makeXlColAlphabet(len = 1978:2020, start = "B")
+#' makeXlColAlphabet(len = length(1978:2020), start = "B", fl = TRUE)
 #'  }
 #' }
 #' @seealso 
