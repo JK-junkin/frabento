@@ -18,6 +18,7 @@ Remotes:
     hadley/emo
 Suggests: 
     devtools,
+    pkgdown,
     covr,
     ggh4x,
     ggtext,
