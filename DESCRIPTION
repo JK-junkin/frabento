@@ -17,6 +17,7 @@ Remotes:
     Gedevan-Aleksizde/fontregisterer,
     hadley/emo
 Suggests: 
+    devtools,
     covr,
     ggh4x,
     ggtext,
