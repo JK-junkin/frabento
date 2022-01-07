@@ -4,14 +4,16 @@
 \alias{makeXlColAlphabet}
 \title{Make Microsoft Excel's alphabet column names}
 \usage{
-makeXlColAlphabet(nchar = 2L, len = NULL, start = 1L)
+makeXlColAlphabet(nchar = 2L, len = NULL, start = 1L, fl = FALSE)
 }
 \arguments{
 \item{nchar}{A number of combined characters, Default: 2}
 
 \item{len}{Length (size) of the output vector, Default: NULL}
 
-\item{start}{Index at start, Default: 1. When 'start' = 1 (default) is "A"; 'start' = 2 is "B", for example.}
+\item{start}{Index or character at start, Default: 1 (is 'A'). \code{start} larger than \code{len} will return NA.}
+
+\item{fl}{show only first and last character, Default: FALSE}
 }
 \value{
 A character vector.
@@ -27,6 +29,7 @@ No description.
 if(interactive()){
 makeXlColAlphabet(nchar = 1)
 makeXlColAlphabet(len = 10, start = 3)
+makeXlColAlphabet(len = 1978:2020, start = "B")
  }
 }
 }
