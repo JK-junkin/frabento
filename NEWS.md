@@ -1,7 +1,7 @@
 # frabento 0.1.1
-Add a new function!
-
-- kurai_ja()
+1. Add a new function!
+    - kurai_ja()
+2. Change output format of `makeXlColAlphabet()`
 
 # frabento 0.1.0
 First development version! Below functions are now available.
