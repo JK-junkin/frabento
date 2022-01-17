@@ -15,6 +15,7 @@ knitr::opts_chunk$set(
   dpi = 96,
   dev = "ragg_png"
 )
+library(emo)
 ```
 
 ## はじめに
