@@ -19,6 +19,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -31,18 +33,12 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">frabento</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.2</span>
       </span>
     </div>
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-<li>
-  <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
@@ -73,7 +69,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/JK-junkin/frabento/">
+  <a href="https://github.com/JK-junkin/frabento/" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -88,78 +84,82 @@
 
       
 
-      </header><script src="coord_panel_ranges_files/header-attrs-2.11/header-attrs.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>ggplot: ファセットグラフのパネル別ズーム</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/JK-junkin/frabento/blob/HEAD/vignettes/coord_panel_ranges.Rmd"><code>vignettes/coord_panel_ranges.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/JK-junkin/frabento/blob/HEAD/vignettes/coord_panel_ranges.Rmd" class="external-link"><code>vignettes/coord_panel_ranges.Rmd</code></a></small>
       <div class="hidden name"><code>coord_panel_ranges.Rmd</code></div>
 
     </div>
 
     
     
-<div id="はじめに" class="section level2">
-<h2 class="hasAnchor">
-<a href="#%E3%81%AF%E3%81%98%E3%82%81%E3%81%AB" class="anchor"></a>はじめに</h2>
+<div class="section level2">
+<h2 id="はじめに">はじめに<a class="anchor" aria-label="anchor" href="#%E3%81%AF%E3%81%98%E3%82%81%E3%81%AB"></a>
+</h2>
 <ul>
 <li>
-<code>ggplot2</code> でファセットグラフを描いた際, このパネルだけズームしたい, と思うことがあります.</li>
-<li>そこで, ファセットグラフの任意のパネルをズームする関数 <code><a href="../reference/coord_panel_ranges.html">frabento::coord_panel_ranges()</a></code> を作ってみました.</li>
-<li>なお, この関数はWEB上にあった<a href="https://andburch.github.io/ggplot_facets/">記事1</a>と <a href="https://stackoverflow.com/questions/63550588/ggplot2coord-cartesian-on-facets">記事2</a>を参考にほぼそのまま転用したものとなります. ご承知おきください.</li>
+<code>ggplot2</code> でファセットグラフを描いた際,
+このパネルだけズームしたい, と思うことがあります.</li>
+<li>そこで, ファセットグラフの任意のパネルをズームする関数
+<code><a href="../reference/coord_panel_ranges.html">frabento::coord_panel_ranges()</a></code> を作ってみました.</li>
+<li>なお, この関数はWEB上にあった<a href="https://andburch.github.io/ggplot_facets/" class="external-link">記事1</a>と <a href="https://stackoverflow.com/questions/63550588/ggplot2coord-cartesian-on-facets" class="external-link">記事2</a>を参考にほぼそのまま転用したものとなります.
+ご承知おきください.</li>
 </ul>
 </div>
-<div id="使用例" class="section level2">
-<h2 class="hasAnchor">
-<a href="#%E4%BD%BF%E7%94%A8%E4%BE%8B" class="anchor"></a>使用例</h2>
+<div class="section level2">
+<h2 id="使用例">使用例<a class="anchor" aria-label="anchor" href="#%E4%BD%BF%E7%94%A8%E4%BE%8B"></a>
+</h2>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/JK-junkin/frabento">frabento</a></span><span class="op">)</span>       <span class="co"># このパッケージ</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span>      <span class="co"># ggplot2とtidyなデータハンドリング</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://patchwork.data-imaginist.com">patchwork</a></span><span class="op">)</span>      <span class="co"># ggplotを簡単, キレイにレイアウト</span></code></pre></div>
-<div id="基本的な使用例" class="section level3">
-<h3 class="hasAnchor">
-<a href="#%E5%9F%BA%E6%9C%AC%E7%9A%84%E3%81%AA%E4%BD%BF%E7%94%A8%E4%BE%8B" class="anchor"></a>基本的な使用例</h3>
-<p>データセット<code>iris</code> (Edgar Anderson’s Iris Data) を例に, ファセットグラフを 描いてみます.</p>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/JK-junkin/frabento" class="external-link">frabento</a></span><span class="op">)</span>       <span class="co"># このパッケージ</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org" class="external-link">tidyverse</a></span><span class="op">)</span>      <span class="co"># ggplot2とtidyなデータハンドリング</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://patchwork.data-imaginist.com" class="external-link">patchwork</a></span><span class="op">)</span>      <span class="co"># ggplotを簡単, キレイにレイアウト</span></code></pre></div>
+<div class="section level3">
+<h3 id="基本的な使用例">基本的な使用例<a class="anchor" aria-label="anchor" href="#%E5%9F%BA%E6%9C%AC%E7%9A%84%E3%81%AA%E4%BD%BF%E7%94%A8%E4%BE%8B"></a>
+</h3>
+<p>データセット<code>iris</code> (Edgar Anderson’s Iris Data) を例に,
+ファセットグラフを 描いてみます.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme_get.html">theme_set</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_linedraw</a></span><span class="op">(</span>base_family <span class="op">=</span> <span class="st">"Helvetica"</span>, base_line_size <span class="op">=</span> <span class="fl">0.3</span><span class="op">)</span> <span class="op">+</span>
-          <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>aspect.ratio <span class="op">=</span> <span class="fl">1</span><span class="op">/</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span>
+<code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme_get.html" class="external-link">theme_set</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_linedraw</a></span><span class="op">(</span>base_family <span class="op">=</span> <span class="st">"Helvetica"</span>, base_line_size <span class="op">=</span> <span class="fl">0.3</span><span class="op">)</span> <span class="op">+</span>
+          <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>aspect.ratio <span class="op">=</span> <span class="fl">1</span><span class="op">/</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span>
 
 <span class="co"># base plot</span>
-<span class="va">g</span> <span class="op">&lt;-</span> <span class="va">iris</span> <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span>
-    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">Sepal.Length</span>, y <span class="op">=</span> <span class="va">Sepal.Width</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>color <span class="op">=</span> <span class="va">Species</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_tile.html">geom_rect</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">.</span>  <span class="op"><a href="../reference/%&gt;%.html">%&gt;%</a></span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">Species</span> <span class="op">==</span> <span class="st">"versicolor"</span><span class="op">)</span>,
+<span class="va">g</span> <span class="op">&lt;-</span> <span class="va">iris</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">Sepal.Length</span>, y <span class="op">=</span> <span class="va">Sepal.Width</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>color <span class="op">=</span> <span class="va">Species</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_tile.html" class="external-link">geom_rect</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">.</span>  <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Species</span> <span class="op">==</span> <span class="st">"versicolor"</span><span class="op">)</span>,
               xmin <span class="op">=</span> <span class="fl">5.5</span>, xmax <span class="op">=</span> <span class="fl">6.5</span>, ymin <span class="op">=</span> <span class="fl">2.5</span>, ymax <span class="op">=</span> <span class="fl">3</span>,
               color <span class="op">=</span> <span class="st">"red"</span>, size <span class="op">=</span> <span class="fl">1</span>, fill <span class="op">=</span> <span class="cn">NA</span><span class="op">)</span> <span class="op">+</span>
-    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span><span class="op">(</span><span class="op">~</span> <span class="va">Species</span>, scale <span class="op">=</span> <span class="st">"free"</span>, ncol <span class="op">=</span> <span class="fl">2</span>, dir <span class="op">=</span> <span class="st">"h"</span><span class="op">)</span> <span class="op">+</span>
-    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.75</span>, <span class="fl">0.25</span><span class="op">)</span><span class="op">)</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html" class="external-link">facet_wrap</a></span><span class="op">(</span><span class="op">~</span> <span class="va">Species</span>, scale <span class="op">=</span> <span class="st">"free"</span>, ncol <span class="op">=</span> <span class="fl">2</span>, dir <span class="op">=</span> <span class="st">"h"</span><span class="op">)</span> <span class="op">+</span>
+    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.75</span>, <span class="fl">0.25</span><span class="op">)</span><span class="op">)</span>
 
 <span class="co"># zoom in versicolor panel (this is second panel)</span>
-<span class="va">gz</span> <span class="op">&lt;-</span> <span class="va">g</span> <span class="op">+</span> <span class="fu"><a href="../reference/coord_panel_ranges.html">coord_panel_ranges</a></span><span class="op">(</span>panel_ranges <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>
-    <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="cn">NULL</span><span class="op">)</span>,
-    <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">5.4</span>, <span class="fl">6.6</span><span class="op">)</span>, y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2.4</span>, <span class="fl">3.1</span><span class="op">)</span><span class="op">)</span>,
-    <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="cn">NULL</span><span class="op">)</span>
+<span class="va">gz</span> <span class="op">&lt;-</span> <span class="va">g</span> <span class="op">+</span> <span class="fu"><a href="../reference/coord_panel_ranges.html">coord_panel_ranges</a></span><span class="op">(</span>panel_ranges <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>
+    <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="cn">NULL</span><span class="op">)</span>,
+    <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5.4</span>, <span class="fl">6.6</span><span class="op">)</span>, y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2.4</span>, <span class="fl">3.1</span><span class="op">)</span><span class="op">)</span>,
+    <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="cn">NULL</span><span class="op">)</span>
     <span class="op">)</span><span class="op">)</span>
 
 <span class="co"># patchwork</span>
 <span class="va">g</span> <span class="op">|</span> <span class="va">gz</span></code></pre></div>
 <p><img src="coord_panel_ranges_files/figure-html/ex1-1.png" width="755.905511811024"></p>
 </div>
-<div id="参考情報" class="section level3">
-<h3 class="hasAnchor">
-<a href="#%E5%8F%82%E8%80%83%E6%83%85%E5%A0%B1" class="anchor"></a>参考情報</h3>
+<div class="section level3">
+<h3 id="参考情報">参考情報<a class="anchor" aria-label="anchor" href="#%E5%8F%82%E8%80%83%E6%83%85%E5%A0%B1"></a>
+</h3>
 <ul>
 <li>
-<strong>【注目！】</strong> <code>ggh4x</code> が<a href="https://teunbrand.github.io/ggh4x/reference/facetted_pos_scales.html">別の解法</a>を実装しています.</li>
+<strong>【注目！】</strong> <code>ggh4x</code> が<a href="https://teunbrand.github.io/ggh4x/reference/facetted_pos_scales.html" class="external-link">別の解法</a>を実装しています.</li>
 </ul>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">g</span> <span class="op">+</span> <span class="fu">ggh4x</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ggh4x/man/facetted_pos_scales.html">facetted_pos_scales</a></span><span class="op">(</span>
-    x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">Species</span> <span class="op">==</span> <span class="st">"versicolor"</span> <span class="op">~</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_x_continuous</a></span><span class="op">(</span>limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">5.5</span>, <span class="fl">6.5</span><span class="op">)</span>,
-                                                          expand <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/expansion.html">expansion</a></span><span class="op">(</span>add <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.1</span>, <span class="fl">0.1</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>,
-    y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">Species</span> <span class="op">==</span> <span class="st">"versicolor"</span> <span class="op">~</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_y_continuous</a></span><span class="op">(</span>limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2.5</span>, <span class="fl">3.0</span><span class="op">)</span>,
-                                                          expand <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/expansion.html">expansion</a></span><span class="op">(</span>add <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.1</span>, <span class="fl">0.1</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
+<code class="sourceCode R"><span class="va">g</span> <span class="op">+</span> <span class="fu">ggh4x</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ggh4x/man/facetted_pos_scales.html" class="external-link">facetted_pos_scales</a></span><span class="op">(</span>
+    x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">Species</span> <span class="op">==</span> <span class="st">"versicolor"</span> <span class="op">~</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">scale_x_continuous</a></span><span class="op">(</span>limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5.5</span>, <span class="fl">6.5</span><span class="op">)</span>,
+                                                          expand <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/expansion.html" class="external-link">expansion</a></span><span class="op">(</span>add <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.1</span>, <span class="fl">0.1</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>,
+    y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">Species</span> <span class="op">==</span> <span class="st">"versicolor"</span> <span class="op">~</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">scale_y_continuous</a></span><span class="op">(</span>limits <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2.5</span>, <span class="fl">3.0</span><span class="op">)</span>,
+                                                          expand <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/expansion.html" class="external-link">expansion</a></span><span class="op">(</span>add <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.1</span>, <span class="fl">0.1</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
   <span class="op">)</span></code></pre></div>
 <p><img src="coord_panel_ranges_files/figure-html/unnamed-chunk-2-1.png" width="377.952755905512"></p>
 </div>
@@ -177,11 +177,14 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Junji Kinoshita.</p>
+  <p></p>
+<p>Developed by Junji Kinoshita.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a>
+2.0.1.</p>
 </div>
 
       </footer>
@@ -189,6 +192,8 @@
 
   
 
+
+  
 
   </body>
 </html>

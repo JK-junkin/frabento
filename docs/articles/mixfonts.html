@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">frabento</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.2</span>
       </span>
     </div>
 
@@ -90,7 +90,7 @@
       <h1 data-toc-skip>ggplot: ASCIIとマルチバイト文字の混在表記</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/JK-junkin/frabento/blob/HEAD/../../vignettes/mixfonts.Rmd" class="external-link"><code>../../vignettes/mixfonts.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/JK-junkin/frabento/blob/HEAD/vignettes/mixfonts.Rmd" class="external-link"><code>vignettes/mixfonts.Rmd</code></a></small>
       <div class="hidden name"><code>mixfonts.Rmd</code></div>
 
     </div>
@@ -101,12 +101,22 @@
 <h2 id="はじめに">はじめに<a class="anchor" aria-label="anchor" href="#%E3%81%AF%E3%81%98%E3%82%81%E3%81%AB"></a>
 </h2>
 <ul>
-<li>世間的には (?) 特殊な事例かもしれませんが, <code>ggplot2</code> で作図を行う時, 英数字と日本語が混ざったラベル—例えば<strong>CPUE (/1000網)</strong>—のフォントを英数字と日本語で 別にしてください, という指摘を受けることがあります.</li>
-<li>ggplotにおける図タイトルや軸ラベル, 凡例ラベル等のそれぞれのフォントは, <code><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">ggplot2::theme()</a></code>等を使って個別に変更することができます. しかし, <strong>一つの文字列内</strong>で 複数のフォントを混在させるのは, かなりの手間がかかります.</li>
-<li>そこで, その手間を少しでも楽にするために作成したのが <code><a href="../reference/mixfonts.html">mixfonts()</a></code> です.</li>
+<li>世間的には (?) 特殊な事例かもしれませんが, <code>ggplot2</code>
+で作図を行う時, 英数字と日本語が混ざったラベル—例えば<strong>CPUE
+(/1000網)</strong>—のフォントを英数字と日本語で 別にしてください,
+という指摘を受けることがあります.</li>
+<li>ggplotにおける図タイトルや軸ラベル,
+凡例ラベル等のそれぞれのフォントは,
+<code><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">ggplot2::theme()</a></code>等を使って個別に変更することができます.
+しかし, <strong>一つの文字列内</strong>で
+複数のフォントを混在させるのは, かなりの手間がかかります.</li>
+<li>そこで, その手間を少しでも楽にするために作成したのが
+<code><a href="../reference/mixfonts.html">mixfonts()</a></code> です.</li>
 </ul>
-<p><strong>【重要】</strong> <code>ragg</code> 📦 がフォント混在の問題を解決してくれるかもしれません！<br>
-下記の参考情報をご覧ください. いい仕事をしてくれる方々に心よりの感謝！！</p>
+<p><strong>【重要】</strong> <code>ragg</code> 📦
+がフォント混在の問題を解決してくれるかもしれません！<br>
+下記の参考情報をご覧ください.
+いい仕事をしてくれる方々に心よりの感謝！！</p>
 </div>
 <div class="section level2">
 <h2 id="使用例">使用例<a class="anchor" aria-label="anchor" href="#%E4%BD%BF%E7%94%A8%E4%BE%8B"></a>
@@ -122,7 +132,9 @@
 <div class="section level3">
 <h3 id="基本的な使用例-軸タイトル">基本的な使用例: 軸タイトル<a class="anchor" aria-label="anchor" href="#%E5%9F%BA%E6%9C%AC%E7%9A%84%E3%81%AA%E4%BD%BF%E7%94%A8%E4%BE%8B-%E8%BB%B8%E3%82%BF%E3%82%A4%E3%83%88%E3%83%AB"></a>
 </h3>
-<p><code><a href="../reference/mixfonts.html">mixfonts()</a></code>では, デフォルトのASCII文字フォントを<strong>Arial</strong>, マルチバイト文字フォントを<strong>MS Gothic</strong>にしています.</p>
+<p><code><a href="../reference/mixfonts.html">mixfonts()</a></code>では,
+デフォルトのASCII文字フォントを<strong>Arial</strong>,
+マルチバイト文字フォントを<strong>MS Gothic</strong>にしています.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme_get.html" class="external-link">theme_set</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_linedraw</a></span><span class="op">(</span>base_family <span class="op">=</span> <span class="st">"MS Gothic"</span><span class="op">)</span> <span class="op">+</span>
           <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>aspect.ratio <span class="op">=</span> <span class="fl">1</span><span class="op">/</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span> <span class="co"># アスペクト(縦横)比</span>
@@ -144,7 +156,8 @@
 <span class="co"># use patchwork</span>
 <span class="va">g</span> <span class="op">|</span> <span class="va">gm</span></code></pre></div>
 <p><img src="mixfonts_files/figure-html/eg1-1.png" width="377.952755905512"></p>
-<p>フォントを変更してみます. <code>fontregisterer</code> 📦 が威力を発揮します.</p>
+<p>フォントを変更してみます. <code>fontregisterer</code> 📦
+が威力を発揮します.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">gm1</span> <span class="op">&lt;-</span> <span class="va">gm</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>y <span class="op">=</span> <span class="fu"><a href="../reference/mixfonts.html">mixfonts</a></span><span class="op">(</span><span class="st">"CPUE (/1000網)"</span>, asciifont <span class="op">=</span> <span class="st">"Cambria"</span><span class="op">)</span><span class="op">)</span>
 <span class="va">gm2</span> <span class="op">&lt;-</span> <span class="va">gm</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>y <span class="op">=</span> <span class="fu"><a href="../reference/mixfonts.html">mixfonts</a></span><span class="op">(</span><span class="st">"CPUE (/1000網)"</span>, mbytefont <span class="op">=</span> <span class="st">"Meiryo"</span><span class="op">)</span><span class="op">)</span>
@@ -206,8 +219,13 @@
 <h3 id="参考情報">参考情報<a class="anchor" aria-label="anchor" href="#%E5%8F%82%E8%80%83%E6%83%85%E5%A0%B1"></a>
 </h3>
 <ul>
-<li><p>類似した問題は <a href="https://stackoverflow.com/questions/52852882/use-different-font-sizes-for-different-portions-of-text-in-ggplot2-title" class="external-link">stack overflow</a> においてすでに解決策が提示されています. これにインスピレーションを受け, この関数を作成しました.</p></li>
-<li><p><a href="https://www.tidyverse.org/blog/2021/02/modern-text-features/" class="external-link"><strong>ragg</strong>の紹介ブログ</a>: fallbackのフォントをどう指定したらよいかがわかりませんが, 指定できるのであれば これ以上のパッケージはないと思います. 今後の動向に注目です.</p></li>
+<li><p>類似した問題は <a href="https://stackoverflow.com/questions/52852882/use-different-font-sizes-for-different-portions-of-text-in-ggplot2-title" class="external-link">stack
+overflow</a> においてすでに解決策が提示されています.
+これにインスピレーションを受け, この関数を作成しました.</p></li>
+<li><p><a href="https://www.tidyverse.org/blog/2021/02/modern-text-features/" class="external-link"><strong>ragg</strong>の紹介ブログ</a>:
+fallbackのフォントをどう指定したらよいかがわかりませんが,
+指定できるのであれば これ以上のパッケージはないと思います.
+今後の動向に注目です.</p></li>
 </ul>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># 豆腐化した文字をfallback (最後の拠り所) で補完する</span>
@@ -219,7 +237,8 @@
 <p><img src="mixfonts_files/figure-html/ragg-1.png" width="377.952755905512"></p>
 <ul>
 <li>
-<a href="https://ill-identified.hatenablog.com/entry/2021/09/10/231230" class="external-link">fontregistererの作者のページ</a> に日本語フォント周りの情報が色々まとまっています.</li>
+<a href="https://ill-identified.hatenablog.com/entry/2021/09/10/231230" class="external-link">fontregistererの作者のページ</a>
+に日本語フォント周りの情報が色々まとまっています.</li>
 </ul>
 </div>
 </div>
@@ -242,7 +261,8 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a>
+2.0.1.</p>
 </div>
 
       </footer>
