@@ -50,4 +50,3 @@ tibble::tibble(year =  -6000:1979, haba = treering) \%>\%
  }
 }
 }
-\keyword{force_all}

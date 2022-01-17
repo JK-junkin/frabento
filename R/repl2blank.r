@@ -63,12 +63,12 @@ repl2blank <-
 #'  }
 #' }
 #' @rdname label_repl2blank
-#' @keywords force_all
 #' @export
 label_repl2blank <-
     function(nskip = 1, first = FALSE, last = FALSE, inverse = FALSE,
              ptime = FALSE, ftime = "%Y-%m-%d") {
-    scales:::force_all(nskip, first, last, inverse)
+    force_all <- function(...) { list(...) }
+    force_all(nskip, first, last, inverse)
     if (ptime) {
         function(x) {
             a <- repl2blank(vec = x, nskip = nskip, first = first,
