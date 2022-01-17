@@ -1,12 +1,12 @@
 #' @title Convert numbers as expressions of exponential format
 #' @description Modify input numbers to expression class of exponential format like `expression(1.35~'×'~10^{4})`.
 #' @param x numeric vector.
-#' @param digits a number of digits before `cat("\u00d7")`. Default: 3
+#' @param digits a number of digits before `\\u00d7`. Default: 3
 #' @param scale a number to multiply x. Default: 1.
 #' @param prefix a character string to paste just before x. Default: ''.
 #' @param suffix a character string to paste just after x. Default: ''.
 #' @param decimal.mark a character string to use decimal mark, Default: '.'.
-#' @param trim: Logical, if ‘FALSE’, values are right-justified to a common
+#' @param trim Logical, if ‘FALSE’, values are right-justified to a common
 #' width (see ‘base::format()’). Default: TRUE.
 #' @param ... extra arguments passed to `scientific()`.
 #' @return An expression
@@ -42,12 +42,12 @@ expfn <- function(x, digits = 3, scale = 1, prefix = "", suffix = "",
 #' @title Label exponential format
 #' @description Return functions to display exponential format expression where
 #' `expfn` works internally.
-#' @param digits a number of digits before \u00d7. Default: 3
+#' @param digits a number of digits before `\\u00d7`. Default: 3
 #' @param scale a number to multiply x. Default: 1.
 #' @param prefix a character string to paste just before x. Default: ''.
 #' @param suffix a character string to paste just after x. Default: ''.
 #' @param decimal.mark a character string to use decimal mark, Default: '.'.
-#' @param trim: Logical, if ‘FALSE’, values are right-justified to a common
+#' @param trim Logical, if ‘FALSE’, values are right-justified to a common
 #' width (see ‘base::format()’). Default: TRUE.
 #' @param ... extra arguments passed to `scientific()`.
 #' @return A function

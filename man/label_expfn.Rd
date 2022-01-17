@@ -15,7 +15,7 @@ label_expfn(
 )
 }
 \arguments{
-\item{digits}{a number of digits before \u00d7. Default: 3}
+\item{digits}{a number of digits before \verb{\\\\u00d7}. Default: 3}
 
 \item{scale}{a number to multiply x. Default: 1.}
 
@@ -25,10 +25,10 @@ label_expfn(
 
 \item{decimal.mark}{a character string to use decimal mark, Default: '.'.}
 
-\item{...}{extra arguments passed to \code{scientific()}.}
-
-\item{trim:}{Logical, if ‘FALSE’, values are right-justified to a common
+\item{trim}{Logical, if ‘FALSE’, values are right-justified to a common
 width (see ‘base::format()’). Default: TRUE.}
+
+\item{...}{extra arguments passed to \code{scientific()}.}
 }
 \value{
 A function
