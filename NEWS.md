@@ -1,3 +1,8 @@
+# frabento 0.1.2
+1. Add new functions!
+    - expfn()
+    - label_expfn()
+
 # frabento 0.1.1
 1. Add a new function!
     - kurai_ja()
