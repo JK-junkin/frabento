@@ -4,10 +4,11 @@
 \alias{makeXlColAlphabet}
 \title{Make Microsoft Excel's alphabet column names}
 \usage{
-makeXlColAlphabet(start = 1L, len = NULL, nchar = 2L, print_all = FALSE)
+makeXlColAlphabet(start = NULL, len = NULL, nchar = 2L, print_all = FALSE)
 }
 \arguments{
-\item{start}{Index or character at start, Default: 1 (is 'A'). \code{start} larger than \code{len} will return NA.}
+\item{start}{Index or character at start, Default: NULL (but 'A' is automatically
+assigned to). \code{start} larger than \code{len} will return NA.}
 
 \item{len}{Length (size) of the output vector, Default: NULL}
 
