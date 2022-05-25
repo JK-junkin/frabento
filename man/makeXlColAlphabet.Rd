@@ -7,8 +7,8 @@
 makeXlColAlphabet(start = NULL, len = NULL, nchar = 2L, print_all = FALSE)
 }
 \arguments{
-\item{start}{Index or character at start, Default: NULL (but 'A' is automatically
-assigned to). \code{start} larger than \code{len} will return NA.}
+\item{start}{Index or character at start, Default: NULL (to which 'A' is automatically
+assigned). \code{start} larger than \code{len} will return NA.}
 
 \item{len}{Length (size) of the output vector, Default: NULL}
 
