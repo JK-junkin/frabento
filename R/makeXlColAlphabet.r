@@ -115,7 +115,8 @@ index2abc <- function(num, nchar = NULL) {
 #' @examples 
 #' \dontrun{
 #' if(interactive()){
-#'  #EXAMPLE1
+#' abc2index(letters)
+#' abc2index(c("a", "a"))
 #'  }
 #' }
 #' @seealso 
@@ -133,7 +134,7 @@ abc2index <- function(abc, nchar = NULL) {
     }
 
     foreach::foreach(i = abc, .combine = "c") %do% {
-        stringr::str_which(x, paste0("^", toupper(abc), "$"))
+        stringr::str_which(x, paste0("^", toupper(i), "$"))
     }
 }
 
