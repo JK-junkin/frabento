@@ -3,7 +3,7 @@ library(frabento)
 test_that("makeXlColAlphabet()", {
     expect_error(makeXlColAlphabet(nchar = -1))
     expect_error(makeXlColAlphabet(nchar = 0))
-    expect_error(makeXlColAlphabet(nchar = 4))
+    expect_error(makeXlColAlphabet(nchar = 5))
     expect_error(makeXlColAlphabet(start = 0))
     expect_error(makeXlColAlphabet(start = -1))
     expect_error(makeXlColAlphabet(start = 1000))
