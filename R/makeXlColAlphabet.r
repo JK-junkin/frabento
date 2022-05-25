@@ -26,37 +26,22 @@
 makeXlColAlphabet <- function(start = NULL, len = NULL, nchar = 2L, 
                               print_all = FALSE) {
 
+    if (is.null(nchar)) { nchar <- 2; warning("2 was assigned to 'nchar'.") }
     if (nchar <= 0) stop("'nchar' should be greater than or equal to (GTE) 1.")
-    if (nchar > 3) stop("'nchar' greater than (GT) 3 is not supported.")
-    if (is.character(start) & nchar < nchar(start)) {
-        stop("Preset 'nchar = '", nchar, " is exceeded by `nchar(start)`.\n",
-             "Please confirm the 'start' string.")
-    }
+    if (nchar > 4)  stop("'nchar' greater than (GT) 4 is NOT recommended because it processes too much time.")
 
-    i <- NULL # for R CMD CHECK: no visible binding for global variable
-    x <- foreach::foreach(i = seq_len(nchar), .combine = "c") %do% {
-        do.call(paste0, expand.grid(rep(list(LETTERS), i))[rev(seq_len(i))])
-    }
+    if (is.character(start)) start <- abc2colnum(abc = start, nchar = nchar)
+    if (is.null(start))      start <- 1L
+    if (is.null(len))        len <- sum(26^seq_len(nchar)) - start + 1
 
-    if (is.character(start)) {
-        start <- stringr::str_which(x, paste0("^", toupper(start), "$"))
-    } else if (is.null(start)) {
-        start <- 1L
-    }
-
-    if (is.null(len)) {
-        len <- dplyr::case_when(nchar == 1 ~ 26^1 - start + 1,
-                                nchar == 2 ~ 26^1 + 26^2 - start + 1,
-                                nchar == 3 ~ 26^1 + 26^2 + 26^3 - start + 1)
-    }
-
-    if (start < 1) {
+    if (any(start < 1)) {
         stop("'start' should be greater than 0.")
-    } else if (len < 1) {
+    } else if (any(len < 1)) {
         stop("'start' should be less than ", len + start,
              " when 'nchar' is ", nchar, ".")
     }
 
+    x <- make_abcbase(nchar = nchar)
     res <- x[start:(len + start - 1L)]
     if (!print_all) {
         firlas <- unique(res[c(1, length(res))])
@@ -68,3 +53,30 @@ makeXlColAlphabet <- function(start = NULL, len = NULL, nchar = 2L,
 }
 
 # sinew::makeOxygen(makeXlColAlphabet)
+
+
+#' @title Convert alphabet to numeric order
+#' @description Internal function of makeXlColAlphabet
+#' @param abc character string
+#' @param nchar PARAM_DESCRIPTION, Default: 2
+#' @return OUTPUT_DESCRIPTION
+#' @details DETAILS
+#' @rdname abc2colnum
+#' @importFrom foreach foreach `%do%`
+#' @importFrom stringr str_which
+abc2colnum <- function(abc, nchar = NULL) {
+    if (nchar < max(nchar(abc), na.rm = TRUE)) {
+        stop("`max(nchar(abc))` exceeds preset 'nchar'(", nchar, "). Please confirm the balance of 'nchar' and 'abc' string.")
+    }
+
+    x <- make_abcbase(nchar = nchar)
+    stringr::str_which(x, paste0("^", toupper(abc), "$", collapse = "|"))
+}
+
+make_abcbase <- function(nchar = NULL) {
+    i <- NULL # for R CMD CHECK: no visible binding for global variable
+    foreach::foreach(i = seq_len(nchar), .combine = "c") %do% {
+        do.call(paste0, expand.grid(rep(list(LETTERS), i))[rev(seq_len(i))])
+    }
+}
+
