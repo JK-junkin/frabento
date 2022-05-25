@@ -1,8 +1,8 @@
 #' @title Make Microsoft Excel's alphabet column names
 #' @description Genarate a character vector such as "A" "B" ... "AA" "AB" ... "ZZZ".
-#' @param nchar A number of combined characters, Default: 2
-#' @param len Length (size) of the output vector, Default: NULL
 #' @param start Index or character at start, Default: 1 (is 'A'). `start` larger than `len` will return NA.
+#' @param len Length (size) of the output vector, Default: NULL
+#' @param nchar A number of combined characters, Default: 2
 #' @param print_all displays all characters to the console if TRUE. When FALSE (default), showing only the first and last characters with column numbers.
 #' @return A character vector.
 #' @details No description.
@@ -22,7 +22,7 @@
 #' @importFrom dplyr case_when
 #' @importFrom utils head tail
 #' @export 
-makeXlColAlphabet <- function(nchar = 2L, len = NULL, start = 1L,
+makeXlColAlphabet <- function(start = 1L, len = NULL, nchar = 2L, 
                               print_all = FALSE) {
 
     if (nchar <= 0) stop("'nchar' should be greater than or equal to (GTE) 1.")
