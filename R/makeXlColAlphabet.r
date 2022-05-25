@@ -26,11 +26,7 @@
 makeXlColAlphabet <- function(start = NULL, len = NULL, nchar = 2L, 
                               print_all = FALSE) {
 
-    if (is.null(nchar)) { nchar <- 2; warning("2 was assigned to 'nchar'.") }
-    if (nchar <= 0) stop("'nchar' should be greater than or equal to (GTE) 1.")
-    if (nchar > 4)  stop("'nchar' greater than (GT) 4 is NOT recommended because it processes too much time.")
-
-    if (is.character(start)) start <- abc2colnum(abc = start, nchar = nchar)
+    if (is.character(start)) start <- get_abcorder(abc = start, nchar = nchar)
     if (is.null(start))      start <- 1L
     if (is.null(len))        len <- sum(26^seq_len(nchar)) - start + 1
 
@@ -43,6 +39,7 @@ makeXlColAlphabet <- function(start = NULL, len = NULL, nchar = 2L,
 
     x <- make_abcbase(nchar = nchar)
     res <- x[start:(len + start - 1L)]
+
     if (!print_all) {
         firlas <- unique(res[c(1, length(res))])
         names(firlas) <- as.character(unique(c(start, start + len - 1)))
@@ -55,28 +52,32 @@ makeXlColAlphabet <- function(start = NULL, len = NULL, nchar = 2L,
 # sinew::makeOxygen(makeXlColAlphabet)
 
 
-#' @title Convert alphabet to numeric order
-#' @description Internal function of makeXlColAlphabet
-#' @param abc character string
-#' @param nchar PARAM_DESCRIPTION, Default: 2
-#' @return OUTPUT_DESCRIPTION
-#' @details DETAILS
-#' @rdname abc2colnum
-#' @importFrom foreach foreach `%do%`
-#' @importFrom stringr str_which
-abc2colnum <- function(abc, nchar = NULL) {
+get_abcorder <- function(abc, nchar = NULL) {
     if (nchar < max(nchar(abc), na.rm = TRUE)) {
-        stop("`max(nchar(abc))` exceeds preset 'nchar'(", nchar, "). Please confirm the balance of 'nchar' and 'abc' string.")
+        stop(paste("`max(nchar(abc))` exceeds preset 'nchar'(", nchar, ").",
+                   "Please confirm the balance of 'nchar' and 'abc' string."))
     }
 
     x <- make_abcbase(nchar = nchar)
     stringr::str_which(x, paste0("^", toupper(abc), "$", collapse = "|"))
 }
 
+
 make_abcbase <- function(nchar = NULL) {
+    if (is.null(nchar)) { nchar <- 2; warning("2 was assigned to 'nchar'.") }
+    if (nchar <= 0) stop("'nchar' should be greater than or equal to (GTE) 1.")
+    if (nchar > 4)  stop(paste("'nchar' greater than (GT) 4 is NOT recommended",
+                               "because it processes too much time."))
+
     i <- NULL # for R CMD CHECK: no visible binding for global variable
     foreach::foreach(i = seq_len(nchar), .combine = "c") %do% {
         do.call(paste0, expand.grid(rep(list(LETTERS), i))[rev(seq_len(i))])
     }
 }
 
+shift_abc <- function(start, n = 0) {
+    makeXlColAlphabet(start = start, len = 1, nchar = 3) %>%
+        names() %>% as.integer() %>%
+#     makeXlColAlphabet(start = . - 1, len = 2) # error
+        { makeXlColAlphabet(start = . - n, len = 1, nchar = 3) }
+}
