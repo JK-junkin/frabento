@@ -81,6 +81,33 @@ make_abcbase <- function(nchar = NULL) {
 
 #' @title FUNCTION_TITLE
 #' @description FUNCTION_DESCRIPTION
+#' @param num PARAM_DESCRIPTION
+#' @param nchar PARAM_DESCRIPTION, Default: NULL
+#' @return OUTPUT_DESCRIPTION
+#' @details DETAILS
+#' @examples 
+#' \dontrun{
+#' if(interactive()){
+#'  #EXAMPLE1
+#'  }
+#' }
+#' @rdname index2abc
+#' @export 
+index2abc <- function(num, nchar = NULL) {
+    x <- make_abcbase(nchar = nchar)
+
+    len <- length(x) # Never NA
+    if (len < max(num, na.rm = TRUE)) {
+        stop(paste("`max(num)` exceeds the length of alphabet base( N =",
+                   len, ").", "Please adjust (increase) 'nchar'."))
+    }
+    
+    if (any(num < 0)) num[num < 0] <- 0 
+    x[num]
+}
+
+#' @title FUNCTION_TITLE
+#' @description FUNCTION_DESCRIPTION
 #' @param abc PARAM_DESCRIPTION
 #' @param nchar PARAM_DESCRIPTION, Default: NULL
 #' @return OUTPUT_DESCRIPTION
@@ -105,34 +132,9 @@ abc2index <- function(abc, nchar = NULL) {
                    "Please adjust (increase) 'nchar'."))
     }
 
-    stringr::str_which(x, paste0("^", toupper(abc), "$", collapse = "|"))
-}
-
-#' @title FUNCTION_TITLE
-#' @description FUNCTION_DESCRIPTION
-#' @param num PARAM_DESCRIPTION
-#' @param nchar PARAM_DESCRIPTION, Default: NULL
-#' @return OUTPUT_DESCRIPTION
-#' @details DETAILS
-#' @examples 
-#' \dontrun{
-#' if(interactive()){
-#'  #EXAMPLE1
-#'  }
-#' }
-#' @rdname index2abc
-#' @export 
-index2abc <- function(num, nchar = NULL) {
-    x <- make_abcbase(nchar = nchar)
-
-    len <- length(x) # Never NA
-    if (len < max(num, na.rm = TRUE)) {
-        stop(paste("`max(num)` exceeds the length of alphabet base( N =",
-                   len, ").", "Please adjust (increase) 'nchar'."))
+    foreach::foreach(i = abc, .combine = "c") %do% {
+        stringr::str_which(x, paste0("^", toupper(abc), "$"))
     }
-    
-    if (any(num < 0)) num[num < 0] <- 0 
-    x[num]
 }
 
 #' @title FUNCTION_TITLE
