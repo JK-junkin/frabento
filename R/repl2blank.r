@@ -51,6 +51,7 @@ repl2blank <- function(vec, nskip = 1, first = FALSE, last = FALSE,
 #' @param first 1個目の値を空白にする, Default: FALSE. TRUEで強制的に空白にする. inverse = TRUE の時はTRUEで強制的に値を与える.
 #' @param last 最後の値を空白にする, Default: FALSE. TRUEで強制的に空白にする. inverse = TRUE の時はTRUEで強制的に値を与える.
 #' @param inverse 空白と非空白を逆転させる, Default: FALSE
+#' @param comma 3桁ごとにコンマをつける, Default: FALSE
 #' @param ptime Parse date-time type vector, Default: FALSE
 #' @param ftime Format of date-time, Default: '%Y-%m-%d'
 #' @return A function
@@ -67,26 +68,32 @@ repl2blank <- function(vec, nskip = 1, first = FALSE, last = FALSE,
 #'     geom_line(size = 0.2) +
 #'     scale_x_continuous(breaks = seq(-6000, 2000, by = 200),
 #'                        labels = label_repl2blank(nskip = 4))
+#'
+#' tibble::tibble(year =  -6000:1979, haba = treering) %>%
+#'     ggplot(aes(x = year, y = haba)) +
+#'     geom_line(size = 0.2) +
+#'     scale_x_continuous(breaks = seq(-6000, 2000, by = 200),
+#'                        labels = label_repl2blank(nskip = 4, comma = TRUE))
 #'  }
 #' }
 #' @rdname label_repl2blank
 #' @export
 label_repl2blank <-
-    function(nskip = 1, first = FALSE, last = FALSE, inverse = FALSE,
-             ptime = FALSE, ftime = "%Y-%m-%d") {
+    function(nskip = 1, first = FALSE, last = FALSE, inverse = FALSE, 
+             comma = FALSE, ptime = FALSE, ftime = "%Y-%m-%d") {
     force_all <- function(...) { list(...) }
-    force_all(nskip, first, last, inverse)
+    force_all(nskip, first, last, inverse, comma)
     if (ptime) {
         function(x) {
             a <- repl2blank(vec = x, nskip = nskip, first = first,
-                            last = last, inverse = inverse)
+                            last = last, inverse = inverse, comma = comma)
             a <- strftime(a, ftime)
             a[is.na(a)] <- ""
             a
         }
     } else {
         function(x) repl2blank(vec = x, nskip = nskip, first = first,
-                               last = last, inverse = inverse)
+                               last = last, inverse = inverse, comma = comma)
     }
 }
 

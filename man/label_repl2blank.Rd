@@ -9,6 +9,7 @@ label_repl2blank(
   first = FALSE,
   last = FALSE,
   inverse = FALSE,
+  comma = FALSE,
   ptime = FALSE,
   ftime = "\%Y-\%m-\%d"
 )
@@ -21,6 +22,8 @@ label_repl2blank(
 \item{last}{最後の値を空白にする, Default: FALSE. TRUEで強制的に空白にする. inverse = TRUE の時はTRUEで強制的に値を与える.}
 
 \item{inverse}{空白と非空白を逆転させる, Default: FALSE}
+
+\item{comma}{3桁ごとにコンマをつける, Default: FALSE}
 
 \item{ptime}{Parse date-time type vector, Default: FALSE}
 
@@ -47,6 +50,12 @@ tibble::tibble(year =  -6000:1979, haba = treering) \%>\%
     geom_line(size = 0.2) +
     scale_x_continuous(breaks = seq(-6000, 2000, by = 200),
                        labels = label_repl2blank(nskip = 4))
+
+tibble::tibble(year =  -6000:1979, haba = treering) \%>\%
+    ggplot(aes(x = year, y = haba)) +
+    geom_line(size = 0.2) +
+    scale_x_continuous(breaks = seq(-6000, 2000, by = 200),
+                       labels = label_repl2blank(nskip = 4, comma = TRUE))
  }
 }
 }
