@@ -1,6 +1,7 @@
 
 # devtools::install(here::here())
-devtools::load_all(here::here())
+devtools::load_all(here::here(), export_all = FALSE)
+devtools::document(here::here())
 ls("package:frabento")
 
 mixFonts(paste0(0:1, "歳"))
