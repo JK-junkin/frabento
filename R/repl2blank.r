@@ -1,10 +1,14 @@
 #' @title Replace string elements to blank at a certain interval
-#' @description ggplot作図の際に軸ラベルの一部を空白にすることで minor break のようにみせかける.
+#' @description ggplot作図の際に軸ラベルの一部を空白にすることで minor break の
+#' ようにみせかける.
 #' @param vec A character or an numeric vector. ラベルにする文字列/数値ベクトル
 #' @param nskip 何個置きに空白文字にするか, Default: 1.
-#' @param first 1個目の値を空白にする, Default: FALSE. TRUEで強制的に空白にする. inverse = TRUE の時はTRUEで強制的に値を与える.
-#' @param last 最後の値を空白にする, Default: FALSE. TRUEで強制的に空白にする. inverse = TRUE の時はTRUEで強制的に値を与える.
+#' @param first 1個目の値を空白にする, Default: FALSE. TRUEで強制的に空白にする
+#' . inverse = TRUE の時はTRUEで強制的に値を与える.
+#' @param last 最後の値を空白にする, Default: FALSE. TRUEで強制的に空白にする.
+#' inverse = TRUE の時はTRUEで強制的に値を与える.
 #' @param inverse 空白と非空白を逆転させる, Default: FALSE
+#' @param comma 3桁ごとにコンマをつける, Default: FALSE
 #' @return A character vector
 #' @details 例をご覧ください.
 #' @examples
@@ -19,8 +23,11 @@
 #' @rdname repl2blank
 #' @export
 #' @importFrom stringr str_detect
-repl2blank <-
-    function(vec, nskip = 1, first = FALSE, last = FALSE, inverse = FALSE) {
+repl2blank <- function(vec, nskip = 1, first = FALSE, last = FALSE, 
+                       inverse = FALSE, comma = FALSE) {
+
+    if (comma) vec <- comma(vec)
+
     org <- vec
     index <- seq_along(vec)
     resid <- c(1, index[index %% (nskip + 1) == 0] + 1)

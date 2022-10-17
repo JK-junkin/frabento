@@ -4,24 +4,36 @@
 \alias{repl2blank}
 \title{Replace string elements to blank at a certain interval}
 \usage{
-repl2blank(vec, nskip = 1, first = FALSE, last = FALSE, inverse = FALSE)
+repl2blank(
+  vec,
+  nskip = 1,
+  first = FALSE,
+  last = FALSE,
+  inverse = FALSE,
+  comma = FALSE
+)
 }
 \arguments{
 \item{vec}{A character or an numeric vector. ラベルにする文字列/数値ベクトル}
 
 \item{nskip}{何個置きに空白文字にするか, Default: 1.}
 
-\item{first}{1個目の値を空白にする, Default: FALSE. TRUEで強制的に空白にする. inverse = TRUE の時はTRUEで強制的に値を与える.}
+\item{first}{1個目の値を空白にする, Default: FALSE. TRUEで強制的に空白にする
+. inverse = TRUE の時はTRUEで強制的に値を与える.}
 
-\item{last}{最後の値を空白にする, Default: FALSE. TRUEで強制的に空白にする. inverse = TRUE の時はTRUEで強制的に値を与える.}
+\item{last}{最後の値を空白にする, Default: FALSE. TRUEで強制的に空白にする.
+inverse = TRUE の時はTRUEで強制的に値を与える.}
 
 \item{inverse}{空白と非空白を逆転させる, Default: FALSE}
+
+\item{comma}{3桁ごとにコンマをつける, Default: FALSE}
 }
 \value{
 A character vector
 }
 \description{
-ggplot作図の際に軸ラベルの一部を空白にすることで minor break のようにみせかける.
+ggplot作図の際に軸ラベルの一部を空白にすることで minor break の
+ようにみせかける.
 }
 \details{
 例をご覧ください.
