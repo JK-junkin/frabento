@@ -46,9 +46,11 @@ mixfonts <- function(strs, asciifont = "Arial", mbytefont = "MS Gothic") {
                                   .combine = "paste0") %do% {
             htmltools::span(l, style = paste0("font-family:\'", m, "\'"))
         }
-        stringr::str_replace_all(as.character(spans), "\n", "<br>") %>%
-            stringr::str_replace_all("(?<=\\>) ", "&nbsp;") %>%
-            stringr::str_replace_all(" (?=\\<)", "&nbsp;")
+        as.character(spans) %>%
+            stringi::stri_trans_nfkc() %>%
+            stringr::str_replace_all("\n", "<br>") %>%
+            stringr::str_replace_all("(?<=\\>) ", "&emsp;") %>%
+            stringr::str_replace_all(" (?=\\<)", "&emsp;")
     }
 }
 
