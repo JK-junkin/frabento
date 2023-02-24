@@ -14,13 +14,10 @@
 #' }
 #' @seealso 
 #'  \code{\link[stringr]{str_split}},\code{\link[stringr]{str_replace}}
-#'  \code{\link[foreach]{foreach}},\code{\link[foreach]{\%do\%}}
 #'  \code{\link[htmltools]{builder}}
 #' @rdname mixfonts
 #' @export 
-#' @importFrom stringr str_split str_replace_all
-#' @importFrom foreach foreach %do%
-#' @importFrom htmltools span
+#' @importFrom foreach %do%
 mixfonts <- function(strs, asciifont = "Arial", mbytefont = "MS Gothic") {
     s <- a <- i <- j <- k <- l <- m <- NULL # for R CMD CHECK
     foreach::foreach(s = strs, .combine = "c") %do% {
@@ -50,7 +47,11 @@ mixfonts <- function(strs, asciifont = "Arial", mbytefont = "MS Gothic") {
             stringi::stri_trans_nfkc() %>%
             stringr::str_replace_all("\n", "<br>") %>%
             stringr::str_replace_all("(?<=\\>) ", "&emsp;") %>%
-            stringr::str_replace_all(" (?=\\<)", "&emsp;")
+            stringr::str_replace_all(" (?=\\<)", "&emsp;") %>%
+            stringr::str_replace_all("_\\{", "<sub>") %>%
+            stringr::str_replace_all("\\^\\{", "<sup>") %>%
+            stringr::str_replace_all("(?<=<sub>[:alnum:]{0,30})\\}", "</sub>") %>%
+            stringr::str_replace_all("(?<=<sup>[:alnum:]{0,30})\\}", "</sup>")
     }
 }
 
