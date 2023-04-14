@@ -1,3 +1,9 @@
+# frabento 0.1.5
+- Add `shift` argument into `repl2blank()` and `label_repl2blank()`
+
+# frabento 0.1.4
+- Cope with super- and sub-script in `mixfonts()` and `label_mixfonts()`
+
 # frabento 0.1.3
 - Add `comma` argument into `repl2blank()` and `label_repl2blank()`
 

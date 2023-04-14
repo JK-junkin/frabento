@@ -32,6 +32,5 @@ if(interactive()){
 }
 \seealso{
 \code{\link[stringr]{str_split}},\code{\link[stringr]{str_replace}}
-\code{\link[foreach]{foreach}},\code{\link[foreach]{\%do\%}}
 \code{\link[htmltools]{builder}}
 }

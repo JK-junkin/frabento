@@ -3,6 +3,7 @@
 #' ようにみせかける.
 #' @param vec A character or an numeric vector. ラベルにする文字列/数値ベクトル
 #' @param nskip 何個置きに空白文字にするか, Default: 1.
+#' @param shift blankで置き換える位置を右にずらす. Default: 0.
 #' @param first 1個目の値を空白にする, Default: FALSE. TRUEで強制的に空白にする
 #' . inverse = TRUE の時はTRUEで強制的に値を与える.
 #' @param last 最後の値を空白にする, Default: FALSE. TRUEで強制的に空白にする.
@@ -23,13 +24,13 @@
 #' @rdname repl2blank
 #' @export
 #' @importFrom stringr str_detect
-repl2blank <- function(vec, nskip = 1, first = FALSE, last = FALSE, 
+repl2blank <- function(vec, nskip = 1, shift = 0, first = FALSE, last = FALSE, 
                        inverse = FALSE, comma = FALSE) {
 
     if (comma) vec <- comma(vec)
 
     org <- vec
-    index <- seq_along(vec)
+    index <- seq_along(vec) + (-shift)
     resid <- c(1, index[index %% (nskip + 1) == 0] + 1)
     
     vec[!(index %in% resid)] <- ""
