@@ -18,7 +18,7 @@ expfn works internally."><!-- mathjax --><script src="https://cdnjs.cloudflare.c
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">frabento</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.5</span>
       </span>
     </div>
 
@@ -27,7 +27,7 @@ expfn works internally."><!-- mathjax --><script src="https://cdnjs.cloudflare.c
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -74,38 +74,53 @@ expfn works internally."><!-- mathjax --><script src="https://cdnjs.cloudflare.c
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">label_expfn</span><span class="op">(</span>
-  digits <span class="op">=</span> <span class="fl">3</span>,
-  scale <span class="op">=</span> <span class="fl">1</span>,
-  prefix <span class="op">=</span> <span class="st">""</span>,
-  suffix <span class="op">=</span> <span class="st">""</span>,
-  decimal.mark <span class="op">=</span> <span class="st">"."</span>,
-  trim <span class="op">=</span> <span class="cn">TRUE</span>,
-  <span class="va">...</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">label_expfn</span><span class="op">(</span></span>
+<span>  digits <span class="op">=</span> <span class="fl">3</span>,</span>
+<span>  scale <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  prefix <span class="op">=</span> <span class="st">""</span>,</span>
+<span>  suffix <span class="op">=</span> <span class="st">""</span>,</span>
+<span>  decimal.mark <span class="op">=</span> <span class="st">"."</span>,</span>
+<span>  trim <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>digits</dt>
 <dd><p>a number of digits before <code>\\u00d7</code>. Default: 3</p></dd>
+
+
 <dt>scale</dt>
 <dd><p>a number to multiply x. Default: 1.</p></dd>
+
+
 <dt>prefix</dt>
 <dd><p>a character string to paste just before x. Default: ''.</p></dd>
+
+
 <dt>suffix</dt>
 <dd><p>a character string to paste just after x. Default: ''.</p></dd>
+
+
 <dt>decimal.mark</dt>
 <dd><p>a character string to use decimal mark, Default: '.'.</p></dd>
+
+
 <dt>trim</dt>
 <dd><p>Logical, if ‘FALSE’, values are right-justified to a common
 width (see ‘base::format()’). Default: TRUE.</p></dd>
+
+
 <dt>...</dt>
 <dd><p>extra arguments passed to <code>scientific()</code>.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A function</p>
+    
+
+<p>A function</p>
     </div>
     <div id="details">
     <h2>Details</h2>
@@ -114,11 +129,11 @@ width (see ‘base::format()’). Default: TRUE.</p></dd>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in"><span class="kw">if</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">{</span></span>
-<span class="r-in"> <span class="co">#EXAMPLE1</span></span>
-<span class="r-in"> <span class="op">}</span></span>
-<span class="r-in"><span class="op">}</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span><span class="kw">if</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">{</span></span></span>
+<span class="r-in"><span> <span class="co">#EXAMPLE1</span></span></span>
+<span class="r-in"><span> <span class="op">}</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -133,8 +148,7 @@ width (see ‘base::format()’). Default: TRUE.</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a>
-2.0.1.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

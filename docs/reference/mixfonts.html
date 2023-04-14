@@ -18,7 +18,7 @@ character(s) into a single string for use in ggplot."><!-- mathjax --><script sr
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">frabento</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.5</span>
       </span>
     </div>
 
@@ -27,7 +27,7 @@ character(s) into a single string for use in ggplot."><!-- mathjax --><script sr
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -74,21 +74,28 @@ character(s) into a single string for use in ggplot.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">mixfonts</span><span class="op">(</span><span class="va">strs</span>, asciifont <span class="op">=</span> <span class="st">"Arial"</span>, mbytefont <span class="op">=</span> <span class="st">"MS Gothic"</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">mixfonts</span><span class="op">(</span><span class="va">strs</span>, asciifont <span class="op">=</span> <span class="st">"Arial"</span>, mbytefont <span class="op">=</span> <span class="st">"MS Gothic"</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>strs</dt>
 <dd><p>A vector of character to be converted</p></dd>
+
+
 <dt>asciifont</dt>
 <dd><p>ASCII font family, Default: 'Arial'</p></dd>
+
+
 <dt>mbytefont</dt>
 <dd><p>Multi byte font family, Default: 'MS Gothic'</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>Character vector of HTML <em>span</em> tag.</p>
+    
+
+<p>Character vector of HTML <em>span</em> tag.</p>
     </div>
     <div id="details">
     <h2>Details</h2>
@@ -97,17 +104,16 @@ character(s) into a single string for use in ggplot.</p>
     <div id="see-also">
     <h2>See also</h2>
     <div class="dont-index"><p><code><a href="https://stringr.tidyverse.org/reference/str_split.html" class="external-link">str_split</a></code>,<code><a href="https://stringr.tidyverse.org/reference/str_replace.html" class="external-link">str_replace</a></code>
-<code><a href="https://rdrr.io/pkg/foreach/man/foreach.html" class="external-link">foreach</a></code>,<code><a href="https://rdrr.io/pkg/foreach/man/foreach.html" class="external-link">%do%</a></code>
-<code><a href="https://rdrr.io/pkg/htmltools/man/builder.html" class="external-link">builder</a></code></p></div>
+<code><a href="https://rstudio.github.io/htmltools/reference/builder.html" class="external-link">builder</a></code></p></div>
     </div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in"><span class="kw">if</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">{</span></span>
-<span class="r-in"> <span class="fu">mixfonts</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"全0歳魚"</span>, <span class="st">"仔魚を含まない\n0歳魚"</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"> <span class="op">}</span></span>
-<span class="r-in"><span class="op">}</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span><span class="kw">if</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">{</span></span></span>
+<span class="r-in"><span> <span class="fu">mixfonts</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"全0歳魚"</span>, <span class="st">"仔魚を含まない\n0歳魚"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span> <span class="op">}</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -122,8 +128,7 @@ character(s) into a single string for use in ggplot.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a>
-2.0.1.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>
