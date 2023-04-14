@@ -87,14 +87,14 @@ label_repl2blank <-
     force_all(nskip, first, last, inverse, comma)
     if (ptime) {
         function(x) {
-            a <- repl2blank(vec = x, nskip = nskip, first = first,
+            a <- repl2blank(vec = x, nskip = nskip, shift = shift, first = first,
                             last = last, inverse = inverse, comma = comma)
             a <- strftime(a, ftime)
             a[is.na(a)] <- ""
             a
         }
     } else {
-        function(x) repl2blank(vec = x, nskip = nskip, first = first,
+        function(x) repl2blank(vec = x, nskip = nskip, shift = shift, first = first,
                                last = last, inverse = inverse, comma = comma)
     }
 }
