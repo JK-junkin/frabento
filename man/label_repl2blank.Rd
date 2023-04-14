@@ -6,6 +6,7 @@
 \usage{
 label_repl2blank(
   nskip = 1,
+  shift = 0,
   first = FALSE,
   last = FALSE,
   inverse = FALSE,
@@ -16,6 +17,8 @@ label_repl2blank(
 }
 \arguments{
 \item{nskip}{何個置きに空白文字にするか, Default: 1.}
+
+\item{shift}{blankで置き換える位置を右にずらす. Default: 0.}
 
 \item{first}{1個目の値を空白にする, Default: FALSE. TRUEで強制的に空白にする. inverse = TRUE の時はTRUEで強制的に値を与える.}
 
