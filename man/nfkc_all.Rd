@@ -35,10 +35,10 @@ This is a dplyr-dependent preprocessing function
  tbl <- tibble::tibble(`列１（トン）` = "1.2\r\n1.3",
                        `列2 (kg) ` = " 2.2\n 2.3")
  nfkc_all(tbl)
- # remove white-spaces from all column names
+ # remove white-spaces (blanks) from all column names
  nfkc_all(tbl, remove_space_colnames = TRUE)
- # remove white-spaces from all contents
+ # remove white-spaces (blanks) from all contents
  nfkc_all(tbl, remove_space_contents = TRUE)
- # remove all white-spaces from .data
+ # remove all white-spaces (blanks) from .data
  nfkc_all(tbl, remove_space_colnames = TRUE, remove_space_contents = TRUE)
 }
