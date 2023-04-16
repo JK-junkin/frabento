@@ -1,3 +1,6 @@
+# frabento 0.1.6
+- Add a new function `nfkc_all()`.
+
 # frabento 0.1.5
 - Add `shift` argument into `repl2blank()` and `label_repl2blank()`
 

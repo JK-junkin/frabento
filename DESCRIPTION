@@ -1,6 +1,6 @@
 Package: frabento
 Title: FRAgmentary BENri TOols
-Version: 0.1.5
+Version: 0.1.6
 Authors@R: 
     person(given = "Junji",
            family = "Kinoshita",
@@ -31,7 +31,8 @@ Suggests:
     tibble,
     fontregisterer,
     emo,
-    testthat (>= 3.0.0)
+    testthat (>= 3.0.0),
+    stringi
 Config/testthat/edition: 3
 Imports: 
     purrr,
