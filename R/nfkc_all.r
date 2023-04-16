@@ -6,6 +6,8 @@
 #' column names. Default: FALSE.
 #' @param remove_space_contents If TRUE, remove all white spaces from all
 #' contents. Default: FALSE.
+#' @param coln_spc Space character to be removed in colnames. Default: [:blank:]
+#' @param cont_spc Space character to be removed in contents. Default: [:blank:]
 #' @return object of the same class as .data
 #' @details NULL
 #' @examples 
@@ -18,8 +20,8 @@
 #'  nfkc_all(dt)
 #'
 #'  # tibble
-#'  tbl <- tibble::tibble(`列１（トン）` = "1.2\r\n1.3",
-#'                        `列2 (kg) ` = " 2.2\n 2.3")
+#'  tbl <- tibble::tibble(`列１（トン）` = "1.2\r\nトン",
+#'                        `列2 (kg) ` = " 2.2\n kg")
 #'  nfkc_all(tbl)
 #'  # remove white-spaces (blanks) from all column names
 #'  nfkc_all(tbl, remove_space_colnames = TRUE)
@@ -27,12 +29,18 @@
 #'  nfkc_all(tbl, remove_space_contents = TRUE)
 #'  # remove all white-spaces (blanks) from .data
 #'  nfkc_all(tbl, remove_space_colnames = TRUE, remove_space_contents = TRUE)
+#'
+#'  # remove all spaces (including new line characters) from all column names
+#'  nfkc_all(tbl, remove_space_colnames = TRUE, coln_spc = "[:space:]")
+#'  # remove all spaces (including new line characters) from all contents
+#'  nfkc_all(tbl, remove_space_contents = TRUE, cont_spc = "[:space:]")
 #' @rdname nfkc_all
 #' @export 
 #' @importFrom dplyr rename_all mutate_all
 #' @importFrom stringi stri_trans_nfkc
 nfkc_all <- function(.data, remove_space_colnames = FALSE,
-                     remove_space_contents = FALSE) {
+                     remove_space_contents = FALSE,
+                     coln_spc = "[:blank:]", cont_spc = "[:blank:]") {
     cls <- class(.data)
 
     out <-
@@ -42,14 +50,18 @@ nfkc_all <- function(.data, remove_space_colnames = FALSE,
 
     if(remove_space_colnames) {
         out <- 
-            dplyr::rename_all(out, ~ stringr::str_remove_all(.x, "[:blank:]"))
+            dplyr::rename_all(out, ~ stringr::str_remove_all(.x, coln_spc))
     }
 
     if(remove_space_contents) {
         out <- 
-            dplyr::mutate_all(out, ~ stringr::str_remove_all(.x, "[:blank:]"))
+            dplyr::mutate_all(out, ~ stringr::str_remove_all(.x, cont_spc))
     }
 
     class(out) <- cls
     return(out)
 }
+
+
+
+

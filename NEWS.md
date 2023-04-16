@@ -1,3 +1,6 @@
+# frabento 0.1.7
+- Add new arguments to `nfkc_all()`: remove_space_colnames, remove_space_contents, coln_spc, cont_spc
+
 # frabento 0.1.6
 - Add a new function `nfkc_all()`.
 

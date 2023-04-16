@@ -5,7 +5,13 @@
 \title{Unicode normalization of colnames and contents of data.frame with
 compatibility equivalence}
 \usage{
-nfkc_all(.data, remove_space_colnames = FALSE, remove_space_contents = FALSE)
+nfkc_all(
+  .data,
+  remove_space_colnames = FALSE,
+  remove_space_contents = FALSE,
+  coln_spc = "[:blank:]",
+  cont_spc = "[:blank:]"
+)
 }
 \arguments{
 \item{.data}{data.frame-like object (tibble, data.table, etc.)}
@@ -15,6 +21,10 @@ column names. Default: FALSE.}
 
 \item{remove_space_contents}{If TRUE, remove all white spaces from all
 contents. Default: FALSE.}
+
+\item{coln_spc}{Space character to be removed in colnames. Default: \link{:blank:}}
+
+\item{cont_spc}{Space character to be removed in contents. Default: \link{:blank:}}
 }
 \value{
 object of the same class as .data
@@ -32,8 +42,8 @@ This is a dplyr-dependent preprocessing function
  nfkc_all(dt)
 
  # tibble
- tbl <- tibble::tibble(`列１（トン）` = "1.2\r\n1.3",
-                       `列2 (kg) ` = " 2.2\n 2.3")
+ tbl <- tibble::tibble(`列１（トン）` = "1.2\r\nトン",
+                       `列2 (kg) ` = " 2.2\n kg")
  nfkc_all(tbl)
  # remove white-spaces (blanks) from all column names
  nfkc_all(tbl, remove_space_colnames = TRUE)
@@ -41,4 +51,9 @@ This is a dplyr-dependent preprocessing function
  nfkc_all(tbl, remove_space_contents = TRUE)
  # remove all white-spaces (blanks) from .data
  nfkc_all(tbl, remove_space_colnames = TRUE, remove_space_contents = TRUE)
+
+ # remove all spaces (including new line characters) from all column names
+ nfkc_all(tbl, remove_space_colnames = TRUE, coln_spc = "[:space:]")
+ # remove all spaces (including new line characters) from all contents
+ nfkc_all(tbl, remove_space_contents = TRUE, cont_spc = "[:space:]")
 }
