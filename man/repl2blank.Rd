@@ -22,10 +22,10 @@ repl2blank(
 \item{shift}{blankで置き換える位置を右にずらす. Default: 0.}
 
 \item{first}{1個目の値を空白にする, Default: FALSE. TRUEで強制的に空白にする
-. inverse = TRUE の時はTRUEで強制的に値を与える.}
+. inverse = TRUE の時は逆動作となる.}
 
 \item{last}{最後の値を空白にする, Default: FALSE. TRUEで強制的に空白にする.
-inverse = TRUE の時はTRUEで強制的に値を与える.}
+inverse = TRUE の時は逆動作となる.}
 
 \item{inverse}{空白と非空白を逆転させる, Default: FALSE}
 

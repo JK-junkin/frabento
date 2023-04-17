@@ -5,9 +5,9 @@
 #' @param nskip 何個置きに空白文字にするか, Default: 1.
 #' @param shift blankで置き換える位置を右にずらす. Default: 0.
 #' @param first 1個目の値を空白にする, Default: FALSE. TRUEで強制的に空白にする
-#' . inverse = TRUE の時はTRUEで強制的に値を与える.
+#' . inverse = TRUE の時は逆動作となる.
 #' @param last 最後の値を空白にする, Default: FALSE. TRUEで強制的に空白にする.
-#' inverse = TRUE の時はTRUEで強制的に値を与える.
+#' inverse = TRUE の時は逆動作となる.
 #' @param inverse 空白と非空白を逆転させる, Default: FALSE
 #' @param comma 3桁ごとにコンマをつける, Default: FALSE
 #' @return A character vector
@@ -47,11 +47,14 @@ repl2blank <- function(vec, nskip = 1, shift = 0, first = FALSE, last = FALSE,
 }
 
 #' @title Label character vector with blanks at a certain interval
-#' @description ggplot作図の際に軸ラベルの一部を空白にすることで minor break のようにみせかける.
+#' @description ggplot作図の際に軸ラベルの一部を空白にすることで minor break の
+#' ようにみせかける.
 #' @param nskip 何個置きに空白文字にするか, Default: 1.
 #' @param shift blankで置き換える位置を右にずらす. Default: 0.
-#' @param first 1個目の値を空白にする, Default: FALSE. TRUEで強制的に空白にする. inverse = TRUE の時はTRUEで強制的に値を与える.
-#' @param last 最後の値を空白にする, Default: FALSE. TRUEで強制的に空白にする. inverse = TRUE の時はTRUEで強制的に値を与える.
+#' @param first 1個目の値を空白にする, Default: FALSE. TRUEで強制的に空白にする
+#' . inverse = TRUE の時は逆動作となる.
+#' @param last 最後の値を空白にする, Default: FALSE. TRUEで強制的に空白にする.
+#' inverse = TRUE の時は逆動作となる.
 #' @param inverse 空白と非空白を逆転させる, Default: FALSE
 #' @param comma 3桁ごとにコンマをつける, Default: FALSE
 #' @param ptime Parse date-time type vector, Default: FALSE
