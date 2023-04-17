@@ -26,7 +26,7 @@ library(emo)
 - そこで, この2段階の数値変換を楽にする関数 `frabento::va_resc()` を作ってみました.
 
 ## 使用例
-```{r setup, echo = 2:7, eval = -c(1), message = FALSE}
+```{r setup, echo = 2:7, eval = -c(1), message = FALSE, warning = FALSE}
 devtools::install_github("Gedevan-Aleksizde/fontregisterer", upgrade = "never")
 library(frabento)       # このパッケージ
 library(tidyverse)      # ggplot2とtidyなデータハンドリング

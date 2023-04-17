@@ -31,7 +31,7 @@ library(emo)
 下記の参考情報をご覧ください. いい仕事をしてくれる方々に心よりの感謝！！
 
 ## 使用例
-```{r setup, echo = 1:7, eval = -1, message = FALSE}
+```{r setup, echo = 1:7, eval = -1, message = FALSE, warning = FALSE}
 devtools::install_github("Gedevan-Aleksizde/fontregisterer", upgrade = "never")
 library(frabento)       # このパッケージ
 library(fontregisterer) # フォントの利用を楽にするため

@@ -25,7 +25,7 @@ knitr::opts_chunk$set(
 
 
 ## 使用例
-```{r setup, echo = 2:4, eval = -c(1), message = FALSE}
+```{r setup, echo = 2:4, eval = -c(1), message = FALSE, warning = FALSE}
 devtools::install_github("Gedevan-Aleksizde/fontregisterer", upgrade = "never")
 library(frabento)       # このパッケージ
 library(tidyverse)      # ggplot2とtidyなデータハンドリング
