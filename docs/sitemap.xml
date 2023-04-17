@@ -31,6 +31,9 @@
     <loc>/news/index.html</loc>
   </url>
   <url>
+    <loc>/reference/abc2index.html</loc>
+  </url>
+  <url>
     <loc>/reference/coord_panel_ranges.html</loc>
   </url>
   <url>
@@ -38,6 +41,9 @@
   </url>
   <url>
     <loc>/reference/index.html</loc>
+  </url>
+  <url>
+    <loc>/reference/index2abc.html</loc>
   </url>
   <url>
     <loc>/reference/kurai_ja.html</loc>
@@ -55,13 +61,22 @@
     <loc>/reference/makeXlColAlphabet.html</loc>
   </url>
   <url>
+    <loc>/reference/make_abcbase.html</loc>
+  </url>
+  <url>
     <loc>/reference/mixfonts.html</loc>
+  </url>
+  <url>
+    <loc>/reference/nfkc_all.html</loc>
   </url>
   <url>
     <loc>/reference/pipe.html</loc>
   </url>
   <url>
     <loc>/reference/repl2blank.html</loc>
+  </url>
+  <url>
+    <loc>/reference/shift_abc.html</loc>
   </url>
   <url>
     <loc>/reference/va_resc.html</loc>
