@@ -90,7 +90,7 @@
       <h1 data-toc-skip>ggplot: 飛び石軸ラベルの作成</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/JK-junkin/frabento/blob/HEAD/data-raw/vignettes/repl2blank.Rmd" class="external-link"><code>data-raw/vignettes/repl2blank.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/JK-junkin/frabento/blob/HEAD/vignettes/repl2blank.Rmd" class="external-link"><code>vignettes/repl2blank.Rmd</code></a></small>
       <div class="hidden name"><code>repl2blank.Rmd</code></div>
 
     </div>
@@ -167,46 +167,67 @@
 <span><span class="co"># patchwork</span></span>
 <span><span class="va">g0</span> <span class="op">/</span> <span class="va">g1</span> </span></code></pre></div>
 <p><img src="repl2blank_files/figure-html/ex1-1.png" width="755.905511811024"></p>
-<div class="section level4">
-<h4 id="中身解説">中身解説<a class="anchor" aria-label="anchor" href="#%E4%B8%AD%E8%BA%AB%E8%A7%A3%E8%AA%AC"></a>
-</h4>
+</div>
+<div class="section level3">
+<h3 id="中身解説">中身解説<a class="anchor" aria-label="anchor" href="#%E4%B8%AD%E8%BA%AB%E8%A7%A3%E8%AA%AC"></a>
+</h3>
 <p><code><a href="../reference/label_repl2blank.html">label_repl2blank()</a></code> は中で <code><a href="../reference/repl2blank.html">repl2blank()</a></code>
 が動いています. 具体的な働き方を下記に示します.</p>
+<div class="section level4">
+<h4 id="通常はこちら">通常はこちら<a class="anchor" aria-label="anchor" href="#%E9%80%9A%E5%B8%B8%E3%81%AF%E3%81%93%E3%81%A1%E3%82%89"></a>
+</h4>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="op">(</span><span class="va">example_vector</span> <span class="op">&lt;-</span> <span class="fl">2011</span><span class="op">:</span><span class="fl">2020</span><span class="op">)</span></span>
-<span><span class="co">#&gt;  [1] 2011 2012 2013 2014 2015 2016 2017 2018 2019 2020</span></span>
+<code class="sourceCode R"><span><span class="op">(</span><span class="va">example_vector</span> <span class="op">&lt;-</span> <span class="fl">2011</span><span class="op">:</span><span class="fl">2021</span><span class="op">)</span></span>
+<span><span class="co">#&gt;  [1] 2011 2012 2013 2014 2015 2016 2017 2018 2019 2020 2021</span></span>
 <span></span>
 <span><span class="co"># デフォルト (引数に何も指定しない)</span></span>
 <span><span class="fu"><a href="../reference/repl2blank.html">repl2blank</a></span><span class="op">(</span><span class="va">example_vector</span><span class="op">)</span></span>
-<span><span class="co">#&gt;  [1] "2011" ""     "2013" ""     "2015" ""     "2017" ""     "2019" ""</span></span>
+<span><span class="co">#&gt;  [1] "2011" ""     "2013" ""     "2015" ""     "2017" ""     "2019" ""    </span></span>
+<span><span class="co">#&gt; [11] "2021"</span></span>
 <span></span>
 <span><span class="co"># nskip を 変える </span></span>
 <span><span class="fu"><a href="../reference/repl2blank.html">repl2blank</a></span><span class="op">(</span><span class="va">example_vector</span>, nskip <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
 <span><span class="co">#&gt;  [1] "2011" ""     ""     "2014" ""     ""     "2017" ""     ""     "2020"</span></span>
+<span><span class="co">#&gt; [11] ""</span></span>
 <span></span>
-<span><span class="co"># first を 変える (一番初めの要素をブランクに)</span></span>
+<span><span class="co"># shift を 変える </span></span>
+<span><span class="fu"><a href="../reference/repl2blank.html">repl2blank</a></span><span class="op">(</span><span class="va">example_vector</span>, shift <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span><span class="co">#&gt;  [1] ""     "2012" ""     "2014" ""     "2016" ""     "2018" ""     "2020"</span></span>
+<span><span class="co">#&gt; [11] ""</span></span>
+<span></span>
+<span><span class="co"># first を 変える (一番初めの要素をブランクに. 元からブランクの場合はブランクのまま)</span></span>
 <span><span class="fu"><a href="../reference/repl2blank.html">repl2blank</a></span><span class="op">(</span><span class="va">example_vector</span>, first <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="co">#&gt;  [1] ""     ""     "2013" ""     "2015" ""     "2017" ""     "2019" ""</span></span>
+<span><span class="co">#&gt;  [1] ""     ""     "2013" ""     "2015" ""     "2017" ""     "2019" ""    </span></span>
+<span><span class="co">#&gt; [11] "2021"</span></span>
 <span></span>
-<span><span class="co"># last を 変える (一番最後の要素をブランクに): この場合は元からブランク</span></span>
+<span><span class="co"># last を 変える (一番最後の要素をブランクに. 元からブランクの場合はブランクのまま)</span></span>
 <span><span class="fu"><a href="../reference/repl2blank.html">repl2blank</a></span><span class="op">(</span><span class="va">example_vector</span>, last <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="co">#&gt;  [1] "2011" ""     "2013" ""     "2015" ""     "2017" ""     "2019" ""</span></span>
-<span></span>
-<span><span class="co"># inverse を 変える (ブランクと非ブランクが反転する)</span></span>
+<span><span class="co">#&gt;  [1] "2011" ""     "2013" ""     "2015" ""     "2017" ""     "2019" ""    </span></span>
+<span><span class="co">#&gt; [11] ""</span></span></code></pre></div>
+</div>
+<div class="section level4">
+<h4 id="ブランク位置の逆転-少しややこい">ブランク位置の逆転 (少しややこい)<a class="anchor" aria-label="anchor" href="#%E3%83%96%E3%83%A9%E3%83%B3%E3%82%AF%E4%BD%8D%E7%BD%AE%E3%81%AE%E9%80%86%E8%BB%A2-%E5%B0%91%E3%81%97%E3%82%84%E3%82%84%E3%81%93%E3%81%84"></a>
+</h4>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># inverse を 変える (ブランクと非ブランクが反転する)</span></span>
 <span><span class="fu"><a href="../reference/repl2blank.html">repl2blank</a></span><span class="op">(</span><span class="va">example_vector</span>, inverse <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="co">#&gt;  [1] ""     "2012" ""     "2014" ""     "2016" ""     "2018" ""     "2020"</span></span>
+<span><span class="co">#&gt; [11] ""</span></span>
 <span></span>
 <span><span class="co"># inverse と first を変える (inverseが優先される)</span></span>
 <span><span class="fu"><a href="../reference/repl2blank.html">repl2blank</a></span><span class="op">(</span><span class="va">example_vector</span>, inverse <span class="op">=</span> <span class="cn">TRUE</span>, first <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="co">#&gt;  [1] "2011" "2012" ""     "2014" ""     "2016" ""     "2018" ""     "2020"</span></span>
+<span><span class="co">#&gt; [11] ""</span></span>
 <span></span>
 <span><span class="co"># inverse と last を変える (inverseが優先される)</span></span>
 <span><span class="fu"><a href="../reference/repl2blank.html">repl2blank</a></span><span class="op">(</span><span class="va">example_vector</span>, inverse <span class="op">=</span> <span class="cn">TRUE</span>, last <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="co">#&gt;  [1] ""     "2012" ""     "2014" ""     "2016" ""     "2018" ""     "2020"</span></span>
+<span><span class="co">#&gt; [11] "2021"</span></span>
 <span></span>
 <span><span class="co"># inverse と first と last を変える (inverseが優先される)</span></span>
 <span><span class="fu"><a href="../reference/repl2blank.html">repl2blank</a></span><span class="op">(</span><span class="va">example_vector</span>, inverse <span class="op">=</span> <span class="cn">TRUE</span>, first <span class="op">=</span> <span class="cn">TRUE</span>, last <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="co">#&gt;  [1] "2011" "2012" ""     "2014" ""     "2016" ""     "2018" ""     "2020"</span></span></code></pre></div>
+<span><span class="co">#&gt;  [1] "2011" "2012" ""     "2014" ""     "2016" ""     "2018" ""     "2020"</span></span>
+<span><span class="co">#&gt; [11] "2021"</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level3">
@@ -225,7 +246,7 @@
 <div class="section level4">
 <h4 id="ggh4x">ggh4x<a class="anchor" aria-label="anchor" href="#ggh4x"></a>
 </h4>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">g0</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html" class="external-link">scale_x_continuous</a></span><span class="op">(</span>breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="op">-</span><span class="fl">6000</span>, <span class="fl">2000</span>, by <span class="op">=</span> <span class="fl">1000</span><span class="op">)</span>,</span>
 <span>                        minor_breaks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="op">-</span><span class="fl">6000</span>, <span class="fl">2000</span>, by <span class="op">=</span> <span class="fl">200</span><span class="op">)</span>,</span>
 <span>                        guide <span class="op">=</span> <span class="st">"axis_minor"</span><span class="op">)</span> <span class="op">+</span></span>

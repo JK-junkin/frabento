@@ -60,12 +60,13 @@ g1 <- g0 +
 g0 / g1 
 ```
 
-#### 中身解説
+### 中身解説
 
 `label_repl2blank()` は中で `repl2blank()` が動いています. 具体的な働き方を下記に示します.
 
-```{r inside-label_repl2blank}
-(example_vector <- 2011:2020)
+#### 通常はこちら
+```{r inside-label_repl2blank 1}
+(example_vector <- 2011:2021)
 
 # デフォルト (引数に何も指定しない)
 repl2blank(example_vector)
@@ -73,12 +74,18 @@ repl2blank(example_vector)
 # nskip を 変える 
 repl2blank(example_vector, nskip = 2)
 
-# first を 変える (一番初めの要素をブランクに)
+# shift を 変える 
+repl2blank(example_vector, shift = 1)
+
+# first を 変える (一番初めの要素をブランクに. 元からブランクの場合はブランクのまま)
 repl2blank(example_vector, first = TRUE)
 
-# last を 変える (一番最後の要素をブランクに): この場合は元からブランク
+# last を 変える (一番最後の要素をブランクに. 元からブランクの場合はブランクのまま)
 repl2blank(example_vector, last = TRUE)
+```
 
+#### ブランク位置の逆転 (少しややこい)
+```{r inside-label_repl2blank 2}
 # inverse を 変える (ブランクと非ブランクが反転する)
 repl2blank(example_vector, inverse = TRUE)
 
@@ -90,7 +97,6 @@ repl2blank(example_vector, inverse = TRUE, last = TRUE)
 
 # inverse と first と last を変える (inverseが優先される)
 repl2blank(example_vector, inverse = TRUE, first = TRUE, last = TRUE)
-
 ```
 
 ### 留意事項
