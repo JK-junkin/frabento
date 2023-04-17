@@ -30,8 +30,6 @@
 #'  # remove all white-spaces (blanks) from .data
 #'  nfkc_all(tbl, remove_space_colnames = TRUE, remove_space_contents = TRUE)
 #'
-#'  # remove all spaces (including new line characters) from all column names
-#'  nfkc_all(tbl, remove_space_colnames = TRUE, coln_spc = "[:space:]")
 #'  # remove all spaces (including new line characters) from all contents
 #'  nfkc_all(tbl, remove_space_contents = TRUE, cont_spc = "[:space:]")
 #' @rdname nfkc_all
