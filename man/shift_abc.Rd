@@ -2,30 +2,28 @@
 % Please edit documentation in R/makeXlColAlphabet.r
 \name{shift_abc}
 \alias{shift_abc}
-\title{FUNCTION_TITLE}
+\title{Shift n from given alphabetical colname}
 \usage{
-shift_abc(abc, n_shift = 0L, nchar = NULL)
+shift_abc(abc, n_shift = 0L)
 }
 \arguments{
-\item{abc}{PARAM_DESCRIPTION}
+\item{abc}{a character vector to be shifted.}
 
-\item{n_shift}{PARAM_DESCRIPTION, Default: 0}
-
-\item{nchar}{PARAM_DESCRIPTION, Default: NULL}
+\item{n_shift}{numbers to shift, Default: 0}
 }
 \value{
-OUTPUT_DESCRIPTION
+a character vector
 }
 \description{
-FUNCTION_DESCRIPTION
-}
-\details{
-DETAILS
+This function is useful for output with openxlsx package.
 }
 \examples{
 \dontrun{
 if(interactive()){
  #EXAMPLE1
+ shift_abc("a", 3)        # D
+ shift_abc(letters, 3)    # D–AC
+ shift_abc(letters, 1:26) # B–AZ. skipping ahead one by one.
  }
 }
 }

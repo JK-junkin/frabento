@@ -2,32 +2,25 @@
 % Please edit documentation in R/makeXlColAlphabet.r
 \name{abc2index}
 \alias{abc2index}
-\title{FUNCTION_TITLE}
+\title{Get the numbers (indices) corresponding to alphabetical colnames}
 \usage{
-abc2index(abc, nchar = NULL)
+abc2index(abc)
 }
 \arguments{
-\item{abc}{PARAM_DESCRIPTION}
-
-\item{nchar}{PARAM_DESCRIPTION, Default: NULL}
+\item{abc}{a character vector to be converted to numbers (indices).}
 }
 \value{
-OUTPUT_DESCRIPTION
+an integer vector
 }
 \description{
-FUNCTION_DESCRIPTION
-}
-\details{
-DETAILS
+This function supports nchar up to 4, i.e. from "A" to "ZZZZ".
 }
 \examples{
 \dontrun{
 if(interactive()){
-abc2index(letters)
-abc2index(c("a", "a"))
+ abc2index(letters)         # 1–26
+ abc2index(c("a", NA, "a")) # 1 NA 1
+ abc2index("zzzza")         # Error
  }
 }
-}
-\seealso{
-\code{\link[stringr]{str_subset}}
 }

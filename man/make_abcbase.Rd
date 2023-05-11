@@ -2,29 +2,27 @@
 % Please edit documentation in R/makeXlColAlphabet.r
 \name{make_abcbase}
 \alias{make_abcbase}
-\title{FUNCTION_TITLE}
+\title{Create an alphabet vector (data source)}
 \usage{
 make_abcbase(nchar = NULL)
 }
 \arguments{
-\item{nchar}{PARAM_DESCRIPTION, Default: NULL}
+\item{nchar}{an integer, Default: NULL}
 }
 \value{
-OUTPUT_DESCRIPTION
+a character vector which length is \code{sum(26^(1:nchar))}.
 }
 \description{
-FUNCTION_DESCRIPTION
-}
-\details{
-DETAILS
+Create an alphabet data source according to the given \code{nchar}.
 }
 \examples{
 \dontrun{
 if(interactive()){
  #EXAMPLE1
+ make_abcbase(nchar = 3)
+ make_abcbase(nchar = 0) # Error
+ make_abcbase(nchar = 5) # Error
+ sum(26^(1:5))           # length is 12356630
  }
 }
-}
-\seealso{
-\code{\link[foreach]{foreach}}
 }

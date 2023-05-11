@@ -49,28 +49,30 @@ makeXlColAlphabet <- function(start = NULL, len = NULL, nchar = 2L,
     }
 }
 
-#' @title FUNCTION_TITLE
-#' @description FUNCTION_DESCRIPTION
-#' @param nchar PARAM_DESCRIPTION, Default: NULL
-#' @return OUTPUT_DESCRIPTION
-#' @details DETAILS
+#' @title Create an alphabet vector (data source)
+#' @description Create an alphabet data source according to the given `nchar`.
+#' @param nchar an integer, Default: NULL
+#' @return a character vector which length is `sum(26^(1:nchar))`.
 #' @examples 
 #' \dontrun{
 #' if(interactive()){
 #'  #EXAMPLE1
+#'  make_abcbase(nchar = 3)
+#'  make_abcbase(nchar = 0) # Error
+#'  make_abcbase(nchar = 5) # Error
+#'  sum(26^(1:5))           # length is 12356630
 #'  }
 #' }
-#' @seealso 
-#'  \code{\link[foreach]{foreach}}
 #' @rdname make_abcbase
 #' @export 
-#' @importFrom foreach foreach
 make_abcbase <- function(nchar = NULL) {
     if (is.null(nchar)) { nchar <- 2; warning("2 was assigned to 'nchar'.") }
     if (nchar <= 0 | nchar > 4) {
-        stop(paste("'nchar' should be from 1 to 4 (integer).",
-                   "'nchar' greater than 4 is NOT recommended",
-                   "because it would take too much time."))
+        stop(paste("'nchar' is currently constrained between 1L and 4L!\n",
+                   "Because it is memory-intensive and time-consuming",
+                   "when 'nchar' is greater than 4L, where the length of vector",
+                   "returned would be 12,356,630 (`sum(26^(1:5))`)",
+                   "if 'nchar = 5L'."))
     }
 
     i <- NULL # for R CMD CHECK: no visible binding for global variable
@@ -79,82 +81,79 @@ make_abcbase <- function(nchar = NULL) {
     }
 }
 
-#' @title FUNCTION_TITLE
-#' @description FUNCTION_DESCRIPTION
-#' @param num PARAM_DESCRIPTION
-#' @param nchar PARAM_DESCRIPTION, Default: NULL
-#' @return OUTPUT_DESCRIPTION
-#' @details DETAILS
+#' @title Get the alphabetical colnames corresponding to numbers (indices)
+#' @description This function supports nchar up to 4 (ZZZZ), i.e. the upper
+#' limit of number is 475,254.
+#' @param num an integer vector which is converted to alphabets.
+#' @param nchar an integer used for creating an alphabetical name base.
+#' Default: 4L.
+#' @return a character vector
 #' @examples 
 #' \dontrun{
 #' if(interactive()){
 #'  #EXAMPLE1
+#'  index2abc(num = 5)        # "E"
+#'  index2abc(num = 10^(1:5)) # "J" "CV" "ALL" "NTP" "EQXD"
+#'  index2abc(num = 500000)   # Error. due to exceeding sum(26^(1:4))
 #'  }
 #' }
 #' @rdname index2abc
 #' @export 
-index2abc <- function(num, nchar = NULL) {
+index2abc <- function(num, nchar = 4L) {
     x <- make_abcbase(nchar = nchar)
 
     len <- length(x) # Never NA
     if (len < max(num, na.rm = TRUE)) {
-        stop(paste("`max(num)` exceeds the length of alphabet base( N =",
-                   len, ").", "Please adjust (increase) 'nchar'."))
+        stop(paste("`max(num)` exceeds the upper limit of alphabet base",
+                   "( N =", len, ")."))
     }
     
-    if (any(num < 0)) num[num < 0] <- 0 
+    if (any(num <= 0) || any(is.na(num))) num[num <= 0] <- NA_integer_
     x[num]
 }
 
-#' @title FUNCTION_TITLE
-#' @description FUNCTION_DESCRIPTION
-#' @param abc PARAM_DESCRIPTION
-#' @param nchar PARAM_DESCRIPTION, Default: NULL
-#' @return OUTPUT_DESCRIPTION
-#' @details DETAILS
+#' @title Get the numbers (indices) corresponding to alphabetical colnames
+#' @description This function supports nchar up to 4, i.e. from "A" to "ZZZZ".
+#' @param abc a character vector to be converted to numbers (indices).
+#' @return an integer vector
 #' @examples 
 #' \dontrun{
 #' if(interactive()){
-#' abc2index(letters)
-#' abc2index(c("a", "a"))
+#'  abc2index(letters)         # 1–26
+#'  abc2index(c("a", NA, "a")) # 1 NA 1
+#'  abc2index("zzzza")         # Error
 #'  }
 #' }
-#' @seealso 
-#'  \code{\link[stringr]{str_subset}}
 #' @rdname abc2index
 #' @export 
-#' @importFrom stringr str_which
-abc2index <- function(abc, nchar = NULL) {
-    x <- make_abcbase(nchar = nchar)
-
-    nchar <- max(nchar(x), na.rm = TRUE)
-    if (nchar < max(nchar(abc), na.rm = TRUE)) {
-        stop(paste("`max(nchar(abc))` exceeds preset 'nchar'(", nchar, ").",
-                   "Please adjust (increase) 'nchar'."))
-    }
-
-    foreach::foreach(i = abc, .combine = "c") %do% {
+abc2index <- function(abc) {
+    nchar_max <- max(nchar(abc), na.rm = TRUE)
+    x <- make_abcbase(nchar = nchar_max)
+    y <- foreach::foreach(i = abc, .combine = "c") %do% {
         stringr::str_which(x, paste0("^", toupper(i), "$"))
     }
+    y[is.na(abc)] <- NA_integer_
+    y
 }
 
-#' @title FUNCTION_TITLE
-#' @description FUNCTION_DESCRIPTION
-#' @param abc PARAM_DESCRIPTION
-#' @param n_shift PARAM_DESCRIPTION, Default: 0
-#' @param nchar PARAM_DESCRIPTION, Default: NULL
-#' @return OUTPUT_DESCRIPTION
-#' @details DETAILS
+#' @title Shift n from given alphabetical colname
+#' @description This function is useful for output with openxlsx package.
+#' @param abc a character vector to be shifted.
+#' @param n_shift numbers to shift, Default: 0
+#' @return a character vector
 #' @examples 
 #' \dontrun{
 #' if(interactive()){
 #'  #EXAMPLE1
+#'  shift_abc("a", 3)        # D
+#'  shift_abc(letters, 3)    # D–AC
+#'  shift_abc(letters, 1:26) # B–AZ. skipping ahead one by one.
 #'  }
 #' }
 #' @rdname shift_abc
 #' @export 
-shift_abc <- function(abc, n_shift = 0L, nchar = NULL) {
-    newindex <- abc2index(abc, nchar = nchar) %>% { . + n_shift }
-    index2abc(num = newindex, nchar = nchar)
+shift_abc <- function(abc, n_shift = 0L) {
+    newindex <- abc2index(abc) %>% { . + n_shift }
+    index2abc(num = newindex)
 }
 

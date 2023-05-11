@@ -2,28 +2,30 @@
 % Please edit documentation in R/makeXlColAlphabet.r
 \name{index2abc}
 \alias{index2abc}
-\title{FUNCTION_TITLE}
+\title{Get the alphabetical colnames corresponding to numbers (indices)}
 \usage{
-index2abc(num, nchar = NULL)
+index2abc(num, nchar = 4L)
 }
 \arguments{
-\item{num}{PARAM_DESCRIPTION}
+\item{num}{an integer vector which is converted to alphabets.}
 
-\item{nchar}{PARAM_DESCRIPTION, Default: NULL}
+\item{nchar}{an integer used for creating an alphabetical name base.
+Default: 4L.}
 }
 \value{
-OUTPUT_DESCRIPTION
+a character vector
 }
 \description{
-FUNCTION_DESCRIPTION
-}
-\details{
-DETAILS
+This function supports nchar up to 4 (ZZZZ), i.e. the upper
+limit of number is 475,254.
 }
 \examples{
 \dontrun{
 if(interactive()){
  #EXAMPLE1
+ index2abc(num = 5)        # "E"
+ index2abc(num = 10^(1:5)) # "J" "CV" "ALL" "NTP" "EQXD"
+ index2abc(num = 500000)   # Error. due to exceeding sum(26^(1:4))
  }
 }
 }
