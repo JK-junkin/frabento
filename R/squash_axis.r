@@ -16,7 +16,7 @@
 #'  ggplot(dat,aes(x = group, y = value)) +
 #'    geom_point() +
 #'    coord_trans(y = squash_axis(5, 95, 10))
-#'  # Error
+#'
 #'  ggplot(dat,aes(x = group,y = value)) +
 #'    geom_point() +
 #'    scale_y_continuous(trans = squash_axis(5, 95, 10))
@@ -30,8 +30,8 @@
 squash_axis <- function(from, to, magnif_ratio) { 
   trans <- function(x) {    
     # get indices for the relevant regions
-    isq <- x > from & x < to
-    ito <- x >= to
+    isq <- x > from & x < to & !is.na(x)
+    ito <- x >= to & !is.na(x)
 
     # apply transformation
     x[isq] <- from + (x[isq] - from) / magnif_ratio
@@ -43,8 +43,8 @@ squash_axis <- function(from, to, magnif_ratio) {
   inv <- function(x) {
 
     # get indices for the relevant regions
-    isq <- x > from & x < from + (to - from) / magnif_ratio
-    ito <- x >= from + (to - from) / magnif_ratio
+    isq <- x > from & x < from + (to - from) / magnif_ratio & !is.na(x)
+    ito <- x >= from + (to - from) / magnif_ratio & !is.na(x)
 
     # apply transformation
     x[isq] <- from + (x[isq] - from) * magnif_ratio

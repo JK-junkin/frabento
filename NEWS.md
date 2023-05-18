@@ -1,3 +1,6 @@
+# frabento 0.1.10
+- bug fix `squash_axis()`
+
 # frabento 0.1.9
 - Refactor `make_abcbase()`, `abc2index()`, `index2abc()`, and `shift_abc()`
 
