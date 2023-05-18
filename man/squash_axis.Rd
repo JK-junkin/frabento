@@ -31,7 +31,7 @@ if(interactive()){
  ggplot(dat,aes(x = group, y = value)) +
    geom_point() +
    coord_trans(y = squash_axis(5, 95, 10))
- # Error
+
  ggplot(dat,aes(x = group,y = value)) +
    geom_point() +
    scale_y_continuous(trans = squash_axis(5, 95, 10))
