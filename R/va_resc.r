@@ -17,21 +17,31 @@
 #' @references
 #' \url{https://blog.statsbeginner.net/entry/2020/09/08/181536}
 #' @examples
-#' \dontrun{
 #' if(interactive()){
-#' lh <- range(faithful$waiting)
-#' rh <- range(faithful$eruptions)
-#' 
-#' faithful %>%
-#'     tidyr::pivot_longer(cols = dplyr::everything()) %>%
-#'     dplyr::mutate(val = ifelse(name == "eruptions", 
-#'                                va_resc(value, lh, rh, "var"), value)) %>%
-#'     ggplot(aes(x = as.integer(rownames(.)), group = name)) +
-#'     geom_line(aes(y = val, color = name), size = 0.3) +
-#'     scale_y_continuous(name = "waiting",
-#'                        sec.axis = sec_axis(~ va_resc(., lh, rh, "axis"),
-#'                                            name = "eruptions"))
+#'  lh <- range(faithful$waiting)
+#'  rh <- range(faithful$eruptions)
+#'  
+#'  g <- faithful %>%
+#'      tidyr::pivot_longer(cols = dplyr::everything()) %>%
+#'      dplyr::mutate(val = ifelse(name == "eruptions", 
+#'                                 va_resc(value, lh, rh, "var"), value)) %>%
+#'      ggplot(aes(x = as.integer(rownames(.)), group = name)) +
+#'      geom_line(aes(y = val, color = name), size = 0.3)
+#'  
+#'  # basically
+#'  g + scale_y_continuous(name = "waiting", # title of left y-axis
+#'                         sec.axis = sec_axis(~ va_resc(., lh, rh, "axis"),
+#'                                             name = "eruptions"))
+#'  
+#'  # a function factory is useful 
+#'  create_right_axis_rescaler <- function(lh, rh) {
+#'    function(x) va_resc(x, lh_lim = lh, rh_lim = rh, "axis") 
 #'  }
+#'  axis_for_eruptions <- create_right_axis_rescaler(lh = lh, rh = rh)
+#'  g + scale_y_continuous(name = "waiting", # title of left y-axis
+#'                         sec.axis = sec_axis(~ axis_for_eruptions(.),
+#'                                             name = "eruptions"))
+#'  print(g)
 #' }
 #' @rdname va_resc
 #' @export
@@ -43,10 +53,13 @@ va_resc <- function(v, lh_lim = NULL, rh_lim = NULL,
     if (is.null(lh_lim)) lh_lim <- range(v, na.rm = TRUE)
     if (is.null(rh_lim)) rh_lim <- range(v, na.rm = TRUE)
 
-    if (all(length(lh_lim) == 1, lh_lim == 0)) stop("When assigning A value to 'lh_lim', it should not be equal to zero ",
-                                                "because the returned value will be all zeros.")
-    if (all(length(rh_lim) == 1, rh_lim == 0)) stop("When assigning A value to 'rh_lim', it should not be equal to zero ",
-                                                "because the returned value will be Inf.")
+    temp_paste <- function(x) {
+        paste("If", x, "= 0 and length(", x, ") equals 1, the return is a",
+              "single value (0 or Inf), so you must specify a non-zero value.")
+    }
+
+    if (all(length(lh_lim) == 1, lh_lim == 0)) stop(temp_paste(x = "`lh_lim`")) 
+    if (all(length(rh_lim) == 1, rh_lim == 0)) stop(temp_paste(x = "`rh_lim`"))
 
     if (all(length(lh_lim) == 1, lh_lim != 0)) lh_lim <- c(0, lh_lim) 
     if (all(length(rh_lim) == 1, rh_lim != 0)) rh_lim <- c(0, rh_lim) 

@@ -40,21 +40,31 @@ NULLの場合は range(v, na.rm = TRUE) となる. Default: NULL}
 See example.
 }
 \examples{
-\dontrun{
 if(interactive()){
-lh <- range(faithful$waiting)
-rh <- range(faithful$eruptions)
-
-faithful \%>\%
-    tidyr::pivot_longer(cols = dplyr::everything()) \%>\%
-    dplyr::mutate(val = ifelse(name == "eruptions", 
-                               va_resc(value, lh, rh, "var"), value)) \%>\%
-    ggplot(aes(x = as.integer(rownames(.)), group = name)) +
-    geom_line(aes(y = val, color = name), size = 0.3) +
-    scale_y_continuous(name = "waiting",
-                       sec.axis = sec_axis(~ va_resc(., lh, rh, "axis"),
-                                           name = "eruptions"))
+ lh <- range(faithful$waiting)
+ rh <- range(faithful$eruptions)
+ 
+ g <- faithful \%>\%
+     tidyr::pivot_longer(cols = dplyr::everything()) \%>\%
+     dplyr::mutate(val = ifelse(name == "eruptions", 
+                                va_resc(value, lh, rh, "var"), value)) \%>\%
+     ggplot(aes(x = as.integer(rownames(.)), group = name)) +
+     geom_line(aes(y = val, color = name), size = 0.3)
+ 
+ # basically
+ g + scale_y_continuous(name = "waiting", # title of left y-axis
+                        sec.axis = sec_axis(~ va_resc(., lh, rh, "axis"),
+                                            name = "eruptions"))
+ 
+ # a function factory is useful 
+ create_right_axis_rescaler <- function(lh, rh) {
+   function(x) va_resc(x, lh_lim = lh, rh_lim = rh, "axis") 
  }
+ axis_for_eruptions <- create_right_axis_rescaler(lh = lh, rh = rh)
+ g + scale_y_continuous(name = "waiting", # title of left y-axis
+                        sec.axis = sec_axis(~ axis_for_eruptions(.),
+                                            name = "eruptions"))
+ print(g)
 }
 }
 \references{
