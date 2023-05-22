@@ -41,6 +41,11 @@ See example.
 }
 \examples{
 if(interactive()){
+ library(dplyr)
+ library(tidyr)
+ library(ggplot2)
+ library(patchwork)
+ 
  lh <- range(faithful$waiting)
  rh <- range(faithful$eruptions)
  
@@ -52,19 +57,25 @@ if(interactive()){
      geom_line(aes(y = val, color = name), size = 0.3)
  
  # basically
- g + scale_y_continuous(name = "waiting", # title of left y-axis
+ g1 <- g +
+     scale_y_continuous(name = "waiting", # title of left y-axis
                         sec.axis = sec_axis(~ va_resc(., lh, rh, "axis"),
-                                            name = "eruptions"))
+                                            name = "eruptions")) +
+     ggtitle("g1")
  
- # a function factory is useful 
+ # a function factory is useful
  create_right_axis_rescaler <- function(lh, rh) {
    function(x) va_resc(x, lh_lim = lh, rh_lim = rh, "axis") 
  }
  axis_for_eruptions <- create_right_axis_rescaler(lh = lh, rh = rh)
- g + scale_y_continuous(name = "waiting", # title of left y-axis
+ g2 <- g + 
+     scale_y_continuous(name = "waiting", # title of left y-axis
                         sec.axis = sec_axis(~ axis_for_eruptions(.),
-                                            name = "eruptions"))
- print(g)
+                                            name = "eruptions")) +
+     ggtitle("g2")
+ 
+ # patchwork
+ g1 / g2
 }
 }
 \references{
