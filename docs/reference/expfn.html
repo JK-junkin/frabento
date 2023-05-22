@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">frabento</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.9</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.10</span>
       </span>
     </div>
 
@@ -139,7 +139,13 @@ width (see ‘base::format()’). Default: TRUE.</p></dd>
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">expfn</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1.2e8</span>, <span class="fl">1.03e8</span>, <span class="op">-</span><span class="cn">Inf</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1.20 1.03 NA </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> expression(1.20~'×'~10^{8}, 1.03~'×'~10^{8}, NA~'×'~10^{NA})</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> expression(1.2 ~ "×" ~ 10^{</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> }, 1.03 ~ "×" ~ 10^{</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> }, NA ~ "×" ~ 10^{</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     NA</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> })</span>
 <span class="r-in"><span><span class="fu">expfn</span><span class="op">(</span><span class="op">-</span><span class="cn">Inf</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> NA </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> expression(0)</span>
