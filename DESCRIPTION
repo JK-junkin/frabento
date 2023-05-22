@@ -42,6 +42,7 @@ Imports:
     htmltools,
     magrittr,
     scales,
-    stringr
+    stringr,
+    stringi
 URL: https://github.com/JK-junkin/frabento
 VignetteBuilder: knitr

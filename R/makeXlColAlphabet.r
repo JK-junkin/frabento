@@ -26,7 +26,7 @@
 makeXlColAlphabet <- function(start = NULL, len = NULL, nchar = 2L, 
                               print_all = FALSE) {
 
-    if (is.character(start)) start <- abc2index(abc = start, nchar = nchar)
+    if (is.character(start)) start <- abc2index(abc = start)
     if (is.null(start))      start <- 1L
     if (is.null(len))        len <- sum(26^seq_len(nchar)) - start + 1
 
