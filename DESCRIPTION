@@ -29,10 +29,10 @@ Suggests:
     tidyverse,
     tidyr,
     tibble,
+    data.table,
     fontregisterer,
     emo,
-    testthat (>= 3.0.0),
-    stringi
+    testthat (>= 3.0.0)
 Config/testthat/edition: 3
 Imports: 
     purrr,

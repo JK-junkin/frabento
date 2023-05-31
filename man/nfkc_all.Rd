@@ -14,7 +14,7 @@ nfkc_all(
 )
 }
 \arguments{
-\item{.data}{data.frame-like object (tibble, data.table, etc.)}
+\item{.data}{data.frame-like object (\code{tibble}, \code{data.table}, etc.)}
 
 \item{remove_space_colnames}{If TRUE, remove all white spaces from all
 column names. Default: FALSE.}
@@ -22,9 +22,9 @@ column names. Default: FALSE.}
 \item{remove_space_contents}{If TRUE, remove all white spaces from all
 contents. Default: FALSE.}
 
-\item{coln_spc}{Space character to be removed in colnames. Default: \link{:blank:}}
+\item{coln_spc}{Space character to be removed in colnames. Default: "\[:blank:\]"}
 
-\item{cont_spc}{Space character to be removed in contents. Default: \link{:blank:}}
+\item{cont_spc}{Space character to be removed in contents. Default: "\[:blank:\]"}
 }
 \value{
 object of the same class as .data
@@ -38,12 +38,13 @@ This is a dplyr-dependent preprocessing function
  nfkc_all(df)
 
  # data.table
- dt <- data.table::data.table(`列１（トン）` = 1.1, `列2 (kg) ` = 2.1)
+ require(data.table)
+ dt <- data.table(`列１（トン）` = 1.1, `列2 (kg) ` = 2.1)
  nfkc_all(dt)
 
  # tibble
- tbl <- tibble::tibble(`列１（トン）` = "1.2\r\nトン",
-                       `列2 (kg) ` = " 2.2\n kg")
+ require(tibble)
+ tbl <- tibble(`列１（トン）` = "1.2\r\nトン", `列2 (kg) ` = " 2.2\n kg")
  nfkc_all(tbl)
  # remove white-spaces (blanks) from all column names
  nfkc_all(tbl, remove_space_colnames = TRUE)

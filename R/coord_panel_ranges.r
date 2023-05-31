@@ -47,7 +47,7 @@
 #'  \code{\link[ggplot2]{ggproto}},\code{\link[ggplot2]{coord_cartesian}}
 #' @rdname coord_panel_ranges
 #' @export
-#' @importFrom ggplot2 ggproto
+#' @import ggplot2
 
 coord_panel_ranges <-
     function(panel_ranges, expand = TRUE, default = FALSE, clip = "on") {

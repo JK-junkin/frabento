@@ -2,7 +2,7 @@
 % Please edit documentation in R/squash_axis.r
 \name{squash_axis}
 \alias{squash_axis}
-\title{A transformation function that squashes the range of \link{from, to} by
+\title{A transformation function that squashes the range of \[from, to\] by
 magnif_ratio on a given axis}
 \usage{
 squash_axis(from, to, magnif_ratio)
@@ -12,7 +12,7 @@ squash_axis(from, to, magnif_ratio)
 
 \item{to}{a double value, right (top) end of the axis}
 
-\item{magnif_ratio}{the compression scale factor of the range \link{from, to}}
+\item{magnif_ratio}{the compression scale factor of the range between from and to.}
 }
 \value{
 A transformation called "squash_axis", which is capsulated by trans_new() function

@@ -1,13 +1,13 @@
 #' @title Unicode normalization of colnames and contents of data.frame with
 #' compatibility equivalence
 #' @description This is a dplyr-dependent preprocessing function
-#' @param .data data.frame-like object (tibble, data.table, etc.)
+#' @param .data data.frame-like object (`tibble`, `data.table`, etc.)
 #' @param remove_space_colnames If TRUE, remove all white spaces from all
 #' column names. Default: FALSE.
 #' @param remove_space_contents If TRUE, remove all white spaces from all
 #' contents. Default: FALSE.
-#' @param coln_spc Space character to be removed in colnames. Default: [:blank:]
-#' @param cont_spc Space character to be removed in contents. Default: [:blank:]
+#' @param coln_spc Space character to be removed in colnames. Default: "\\[:blank:\\]"
+#' @param cont_spc Space character to be removed in contents. Default: "\\[:blank:\\]"
 #' @return object of the same class as .data
 #' @details NULL
 #' @examples 
@@ -16,12 +16,13 @@
 #'  nfkc_all(df)
 #'
 #'  # data.table
-#'  dt <- data.table::data.table(`列１（トン）` = 1.1, `列2 (kg) ` = 2.1)
+#'  require(data.table)
+#'  dt <- data.table(`列１（トン）` = 1.1, `列2 (kg) ` = 2.1)
 #'  nfkc_all(dt)
 #'
 #'  # tibble
-#'  tbl <- tibble::tibble(`列１（トン）` = "1.2\r\nトン",
-#'                        `列2 (kg) ` = " 2.2\n kg")
+#'  require(tibble)
+#'  tbl <- tibble(`列１（トン）` = "1.2\r\nトン", `列2 (kg) ` = " 2.2\n kg")
 #'  nfkc_all(tbl)
 #'  # remove white-spaces (blanks) from all column names
 #'  nfkc_all(tbl, remove_space_colnames = TRUE)
