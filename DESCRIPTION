@@ -1,6 +1,6 @@
 Package: frabento
 Title: FRAgmentary BENri TOols
-Version: 0.1.10
+Version: 0.1.11
 Authors@R: 
     person(given = "Junji",
            family = "Kinoshita",
@@ -43,6 +43,8 @@ Imports:
     magrittr,
     scales,
     stringr,
-    stringi
+    stringi,
+    sf,
+    rnaturalearth
 URL: https://github.com/JK-junkin/frabento
 VignetteBuilder: knitr
