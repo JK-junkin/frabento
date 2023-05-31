@@ -2,8 +2,7 @@
 % Please edit documentation in R/squash_axis.r
 \name{squash_axis}
 \alias{squash_axis}
-\title{A transformation function that squashes the range of \[from, to\] by
-magnif_ratio on a given axis}
+\title{Transformation function compressing a specified interval}
 \usage{
 squash_axis(from, to, magnif_ratio)
 }
@@ -18,7 +17,9 @@ squash_axis(from, to, magnif_ratio)
 A transformation called "squash_axis", which is capsulated by trans_new() function
 }
 \description{
-This function was transcribed from the post on Stackoverflow. --> https://stackoverflow.com/questions/61010786/error-nas-are-not-allowed-in-subscripted-assignments-while-using-squash-axis-i
+This function was transcribed from the post on Stackoverflow.
+--> https:
+//stackoverflow.com/questions/61010786/error-nas-are-not-allowed-in-subscripted-assignments-while-using-squash-axis-i
 }
 \examples{
 \dontrun{

@@ -1,3 +1,6 @@
+# frabento 0.1.11
+- :sparkles: Add `wmap_sf()`
+
 # frabento 0.1.10
 - bug fix `squash_axis()`
 

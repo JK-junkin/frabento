@@ -1,6 +1,7 @@
-#' @title A transformation function that squashes the range of \\[from, to\\] by
-#' magnif_ratio on a given axis
-#' @description This function was transcribed from the post on Stackoverflow. --> https://stackoverflow.com/questions/61010786/error-nas-are-not-allowed-in-subscripted-assignments-while-using-squash-axis-i
+#' @title Transformation function compressing a specified interval
+#' @description This function was transcribed from the post on Stackoverflow.
+#' --> https:
+#' //stackoverflow.com/questions/61010786/error-nas-are-not-allowed-in-subscripted-assignments-while-using-squash-axis-i
 #' @param from a double value, left (bottom) end of the axis
 #' @param to a double value, right (top) end of the axis
 #' @param magnif_ratio the compression scale factor of the range between from and to.
