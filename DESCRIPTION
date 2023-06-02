@@ -13,9 +13,19 @@ Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.3
-Remotes:
-    Gedevan-Aleksizde/fontregisterer,
-    hadley/emo
+Depends:
+    sf
+Imports: 
+    purrr,
+    dplyr,
+    foreach,
+    ggplot2,
+    htmltools,
+    magrittr,
+    scales,
+    stringr,
+    stringi,
+    rnaturalearth
 Suggests: 
     devtools,
     pkgdown,
@@ -33,18 +43,9 @@ Suggests:
     fontregisterer,
     emo,
     testthat (>= 3.0.0)
+Remotes:
+    Gedevan-Aleksizde/fontregisterer,
+    hadley/emo
 Config/testthat/edition: 3
-Imports: 
-    purrr,
-    dplyr,
-    foreach,
-    ggplot2,
-    htmltools,
-    magrittr,
-    scales,
-    stringr,
-    stringi,
-    sf,
-    rnaturalearth
 URL: https://github.com/JK-junkin/frabento
 VignetteBuilder: knitr
