@@ -1,0 +1,88 @@
+---
+title: "wmap_sf()による地図作成例"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{wmap_sf()による地図作成例}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+library(knitr)
+library(pkgdown)
+library(ragg)
+library(emo)
+
+ragg_png <- function(..., res = 256) {
+  ragg::agg_png(..., res = res, units = "in")
+}
+
+## Global options
+options(max.print = "75")
+opts_chunk$set(echo     = TRUE,
+               cache    = FALSE, #TRUE,
+               eval     = TRUE,
+               collapse = TRUE,
+               prompt   = FALSE,
+               tidy     = FALSE,
+               comment  = '#>',
+               message  = FALSE,
+               warning  = FALSE,
+               strip.white = FALSE,
+               dev      = "ragg_png",
+               fig.ext  = "png",
+               include  = TRUE,
+               fig.align = "left",
+#                fig.height = 29.7/2.54,
+               fig.width = 21/2.54,
+               out.width = "80%")
+opts_knit$set(width = 75)
+```
+
+```{r install}
+# install.packages("devtools")
+# devtools::install_github("JK-junkin/frabento")
+library(frabento)
+library(ggplot2)
+```
+
+## 1. 白地図として使用
+```{r ex0, collapse = TRUE}
+theme_set(theme_bw())
+frabento::wmap_sf() + ggtitle("デフォルト解像度 (50 km規模)")
+```
+
+```{r ex1-1, collapse = TRUE, message = FALSE}
+frabento::wmap_sf(lgl = c(130, 145), ltl = c(30, 45)) +
+    ggtitle("デフォルト解像度地図を拡大") +
+    geom_point(aes(x = 135, y = 35), color = "red")
+```
+
+```{r ex1-2, collapse = TRUE, message = FALSE}
+frabento::wmap_sf(lgl = c(130, 145), ltl = c(30, 45), sf_resol = 10) +
+    ggtitle("高解像度地図 (10 km規模) を拡大") +
+    geom_point(aes(x = 135, y = 35), color = "red")
+```
+
+```{r ex1-3, collapse = TRUE, message = FALSE}
+frabento::wmap_sf(lgl = c(135, 155), ltl = c(30, 48), sf_resol = 10) +
+    theme_void() +
+    ggtitle("高解像度地図 (10 km規模) の白地図")
+```
+
+## 2. 既存のデータに地図を足す
+```{r ex2-1, collapse = TRUE, message = FALSE}
+df <- data.frame(Long = runif(n = 30, min = 135, max = 150),
+                 Lati = runif(n = 30, min = 30, max = 40),
+                 group = rep(1:3, each = 10))
+
+ggplot(data = df) +
+    geom_point(aes(x = Long, y = Lati, color = as.factor(group))) +
+    wmap_sf(as_gg = FALSE, lgl = c(125, 155), ltl = c(25, 50)) +
+    ggtitle("追加のlayerとして使用")
+```
+
+## 3. 任意のsfオブジェクトを使用
+```{r ex3-1, collapse = TRUE, message = FALSE}
+
+```

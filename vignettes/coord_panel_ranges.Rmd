@@ -14,6 +14,9 @@ knitr::opts_chunk$set(
   fig.width = 15/2.54,
   dpi = 96
 )
+# devtools::install_github("hadley/emo")
+library(emo)     # 絵文字
+library(pkgdown) # このpackageのwebsiteを手軽に作成
 ```
 
 ## はじめに
@@ -25,16 +28,13 @@ knitr::opts_chunk$set(
 
 
 ## 使用例
-```{r setup, echo = 2:4, eval = -c(1), message = FALSE, warning = FALSE}
-devtools::install_github("Gedevan-Aleksizde/fontregisterer", upgrade = "never")
-library(frabento)       # このパッケージ
-library(tidyverse)      # ggplot2とtidyなデータハンドリング
-library(patchwork)      # ggplotを簡単, キレイにレイアウト
-library(fontregisterer) # フォントの利用を楽にするため
-library(ggtext)         # element_markdown() を使うため
-library(emo)            # 絵文字
-library(pkgdown)        # このpackageのwebsiteを手軽に作成
-library(ggh4x)          # Hacks for ggplot!
+```{r setup, message = FALSE, warning = FALSE}
+library(frabento)  # このパッケージ
+library(tidyverse) # ggplot2とtidyなデータハンドリング
+library(patchwork) # ggplotを簡単, キレイにレイアウト
+library(ragg)      # マルチバイトフォントの利用を楽にするため
+library(ggtext)    # element_markdown() を使うため
+library(ggh4x)     # Awesome!! Hacks for ggplot2
 ```
 
 ### 基本的な使用例

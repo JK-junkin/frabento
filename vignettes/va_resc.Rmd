@@ -15,6 +15,7 @@ knitr::opts_chunk$set(
   dpi = 96
 )
 library(emo)
+library(pkgdown)
 ```
 
 ## はじめに
@@ -26,16 +27,13 @@ library(emo)
 - そこで, この2段階の数値変換を楽にする関数 `frabento::va_resc()` を作ってみました.
 
 ## 使用例
-```{r setup, echo = 2:7, eval = -c(1), message = FALSE, warning = FALSE}
-devtools::install_github("Gedevan-Aleksizde/fontregisterer", upgrade = "never")
-library(frabento)       # このパッケージ
-library(tidyverse)      # ggplot2とtidyなデータハンドリング
-library(patchwork)      # ggplotを簡単, キレイにレイアウト 
-library(fontregisterer) # フォントの利用を楽にするため
-library(ggtext)         # element_markdown() を使うため
-library(ggh4x)          # Hacks for ggplot2
-library(emo)
-library(pkgdown)
+```{r setup, message = FALSE, warning = FALSE}
+library(frabento)  # このパッケージ
+library(tidyverse) # ggplot2とtidyなデータハンドリング
+library(patchwork) # ggplotを簡単, キレイにレイアウト 
+library(ragg)      # マルチバイトフォントの利用を楽にするため
+library(ggtext)    # element_markdown() を使うため
+library(ggh4x)     # Hacks for ggplot2
 ```
 
 ### 基本的な使用例
