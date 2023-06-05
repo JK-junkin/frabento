@@ -1,6 +1,6 @@
 Package: frabento
 Title: FRAgmentary BENri TOols
-Version: 0.1.11
+Version: 0.1.12
 Authors@R: 
     person(given = "Junji",
            family = "Kinoshita",
@@ -20,18 +20,18 @@ Imports:
     dplyr,
     foreach,
     ggplot2,
+    ggtext,
     htmltools,
     magrittr,
     scales,
     stringr,
     stringi,
+    systemfonts (>= 0.3.2),
     rnaturalearth
 Suggests: 
     devtools,
     pkgdown,
-    covr,
     ggh4x,
-    ggtext,
     knitr,
     patchwork,
     ragg,
@@ -40,11 +40,9 @@ Suggests:
     tidyr,
     tibble,
     data.table,
-    fontregisterer,
     emo,
     testthat (>= 3.0.0)
 Remotes:
-    Gedevan-Aleksizde/fontregisterer,
     hadley/emo
 Config/testthat/edition: 3
 URL: https://github.com/JK-junkin/frabento
