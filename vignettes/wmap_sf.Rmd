@@ -67,7 +67,7 @@ frabento::wmap_sf(lgl = c(130, 145), ltl = c(30, 45), sf_resol = 10) +
 ```{r ex1-3, collapse = TRUE, message = FALSE}
 frabento::wmap_sf(lgl = c(135, 155), ltl = c(30, 48), sf_resol = 10) +
     theme_void() +
-    ggtitle("高解像度地図 (10 km規模) の白地図")
+    ggtitle("高解像度地図 (10 km規模) の切り抜き白地図")
 ```
 
 ## 2. 既存のデータに地図を足す
@@ -84,5 +84,10 @@ ggplot(data = df) +
 
 ## 3. 任意のsfオブジェクトを使用
 ```{r ex3-1, collapse = TRUE, message = FALSE}
+jpn <- rnaturalearth::ne_countries(scale = 10, country = "japan") %>%
+    sf::st_as_sf()
 
+wmap_sf(sfmap = jpn, aes(geometry = geometry)) +
+    theme_void() +
+    ggtitle("日本だけの白地図")
 ```

@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">frabento</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.10</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.1.12</span>
       </span>
     </div>
 
@@ -60,6 +60,9 @@
     </li>
     <li>
       <a href="../articles/va_resc.html">ggplot: 2軸グラフの数値調整</a>
+    </li>
+    <li>
+      <a href="../articles/wmap_sf.html">wmap_sf()による地図作成例</a>
     </li>
   </ul>
 </li>
@@ -122,13 +125,12 @@
 <h2 id="使用例">使用例<a class="anchor" aria-label="anchor" href="#%E4%BD%BF%E7%94%A8%E4%BE%8B"></a>
 </h2>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co">## devtools::install_github("Gedevan-Aleksizde/fontregisterer", upgrade = "never")</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/JK-junkin/frabento" class="external-link">frabento</a></span><span class="op">)</span>       <span class="co"># このパッケージ</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">fontregisterer</span><span class="op">)</span> <span class="co"># フォントの利用を楽にするため</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://wilkelab.org/ggtext/" class="external-link">ggtext</a></span><span class="op">)</span>         <span class="co"># element_markdown() を使うため</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org" class="external-link">tidyverse</a></span><span class="op">)</span>      <span class="co"># ggplot2とtidyなデータハンドリング</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://patchwork.data-imaginist.com" class="external-link">patchwork</a></span><span class="op">)</span>      <span class="co"># ggplotを簡単, キレイにレイアウト</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ragg.r-lib.org" class="external-link">ragg</a></span><span class="op">)</span>           <span class="co"># Great raster</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/JK-junkin/frabento" class="external-link">frabento</a></span><span class="op">)</span>  <span class="co"># このパッケージ</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://wilkelab.org/ggtext/" class="external-link">ggtext</a></span><span class="op">)</span>    <span class="co"># element_markdown()などを使うため</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org" class="external-link">tidyverse</a></span><span class="op">)</span> <span class="co"># ggplot2とtidyなデータハンドリング</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://patchwork.data-imaginist.com" class="external-link">patchwork</a></span><span class="op">)</span> <span class="co"># ggplotを簡単, キレイにレイアウト </span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ragg.r-lib.org" class="external-link">ragg</a></span><span class="op">)</span></span>
+<span><span class="fu">frabento</span><span class="fu">::</span><span class="fu"><a href="../reference/register_all_fonts.html">register_all_fonts</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># system下のfontを登録する</span></span></code></pre></div>
 <div class="section level3">
 <h3 id="基本的な使用例-軸タイトル">基本的な使用例: 軸タイトル<a class="anchor" aria-label="anchor" href="#%E5%9F%BA%E6%9C%AC%E7%9A%84%E3%81%AA%E4%BD%BF%E7%94%A8%E4%BE%8B-%E8%BB%B8%E3%82%BF%E3%82%A4%E3%83%88%E3%83%AB"></a>
 </h3>
@@ -156,22 +158,28 @@
 <span><span class="co"># use patchwork</span></span>
 <span><span class="va">g</span> <span class="op">|</span> <span class="va">gm</span></span></code></pre></div>
 <p><img src="mixfonts_files/figure-html/eg1-1.png" width="377.952755905512"></p>
-<p>フォントを変更してみます. <code>fontregisterer</code> 📦
-が威力を発揮します.</p>
+<p>フォントを変更してみます.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">gm1</span> <span class="op">&lt;-</span> <span class="va">gm</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>y <span class="op">=</span> <span class="fu"><a href="../reference/mixfonts.html">mixfonts</a></span><span class="op">(</span><span class="st">"CPUE (/1000網)"</span>, asciifont <span class="op">=</span> <span class="st">"Cambria"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">gm2</span> <span class="op">&lt;-</span> <span class="va">gm</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>y <span class="op">=</span> <span class="fu"><a href="../reference/mixfonts.html">mixfonts</a></span><span class="op">(</span><span class="st">"CPUE (/1000網)"</span>, mbytefont <span class="op">=</span> <span class="st">"Meiryo"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">gm3</span> <span class="op">&lt;-</span> <span class="va">gm</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>y <span class="op">=</span> <span class="fu"><a href="../reference/mixfonts.html">mixfonts</a></span><span class="op">(</span><span class="st">"CPUE (/1000網)"</span>,</span>
-<span>                              ascii <span class="op">=</span> <span class="st">"InconsolataForPowerline-g"</span>,</span>
-<span>                              mbyte <span class="op">=</span> <span class="st">"ToppanBunkyuMidashiGothicStdN-ExtraBold"</span><span class="op">)</span><span class="op">)</span></span>
+<span>                              ascii <span class="op">=</span> <span class="st">"Times New Roman"</span>,</span>
+<span>                              mbyte <span class="op">=</span> <span class="st">"HGSSoeiKakugothicUB"</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># patchwork</span></span>
 <span><span class="va">gm1</span> <span class="op">+</span> <span class="va">gm2</span> <span class="op">+</span> <span class="va">gm3</span> <span class="op">+</span> <span class="fu"><a href="https://patchwork.data-imaginist.com/reference/plot_layout.html" class="external-link">plot_layout</a></span><span class="op">(</span>ncol <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span></code></pre></div>
 <p><img src="mixfonts_files/figure-html/eg2-1.png" width="566.929133858268"></p>
-<p>文字列の折り返しもできます.</p>
+<p>文字列の折り返しや上付き (superscript), 下付き (subscript)
+にも対応してます.<br>
+上付き (superscript), 下付き (subscript) いずれの場合も,
+添字部分は中括弧 <strong>{}</strong> で囲んでください.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># 折り返したい位置に改行記号 `\n` を挿入</span></span>
 <span><span class="va">gm4</span> <span class="op">&lt;-</span> <span class="va">gm</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>y <span class="op">=</span> <span class="fu"><a href="../reference/mixfonts.html">mixfonts</a></span><span class="op">(</span><span class="st">"A海区における\n大中型まき網漁業の\nCPUE (/1000網)"</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># 上付き, 下付き文字を使う</span></span>
+<span><span class="va">gm5</span> <span class="op">&lt;-</span> <span class="va">gm</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>y <span class="op">=</span> <span class="fu"><a href="../reference/mixfonts.html">mixfonts</a></span><span class="op">(</span><span class="st">"A海区における産卵量\n(eggs_{a} 10^{12})"</span>,</span>
+<span>                              mbyte <span class="op">=</span> <span class="st">"HGSSoeiKakugothicUB"</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># mixfont() を使わなくても折り返しはできるが, フォントは混在できない.</span></span>
 <span><span class="va">g_</span>  <span class="op">&lt;-</span> <span class="va">g</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>y <span class="op">=</span> <span class="st">"A海区における\n大中型まき網漁業の\nCPUE (/1000網)"</span><span class="op">)</span></span>
@@ -181,7 +189,7 @@
 <span><span class="va">g__</span> <span class="op">&lt;-</span> <span class="va">g_</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>axis.title.y <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_text</a></span><span class="op">(</span>family <span class="op">=</span> <span class="st">"Arial"</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># patchwork</span></span>
-<span><span class="va">gm4</span> <span class="op">+</span> <span class="fu"><a href="https://patchwork.data-imaginist.com/reference/plot_spacer.html" class="external-link">plot_spacer</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="va">g_</span> <span class="op">+</span> <span class="va">g__</span> <span class="op">+</span> <span class="fu"><a href="https://patchwork.data-imaginist.com/reference/plot_layout.html" class="external-link">plot_layout</a></span><span class="op">(</span>ncol <span class="op">=</span> <span class="fl">2</span>, byrow <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<span><span class="va">gm4</span> <span class="op">+</span> <span class="va">gm5</span> <span class="op">+</span> <span class="va">g_</span> <span class="op">+</span> <span class="va">g__</span> <span class="op">+</span> <span class="fu"><a href="https://patchwork.data-imaginist.com/reference/plot_layout.html" class="external-link">plot_layout</a></span><span class="op">(</span>ncol <span class="op">=</span> <span class="fl">2</span>, byrow <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <p><img src="mixfonts_files/figure-html/eg3-1.png" width="453.543307086614"></p>
 </div>
 <div class="section level3">
@@ -236,9 +244,11 @@ fallbackのフォントをどう指定したらよいかがわかりませんが
 <span>              size <span class="op">=</span> <span class="fl">3.5</span><span class="op">)</span></span></code></pre></div>
 <p><img src="mixfonts_files/figure-html/ragg-1.png" width="377.952755905512"></p>
 <ul>
-<li>
-<a href="https://ill-identified.hatenablog.com/entry/2021/09/10/231230" class="external-link">fontregistererの作者のページ</a>
-に日本語フォント周りの情報が色々まとまっています.</li>
+<li>日本語フォント利用のために<a href="https://github.com/Gedevan-Aleksizde/fontregisterer" class="external-link">fontregisterer</a>を読み込んでいましたが,
+同パッケージの更新が2年前で止まっているため,
+R4.2.2以降??ではインストールできなくなった模様です.
+fontregistererについては, <a href="https://ill-identified.hatenablog.com/entry/2021/09/10/231230" class="external-link">作者のページ</a>
+に情報があります.</li>
 </ul>
 </div>
 </div>

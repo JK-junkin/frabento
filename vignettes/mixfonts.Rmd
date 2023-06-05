@@ -33,11 +33,11 @@ library(emo)
 ## 使用例
 ```{r setup, message = FALSE, warning = FALSE}
 library(frabento)  # このパッケージ
-library(ggtext)    # element_markdown() を使うため
+library(ggtext)    # element_markdown()などを使うため
 library(tidyverse) # ggplot2とtidyなデータハンドリング
 library(patchwork) # ggplotを簡単, キレイにレイアウト 
 library(ragg)
-frabento::register_all_fonts()
+frabento::register_all_fonts() # system下のfontを登録する
 ```
 
 ### 基本的な使用例: 軸タイトル
@@ -66,24 +66,29 @@ gm <- g + labs(y = mixfonts("CPUE (/1000網)")) +
 g | gm
 ```
 
-フォントを変更してみます. `fontregisterer` `r emo::ji("package")` が威力を発揮します.
+フォントを変更してみます.
 
 ```{r eg2, fig.width = 15/2.54, fig.asp = 1/3} 
 gm1 <- gm + labs(y = mixfonts("CPUE (/1000網)", asciifont = "Cambria"))
 gm2 <- gm + labs(y = mixfonts("CPUE (/1000網)", mbytefont = "Meiryo"))
 gm3 <- gm + labs(y = mixfonts("CPUE (/1000網)",
-                              ascii = "InconsolataForPowerline-g",
-                              mbyte = "ToppanBunkyuMidashiGothicStdN-ExtraBold"))
+                              ascii = "Times New Roman",
+                              mbyte = "HGSSoeiKakugothicUB"))
 
 # patchwork
 gm1 + gm2 + gm3 + plot_layout(ncol = 3)
 ```
 
-文字列の折り返しもできます. 
+文字列の折り返しや上付き (superscript), 下付き (subscript) にも対応してます.  
+上付き (superscript), 下付き (subscript) いずれの場合も, 添字部分は中括弧 **{}** で囲んでください.
 
 ```{r eg3, fig.asp = 8/10, fig.width = 12/2.54}
 # 折り返したい位置に改行記号 `\n` を挿入
 gm4 <- gm + labs(y = mixfonts("A海区における\n大中型まき網漁業の\nCPUE (/1000網)"))
+
+# 上付き, 下付き文字を使う
+gm5 <- gm + labs(y = mixfonts("A海区における産卵量\n(eggs_{a} 10^{12})",
+                              mbyte = "HGSSoeiKakugothicUB"))
 
 # mixfont() を使わなくても折り返しはできるが, フォントは混在できない.
 g_  <- g + labs(y = "A海区における\n大中型まき網漁業の\nCPUE (/1000網)")
@@ -93,7 +98,7 @@ g_  <- g + labs(y = "A海区における\n大中型まき網漁業の\nCPUE (/10
 g__ <- g_ + theme(axis.title.y = element_text(family = "Arial"))
 
 # patchwork
-gm4 + plot_spacer() + g_ + g__ + plot_layout(ncol = 2, byrow = TRUE)
+gm4 + gm5 + g_ + g__ + plot_layout(ncol = 2, byrow = TRUE)
 ```
 
 ### 使用例2: 凡例
@@ -142,6 +147,4 @@ ggplot() + theme(aspect.ratio = 1/2) +
               size = 3.5)
 ```
 
-- [fontregistererの作者のページ](https://ill-identified.hatenablog.com/entry/2021/09/10/231230)
-  に日本語フォント周りの情報が色々まとまっています.
-
+- 日本語フォント利用のために[fontregisterer](https://github.com/Gedevan-Aleksizde/fontregisterer)を読み込んでいましたが, 同パッケージの更新が2年前で止まっているため, R4.2.2以降??ではインストールできなくなった模様です. fontregistererについては, [作者のページ](https://ill-identified.hatenablog.com/entry/2021/09/10/231230) に情報があります.

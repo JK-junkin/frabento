@@ -22,6 +22,9 @@
     <loc>/articles/va_resc.html</loc>
   </url>
   <url>
+    <loc>/articles/wmap_sf.html</loc>
+  </url>
+  <url>
     <loc>/authors.html</loc>
   </url>
   <url>
@@ -38,6 +41,9 @@
   </url>
   <url>
     <loc>/reference/expfn.html</loc>
+  </url>
+  <url>
+    <loc>/reference/get_styles.html</loc>
   </url>
   <url>
     <loc>/reference/index.html</loc>
@@ -73,6 +79,9 @@
     <loc>/reference/pipe.html</loc>
   </url>
   <url>
+    <loc>/reference/register_all_fonts.html</loc>
+  </url>
+  <url>
     <loc>/reference/repl2blank.html</loc>
   </url>
   <url>
@@ -83,5 +92,8 @@
   </url>
   <url>
     <loc>/reference/va_resc.html</loc>
+  </url>
+  <url>
+    <loc>/reference/wmap_sf.html</loc>
   </url>
 </urlset>

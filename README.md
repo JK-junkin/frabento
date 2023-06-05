@@ -7,7 +7,7 @@
 <!-- badges: end -->
 
 `frabento` provides fragmentary assets for R language mainly in ggplot visualization.
-The package name is an abbreviation of FRAgmentary BENri TOols. (いちおう FRA も掛けてます)
+The package name is an abbreviation of FRAgmentary BENri TOols.
 
 ## インストール
 

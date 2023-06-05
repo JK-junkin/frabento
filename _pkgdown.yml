@@ -14,12 +14,18 @@ reference:
 - contents:
   - starts_with("coord_")
 
-- title: Use in scale_*()
+- title: Return function
   desc: >
 - contents:
-  - starts_with("label_")
+  - starts_with("label_|squash_")
 
 - title: Return values
   desc: >
 - contents:
-  - -starts_with("coord_|label_")
+  - -starts_with("coord_|label_|squash_|wmap_|register_")
+
+- title: Others
+  desc: >
+- contents:
+  - starts_with("wmap_|register_")
+
