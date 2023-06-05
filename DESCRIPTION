@@ -14,7 +14,6 @@ LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.3
 Depends:
-    sf
 Imports: 
     purrr,
     dplyr,
@@ -24,6 +23,7 @@ Imports:
     htmltools,
     magrittr,
     scales,
+    sf,
     stringr,
     stringi,
     systemfonts (>= 0.3.2),
@@ -41,7 +41,8 @@ Suggests:
     tibble,
     data.table,
     emo,
-    testthat (>= 3.0.0)
+    testthat (>= 3.0.0),
+    rnaturalearthdata
 Remotes:
     hadley/emo
 Config/testthat/edition: 3
