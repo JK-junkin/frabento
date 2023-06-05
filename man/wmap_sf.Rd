@@ -8,7 +8,7 @@ wmap_sf(
   sfmap = NULL,
   sf_resol = 50,
   pacific_centered = TRUE,
-  as_gg = FALSE,
+  as_gg = TRUE,
   lgl = NULL,
   ltl = NULL,
   lgb = NULL,
@@ -26,7 +26,7 @@ wmap_sf(
 Pacific Ocean; if FALSE, the world map is centred on the prime meridian (i.e.
 the meridian on Greenwich).}
 
-\item{as_gg}{Whether or not to make a gg object, Default: FALSE (not make)}
+\item{as_gg}{Whether or not to make a gg object, Default: TRUE}
 
 \item{lgl}{Longitude limits, Default: NULL}
 
@@ -52,25 +52,28 @@ coordinate system based on the WGS84. It has not yet been checked whether
 there are any problems with other coordinate reference systems.
 }
 \examples{
-if(interactive()){
+
  library(ggplot2)
  library(frabento)
  df <- data.frame(Long = seq(140, 240, by = 5),
                   Lati = runif(n = 21, min = 40, max = 65),
                   group = c(rep(1:5, each = 4), 6))
  
- # Default: overlay worldmap on data points
- ggplot() +
-   geom_point(data = df, aes(x = Long, y = Lati, color = as.factor(group))) +
-   wmap_sf(lgl = c(135, 245), ltl = c(35, 70))
+ # plain world map as pacific centered (default)
+ wmap_sf()
  
- # overlay data points on worldmap
- wmap_sf(as_gg = TRUE, lgl = c(135, 245), ltl = c(35, 70)) +
+ # plain world map as Greenwich centered
+ wmap_sf(pacific_centered = FALSE)
+ 
+ # Trim worldmap and overlay data points on worldmap
+ wmap_sf(lgl = c(135, 245), ltl = c(35, 70)) +
    geom_point(data = df, aes(x = Long, y = Lati, color = as.factor(group)))
 
- # plain world map as pacific centered (default)
- wmap_sf(as_gg = TRUE, pacific_centered = TRUE)
- }
+ # Trim world map and overlay worldmap on data points
+ ggplot() +
+   geom_point(data = df, aes(x = Long, y = Lati, color = as.factor(group))) +
+   wmap_sf(as_gg = FALSE, lgl = c(135, 245), ltl = c(35, 70))
+
 }
 \seealso{
 \code{\link[rnaturalearth]{ne_countries}}
