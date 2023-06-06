@@ -93,7 +93,7 @@
       <h1 data-toc-skip>ggplot: ASCIIとマルチバイト文字の混在表記</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/JK-junkin/frabento/blob/HEAD/../../vignettes/mixfonts.Rmd" class="external-link"><code>../../vignettes/mixfonts.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/JK-junkin/frabento/blob/HEAD/vignettes/mixfonts.Rmd" class="external-link"><code>vignettes/mixfonts.Rmd</code></a></small>
       <div class="hidden name"><code>mixfonts.Rmd</code></div>
 
     </div>
@@ -104,46 +104,45 @@
 <h2 id="はじめに">はじめに<a class="anchor" aria-label="anchor" href="#%E3%81%AF%E3%81%98%E3%82%81%E3%81%AB"></a>
 </h2>
 <ul>
-<li>世間的には (?) 特殊な事例かもしれませんが, <code>ggplot2</code>
-で作図を行う時, 英数字と日本語が混ざったラベル—例えば<strong>CPUE
-(/1000網)</strong>—のフォントを英数字と日本語で 別にしてください,
-という指摘を受けることがあります.</li>
-<li>ggplotにおける図タイトルや軸ラベル,
-凡例ラベル等のそれぞれのフォントは,
-<code><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">ggplot2::theme()</a></code>等を使って個別に変更することができます.
-しかし, <strong>一つの文字列内</strong>で
-複数のフォントを混在させるのは, かなりの手間がかかります.</li>
-<li>そこで, その手間を少しでも楽にするために作成したのが
-<code><a href="../reference/mixfonts.html">mixfonts()</a></code> です.</li>
+<li>特殊な事例かもしれませんが, 英数字 (シングルバイト文字) と日本語
+(マルチバイ ト文字) のフォントを混在させて作図しなさい,
+という縛りを受けることがあります. ——例えば<strong>CPUE
+(/1000網)</strong>——の日本語フォント部は<strong>MS ゴシック</strong>で,
+英数字 は<strong>Arial</strong>で, みたいな感じです.</li>
+<li>ggplot2では図タイトルや軸ラベル, 凡例ラベル等のそれぞれのフォントは,
+<code><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">ggplot2::theme()</a></code>等の引数を個別に指定することで容易に変更することができます.
+しかし, <strong>一つの文字列内</strong>で複数のフォントを混在させるのは,
+かなりの手間です. 例えば, <a href="https://stackoverflow.com/questions/52852882/use-different-font-sizes-for-different-portions-of-text-in-ggplot2-title" class="external-link">stack
+overflow</a>に解決策の一例がありますが, 文字列が長くなるのと,
+htmlの知識が必要になります.</li>
+<li>そこで,
+フォント混在作図問題を少しでも楽にするために<code><a href="../reference/mixfonts.html">mixfonts()</a></code>を作成しました.</li>
 </ul>
-<p><strong>【重要】</strong> <code>ragg</code> 📦
-がフォント混在の問題を解決してくれるかもしれません！<br>
-下記の参考情報をご覧ください.
-いい仕事をしてくれる方々に心よりの感謝！！</p>
 </div>
 <div class="section level2">
 <h2 id="使用例">使用例<a class="anchor" aria-label="anchor" href="#%E4%BD%BF%E7%94%A8%E4%BE%8B"></a>
 </h2>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/JK-junkin/frabento" class="external-link">frabento</a></span><span class="op">)</span>  <span class="co"># このパッケージ</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span>   <span class="co"># 作図</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://wilkelab.org/ggtext/" class="external-link">ggtext</a></span><span class="op">)</span>    <span class="co"># element_markdown()などを使うため</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org" class="external-link">tidyverse</a></span><span class="op">)</span> <span class="co"># ggplot2とtidyなデータハンドリング</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://patchwork.data-imaginist.com" class="external-link">patchwork</a></span><span class="op">)</span> <span class="co"># ggplotを簡単, キレイにレイアウト </span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ragg.r-lib.org" class="external-link">ragg</a></span><span class="op">)</span></span>
-<span><span class="fu">frabento</span><span class="fu">::</span><span class="fu"><a href="../reference/register_all_fonts.html">register_all_fonts</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># system下のfontを登録する</span></span></code></pre></div>
-<div class="section level3">
-<h3 id="基本的な使用例-軸タイトル">基本的な使用例: 軸タイトル<a class="anchor" aria-label="anchor" href="#%E5%9F%BA%E6%9C%AC%E7%9A%84%E3%81%AA%E4%BD%BF%E7%94%A8%E4%BE%8B-%E8%BB%B8%E3%82%BF%E3%82%A4%E3%83%88%E3%83%AB"></a>
-</h3>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ragg.r-lib.org" class="external-link">ragg</a></span><span class="op">)</span>      <span class="co"># マルチバイト文字のfallback</span></span>
+<span><span class="fu">frabento</span><span class="fu">::</span><span class="fu"><a href="../reference/register_all_fonts.html">register_all_fonts</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># system下のfontを登録. fontregistererより移植</span></span></code></pre></div>
 <p><code><a href="../reference/mixfonts.html">mixfonts()</a></code>では,
 デフォルトのASCII文字フォントを<strong>Arial</strong>,
 マルチバイト文字フォントを<strong>MS Gothic</strong>にしています.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme_get.html" class="external-link">theme_set</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_linedraw</a></span><span class="op">(</span>base_family <span class="op">=</span> <span class="st">"MS Gothic"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>          <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>aspect.ratio <span class="op">=</span> <span class="fl">1</span><span class="op">/</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span> <span class="co"># アスペクト(縦横)比</span></span>
-<span></span>
-<span><span class="co"># 仮想データ作成</span></span>
-<span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span>cpue <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">30</span>, mean <span class="op">=</span> <span class="fl">500</span>, sd <span class="op">=</span> <span class="fl">35</span><span class="op">)</span>,</span>
-<span>                      year <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">1990</span>, length.out <span class="op">=</span> <span class="fl">30</span>, by <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="co"># ベースのthemeをsetしておく</span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme_get.html" class="external-link">theme_set</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_linedraw</a></span><span class="op">(</span>base_family <span class="op">=</span> <span class="st">"MS Gothic"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>          <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>aspect.ratio <span class="op">=</span> <span class="fl">1</span><span class="op">/</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span> <span class="co"># アスペクト(縦横)比</span></span></code></pre></div>
+<div class="section level3">
+<h3 id="例1-軸タイトル-axis-title">例1: 軸タイトル axis.title<a class="anchor" aria-label="anchor" href="#%E4%BE%8B1-%E8%BB%B8%E3%82%BF%E3%82%A4%E3%83%88%E3%83%AB-axis-title"></a>
+</h3>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># 仮想データ作成</span></span>
+<span><span class="va">dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>cpue <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">30</span>, mean <span class="op">=</span> <span class="fl">500</span>, sd <span class="op">=</span> <span class="fl">35</span><span class="op">)</span>,</span>
+<span>                  year <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">1990</span>, length.out <span class="op">=</span> <span class="fl">30</span>, by <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># まずはmixfontsを使わない</span></span>
 <span><span class="va">g</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">dat</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">year</span>, y <span class="op">=</span> <span class="va">cpue</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
@@ -157,9 +156,11 @@
 <span></span>
 <span><span class="co"># use patchwork</span></span>
 <span><span class="va">g</span> <span class="op">|</span> <span class="va">gm</span></span></code></pre></div>
-<p><img src="mixfonts_files/figure-html/eg1-1.png" width="377.952755905512"></p>
-<p>フォントを変更してみます.</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<p><img src="mixfonts_files/figure-html/eg1-1-1.png" width="377.952755905512"></p>
+<div class="section level4">
+<h4 id="フォントを任意のものに変更">フォントを任意のものに変更<a class="anchor" aria-label="anchor" href="#%E3%83%95%E3%82%A9%E3%83%B3%E3%83%88%E3%82%92%E4%BB%BB%E6%84%8F%E3%81%AE%E3%82%82%E3%81%AE%E3%81%AB%E5%A4%89%E6%9B%B4"></a>
+</h4>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">gm1</span> <span class="op">&lt;-</span> <span class="va">gm</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>y <span class="op">=</span> <span class="fu"><a href="../reference/mixfonts.html">mixfonts</a></span><span class="op">(</span><span class="st">"CPUE (/1000網)"</span>, asciifont <span class="op">=</span> <span class="st">"Cambria"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">gm2</span> <span class="op">&lt;-</span> <span class="va">gm</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>y <span class="op">=</span> <span class="fu"><a href="../reference/mixfonts.html">mixfonts</a></span><span class="op">(</span><span class="st">"CPUE (/1000網)"</span>, mbytefont <span class="op">=</span> <span class="st">"Meiryo"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">gm3</span> <span class="op">&lt;-</span> <span class="va">gm</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>y <span class="op">=</span> <span class="fu"><a href="../reference/mixfonts.html">mixfonts</a></span><span class="op">(</span><span class="st">"CPUE (/1000網)"</span>,</span>
@@ -168,74 +169,103 @@
 <span></span>
 <span><span class="co"># patchwork</span></span>
 <span><span class="va">gm1</span> <span class="op">+</span> <span class="va">gm2</span> <span class="op">+</span> <span class="va">gm3</span> <span class="op">+</span> <span class="fu"><a href="https://patchwork.data-imaginist.com/reference/plot_layout.html" class="external-link">plot_layout</a></span><span class="op">(</span>ncol <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span></code></pre></div>
-<p><img src="mixfonts_files/figure-html/eg2-1.png" width="566.929133858268"></p>
+<p><img src="mixfonts_files/figure-html/eg1-2-1.png" width="566.929133858268"></p>
+</div>
+<div class="section level4">
+<h4 id="折り返し-上付き-下付き">折り返し, 上付き, 下付き<a class="anchor" aria-label="anchor" href="#%E6%8A%98%E3%82%8A%E8%BF%94%E3%81%97-%E4%B8%8A%E4%BB%98%E3%81%8D-%E4%B8%8B%E4%BB%98%E3%81%8D"></a>
+</h4>
 <p>文字列の折り返しや上付き (superscript), 下付き (subscript)
 にも対応してます.<br>
-上付き (superscript), 下付き (subscript) いずれの場合も,
-添字部分は中括弧 <strong>{}</strong> で囲んでください.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+上付き・下付きいずれの場合も, 添字部分は中括弧 <strong>{}</strong>
+で囲んでください. 次のコードを参照.</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># 折り返したい位置に改行記号 `\n` を挿入</span></span>
 <span><span class="va">gm4</span> <span class="op">&lt;-</span> <span class="va">gm</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>y <span class="op">=</span> <span class="fu"><a href="../reference/mixfonts.html">mixfonts</a></span><span class="op">(</span><span class="st">"A海区における\n大中型まき網漁業の\nCPUE (/1000網)"</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># 上付き, 下付き文字を使う</span></span>
+<span><span class="co"># 上付き, 下付き</span></span>
 <span><span class="va">gm5</span> <span class="op">&lt;-</span> <span class="va">gm</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>y <span class="op">=</span> <span class="fu"><a href="../reference/mixfonts.html">mixfonts</a></span><span class="op">(</span><span class="st">"A海区における産卵量\n(eggs_{a} 10^{12})"</span>,</span>
 <span>                              mbyte <span class="op">=</span> <span class="st">"HGSSoeiKakugothicUB"</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># mixfont() を使わなくても折り返しはできるが, フォントは混在できない.</span></span>
+<span><span class="co"># mixfont() を使わなくても折り返しはできる (フォントの混在は不可).</span></span>
 <span><span class="va">g_</span>  <span class="op">&lt;-</span> <span class="va">g</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>y <span class="op">=</span> <span class="st">"A海区における\n大中型まき網漁業の\nCPUE (/1000網)"</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># フォントを変更すると日本語部分が豆腐化※ --&gt; 上書したフォントが優勢になる.</span></span>
+<span><span class="co"># フォントをASCII (シングルバイト文字) に変更すると日本語部分が豆腐化※.</span></span>
+<span><span class="co"># フォントが上書きされる.</span></span>
 <span><span class="co"># ※ GitHub Pages上では日本語部分が補完されて表示されているかもしれません.</span></span>
 <span><span class="va">g__</span> <span class="op">&lt;-</span> <span class="va">g_</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>axis.title.y <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_text</a></span><span class="op">(</span>family <span class="op">=</span> <span class="st">"Arial"</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># patchwork</span></span>
 <span><span class="va">gm4</span> <span class="op">+</span> <span class="va">gm5</span> <span class="op">+</span> <span class="va">g_</span> <span class="op">+</span> <span class="va">g__</span> <span class="op">+</span> <span class="fu"><a href="https://patchwork.data-imaginist.com/reference/plot_layout.html" class="external-link">plot_layout</a></span><span class="op">(</span>ncol <span class="op">=</span> <span class="fl">2</span>, byrow <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-<p><img src="mixfonts_files/figure-html/eg3-1.png" width="453.543307086614"></p>
+<p><img src="mixfonts_files/figure-html/eg1-3-1.png" width="453.543307086614"></p>
+</div>
 </div>
 <div class="section level3">
-<h3 id="使用例2-凡例">使用例2: 凡例<a class="anchor" aria-label="anchor" href="#%E4%BD%BF%E7%94%A8%E4%BE%8B2-%E5%87%A1%E4%BE%8B"></a>
+<h3 id="例2-凡例-legend">例2: 凡例 legend<a class="anchor" aria-label="anchor" href="#%E4%BE%8B2-%E5%87%A1%E4%BE%8B-legend"></a>
 </h3>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># 仮想データ</span></span>
-<span><span class="va">d2</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span>cpue <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">30</span>, mean <span class="op">=</span> <span class="fl">300</span>, sd <span class="op">=</span> <span class="fl">25</span><span class="op">)</span>,</span>
-<span>                              <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">30</span>, mean <span class="op">=</span> <span class="fl">500</span>, sd <span class="op">=</span> <span class="fl">35</span><span class="op">)</span><span class="op">)</span>,</span>
-<span>                     year <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">1990</span>, length.out <span class="op">=</span> <span class="fl">30</span>, by <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>, times <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>,</span>
-<span>                     age  <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"0歳魚"</span>, <span class="st">"1歳魚+"</span><span class="op">)</span>, each <span class="op">=</span> <span class="fl">30</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">d2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>cpue <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">30</span>, mean <span class="op">=</span> <span class="fl">300</span>, sd <span class="op">=</span> <span class="fl">25</span><span class="op">)</span>,</span>
+<span>                          <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">30</span>, mean <span class="op">=</span> <span class="fl">500</span>, sd <span class="op">=</span> <span class="fl">35</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>                 year <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">1990</span>, length.out <span class="op">=</span> <span class="fl">30</span>, by <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>, times <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>,</span>
+<span>                 age  <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"0歳魚"</span>, <span class="st">"1歳魚+"</span><span class="op">)</span>, each <span class="op">=</span> <span class="fl">30</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">p0</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">d2</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">year</span>, y <span class="op">=</span> <span class="va">cpue</span>, group <span class="op">=</span> <span class="va">age</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_path</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>color <span class="op">=</span> <span class="va">age</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span><span class="va">pbase</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">d2</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">year</span>, y <span class="op">=</span> <span class="va">cpue</span>, group <span class="op">=</span> <span class="va">age</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_path</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>color <span class="op">=</span> <span class="va">age</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">p0</span> <span class="op">&lt;-</span> <span class="va">pbase</span> <span class="op">+</span></span>
 <span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>legend.text <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_text</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"blue"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"混在させない"</span><span class="op">)</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"混在できない"</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">pm1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">d2</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">year</span>, y <span class="op">=</span> <span class="va">cpue</span>, group <span class="op">=</span> <span class="va">age</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_path</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>color <span class="op">=</span> <span class="va">age</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_colour_discrete.html" class="external-link">scale_color_discrete</a></span><span class="op">(</span>labels <span class="op">=</span> <span class="fu"><a href="../reference/label_mixfonts.html">label_mixfonts</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>legend.text <span class="op">=</span> <span class="fu">ggtext</span><span class="fu">::</span><span class="fu"><a href="https://wilkelab.org/ggtext/reference/element_markdown.html" class="external-link">element_markdown</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"blue"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"混在 by label_mixfonts()"</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">pm2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">d2</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">year</span>, y <span class="op">=</span> <span class="va">cpue</span>, group <span class="op">=</span> <span class="va">age</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html" class="external-link">geom_path</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>color <span class="op">=</span> <span class="va">age</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span><span class="co"># mixfonts()を使う (値の指定が必要 =&gt; 値を変更できる利点も)</span></span>
+<span><span class="va">pm1</span> <span class="op">&lt;-</span> <span class="va">pbase</span> <span class="op">+</span></span>
 <span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_colour_discrete.html" class="external-link">scale_color_discrete</a></span><span class="op">(</span>labels <span class="op">=</span> <span class="fu"><a href="../reference/mixfonts.html">mixfonts</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"0歳魚"</span>, <span class="st">"1歳魚以上"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>legend.text <span class="op">=</span> <span class="fu">ggtext</span><span class="fu">::</span><span class="fu"><a href="https://wilkelab.org/ggtext/reference/element_markdown.html" class="external-link">element_markdown</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"blue"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"混在 by mixfonts()"</span><span class="op">)</span></span>
 <span></span>
+<span><span class="co"># label_mixfonts()を使う (関数を返すので値の指定は不要. dataの値は変更できない)</span></span>
+<span><span class="va">pm2</span> <span class="op">&lt;-</span> <span class="va">pbase</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_colour_discrete.html" class="external-link">scale_color_discrete</a></span><span class="op">(</span>labels <span class="op">=</span> <span class="fu"><a href="../reference/label_mixfonts.html">label_mixfonts</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>legend.text <span class="op">=</span> <span class="fu">ggtext</span><span class="fu">::</span><span class="fu"><a href="https://wilkelab.org/ggtext/reference/element_markdown.html" class="external-link">element_markdown</a></span><span class="op">(</span>color <span class="op">=</span> <span class="st">"blue"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"混在 by label_mixfonts()"</span><span class="op">)</span></span>
+<span></span>
 <span><span class="co"># patchwork</span></span>
-<span><span class="va">p0</span> <span class="op">+</span> <span class="va">pm1</span> <span class="op">+</span> <span class="fu"><a href="https://patchwork.data-imaginist.com/reference/plot_spacer.html" class="external-link">plot_spacer</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="va">pm2</span> <span class="op">+</span> <span class="fu"><a href="https://patchwork.data-imaginist.com/reference/plot_layout.html" class="external-link">plot_layout</a></span><span class="op">(</span>ncol <span class="op">=</span> <span class="fl">2</span>, byrow <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-<p><img src="mixfonts_files/figure-html/eg4-1.png" width="566.929133858268"></p>
+<span><span class="va">p0</span> <span class="op">+</span> <span class="fu"><a href="https://patchwork.data-imaginist.com/reference/plot_spacer.html" class="external-link">plot_spacer</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="va">pm1</span> <span class="op">+</span> <span class="va">pm2</span> <span class="op">+</span> <span class="fu"><a href="https://patchwork.data-imaginist.com/reference/plot_layout.html" class="external-link">plot_layout</a></span><span class="op">(</span>ncol <span class="op">=</span> <span class="fl">2</span>, byrow <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<p><img src="mixfonts_files/figure-html/eg2-1-1.png" width="566.929133858268"></p>
+</div>
+<div class="section level3">
+<h3 id="例3-facetタイトル-パネル内テキスト-strip-text-geom_richtext">例3: facetタイトル + パネル内テキスト strip.text &amp;
+geom_richtext<a class="anchor" aria-label="anchor" href="#%E4%BE%8B3-facet%E3%82%BF%E3%82%A4%E3%83%88%E3%83%AB-%E3%83%91%E3%83%8D%E3%83%AB%E5%86%85%E3%83%86%E3%82%AD%E3%82%B9%E3%83%88-strip-text-geom_richtext"></a>
+</h3>
+<p>パネル内テキストは元のデータ (ラベル部分)
+を<code><a href="../reference/mixfonts.html">mixfonts()</a></code>で変換します.</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">intext</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>age <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"0歳魚"</span>, <span class="st">"1歳魚+"</span><span class="op">)</span>,</span>
+<span>                     text <span class="op">=</span> <span class="fu"><a href="../reference/mixfonts.html">mixfonts</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"(1) 0歳魚"</span>, <span class="st">"(2) 1歳以上"</span><span class="op">)</span>,</span>
+<span>                                     asciifont <span class="op">=</span> <span class="st">"Arial Rounded MT Bold"</span>,</span>
+<span>                                     mbytefont <span class="op">=</span> <span class="st">"HGSSoeiKakugothicUB"</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">prich</span> <span class="op">&lt;-</span> </span>
+<span>    <span class="va">pbase</span> <span class="op">+</span> </span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html" class="external-link">facet_wrap</a></span><span class="op">(</span><span class="op">~</span> <span class="va">age</span>, labeller <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labeller.html" class="external-link">labeller</a></span><span class="op">(</span>age <span class="op">=</span> <span class="fu"><a href="../reference/label_mixfonts.html">label_mixfonts</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>strip.text <span class="op">=</span> <span class="fu"><a href="https://wilkelab.org/ggtext/reference/element_markdown.html" class="external-link">element_markdown</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">15</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu">ggtext</span><span class="fu">::</span><span class="fu"><a href="https://wilkelab.org/ggtext/reference/geom_richtext.html" class="external-link">geom_richtext</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">intext</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">1990</span>, y <span class="op">=</span> <span class="fl">400</span>, label <span class="op">=</span> <span class="va">text</span><span class="op">)</span>,</span>
+<span>                          hjust <span class="op">=</span> <span class="fl">0</span>, label.size <span class="op">=</span> <span class="fl">0</span>, label.color <span class="op">=</span> <span class="cn">NA</span>, fill <span class="op">=</span> <span class="cn">NA</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"facetタイトル + パネル内"</span><span class="op">)</span></span>
+<span>    </span>
+<span><span class="va">prich</span></span></code></pre></div>
+<p><img src="mixfonts_files/figure-html/eg3-1-1.png" width="566.929133858268"></p>
 </div>
 <div class="section level3">
 <h3 id="参考情報">参考情報<a class="anchor" aria-label="anchor" href="#%E5%8F%82%E8%80%83%E6%83%85%E5%A0%B1"></a>
 </h3>
 <ul>
-<li><p>類似した問題は <a href="https://stackoverflow.com/questions/52852882/use-different-font-sizes-for-different-portions-of-text-in-ggplot2-title" class="external-link">stack
-overflow</a> においてすでに解決策が提示されています.
-これにインスピレーションを受け, この関数を作成しました.</p></li>
-<li><p><a href="https://www.tidyverse.org/blog/2021/02/modern-text-features/" class="external-link"><strong>ragg</strong>の紹介ブログ</a>:
+<li>
+<a href="https://www.tidyverse.org/blog/2021/02/modern-text-features/" class="external-link"><strong>ragg</strong>の紹介ブログ</a>:
 fallbackのフォントをどう指定したらよいかがわかりませんが,
 指定できるのであれば これ以上のパッケージはないと思います.
-今後の動向に注目です.</p></li>
+今後の動向に注目です.</li>
 </ul>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># 豆腐化した文字をfallback (最後の拠り所) で補完する</span></span>
 <span><span class="va">fallback_text</span> <span class="op">&lt;-</span> <span class="st">"This is English, この文は日本語です 🚀"</span></span>
 <span></span>
@@ -243,6 +273,9 @@ fallbackのフォントをどう指定したらよいかがわかりませんが
 <span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_text.html" class="external-link">geom_text</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">0</span>, y <span class="op">=</span> <span class="fl">1</span>, label <span class="op">=</span> <span class="va">fallback_text</span>, family <span class="op">=</span> <span class="st">"Arial"</span><span class="op">)</span>,</span>
 <span>              size <span class="op">=</span> <span class="fl">3.5</span><span class="op">)</span></span></code></pre></div>
 <p><img src="mixfonts_files/figure-html/ragg-1.png" width="377.952755905512"></p>
+<div class="section level4">
+<h4 id="その他">その他<a class="anchor" aria-label="anchor" href="#%E3%81%9D%E3%81%AE%E4%BB%96"></a>
+</h4>
 <ul>
 <li>日本語フォント利用のために<a href="https://github.com/Gedevan-Aleksizde/fontregisterer" class="external-link">fontregisterer</a>を読み込んでいましたが,
 同パッケージの更新が2年前で止まっているため,
@@ -250,6 +283,7 @@ R4.2.2以降??ではインストールできなくなった模様です.
 fontregistererについては, <a href="https://ill-identified.hatenablog.com/entry/2021/09/10/231230" class="external-link">作者のページ</a>
 に情報があります.</li>
 </ul>
+</div>
 </div>
 </div>
   </div>

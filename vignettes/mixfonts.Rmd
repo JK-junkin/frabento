@@ -10,6 +10,8 @@ vignette: >
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
+  message = FALSE,
+  warning = FALSE,
   comment = "#>",
   fig.width = 10/2.54,
   dpi = 96,
@@ -19,38 +21,40 @@ library(emo)
 ```
 
 ## はじめに
-- 世間的には (?) 特殊な事例かもしれませんが, `ggplot2` で作図を行う時, 
-  英数字と日本語が混ざったラベル—例えば**CPUE (/1000網)**—のフォントを英数字と日本語で
-  別にしてください, という指摘を受けることがあります.
-- ggplotにおける図タイトルや軸ラベル, 凡例ラベル等のそれぞれのフォントは,
-  `ggplot2::theme()`等を使って個別に変更することができます. しかし, **一つの文字列内**で
-  複数のフォントを混在させるのは, かなりの手間がかかります. 
-- そこで, その手間を少しでも楽にするために作成したのが `mixfonts()` です.  
-
-**【重要】** `ragg` `r emo::ji("package")` がフォント混在の問題を解決してくれるかもしれません！  
-下記の参考情報をご覧ください. いい仕事をしてくれる方々に心よりの感謝！！
+- 特殊な事例かもしれませんが, 英数字 (シングルバイト文字) と日本語 (マルチバイ
+  ト文字) のフォントを混在させて作図しなさい, という縛りを受けることがあります.
+  ——例えば**CPUE (/1000網)**——の日本語フォント部は**MS ゴシック**で, 英数字
+  は**Arial**で, みたいな感じです.
+- ggplot2では図タイトルや軸ラベル, 凡例ラベル等のそれぞれのフォントは,
+  `ggplot2::theme()`等の引数を個別に指定することで容易に変更することができます.
+  しかし, **一つの文字列内**で複数のフォントを混在させるのは, かなりの手間です. 
+  例えば, [stack overflow](https://stackoverflow.com/questions/52852882/use-different-font-sizes-for-different-portions-of-text-in-ggplot2-title)に解決策の一例がありますが, 文字列が長くなるのと, htmlの知識が必要になります.
+- そこで, フォント混在作図問題を少しでも楽にするために`mixfonts()`を作成しました.  
 
 ## 使用例
-```{r setup, message = FALSE, warning = FALSE}
+```{r setup}
 library(frabento)  # このパッケージ
+library(ggplot2)   # 作図
 library(ggtext)    # element_markdown()などを使うため
-library(tidyverse) # ggplot2とtidyなデータハンドリング
 library(patchwork) # ggplotを簡単, キレイにレイアウト 
-library(ragg)
-frabento::register_all_fonts() # system下のfontを登録する
+library(ragg)      # マルチバイト文字のfallback
+frabento::register_all_fonts() # system下のfontを登録. fontregistererより移植
 ```
 
-### 基本的な使用例: 軸タイトル
 `mixfonts()`では, デフォルトのASCII文字フォントを**Arial**,
 マルチバイト文字フォントを**MS Gothic**にしています.
 
-```{r eg1, fig.asp = 1/2}
+```{r plot-setting, message = FALSE, warning = FALSE}
+# ベースのthemeをsetしておく
 theme_set(theme_linedraw(base_family = "MS Gothic") +
           theme(aspect.ratio = 1/1)) # アスペクト(縦横)比
+```
 
+### 例1: 軸タイトル axis.title
+```{r eg1-1, fig.asp = 1/2}
 # 仮想データ作成
-dat <- tibble::tibble(cpue = rnorm(n = 30, mean = 500, sd = 35),
-                      year = seq(1990, length.out = 30, by = 1))
+dat <- data.frame(cpue = rnorm(n = 30, mean = 500, sd = 35),
+                  year = seq(1990, length.out = 30, by = 1))
 
 # まずはmixfontsを使わない
 g <- ggplot(data = dat, aes(x = year, y = cpue)) +
@@ -66,9 +70,8 @@ gm <- g + labs(y = mixfonts("CPUE (/1000網)")) +
 g | gm
 ```
 
-フォントを変更してみます.
-
-```{r eg2, fig.width = 15/2.54, fig.asp = 1/3} 
+#### フォントを任意のものに変更
+```{r eg1-2, fig.width = 15/2.54, fig.asp = 1/3} 
 gm1 <- gm + labs(y = mixfonts("CPUE (/1000網)", asciifont = "Cambria"))
 gm2 <- gm + labs(y = mixfonts("CPUE (/1000網)", mbytefont = "Meiryo"))
 gm3 <- gm + labs(y = mixfonts("CPUE (/1000網)",
@@ -79,21 +82,23 @@ gm3 <- gm + labs(y = mixfonts("CPUE (/1000網)",
 gm1 + gm2 + gm3 + plot_layout(ncol = 3)
 ```
 
+#### 折り返し, 上付き, 下付き
 文字列の折り返しや上付き (superscript), 下付き (subscript) にも対応してます.  
-上付き (superscript), 下付き (subscript) いずれの場合も, 添字部分は中括弧 **{}** で囲んでください.
+上付き・下付きいずれの場合も, 添字部分は中括弧 **{}** で囲んでください. 次のコードを参照.
 
-```{r eg3, fig.asp = 8/10, fig.width = 12/2.54}
+```{r eg1-3, fig.asp = 8/10, fig.width = 12/2.54}
 # 折り返したい位置に改行記号 `\n` を挿入
 gm4 <- gm + labs(y = mixfonts("A海区における\n大中型まき網漁業の\nCPUE (/1000網)"))
 
-# 上付き, 下付き文字を使う
+# 上付き, 下付き
 gm5 <- gm + labs(y = mixfonts("A海区における産卵量\n(eggs_{a} 10^{12})",
                               mbyte = "HGSSoeiKakugothicUB"))
 
-# mixfont() を使わなくても折り返しはできるが, フォントは混在できない.
+# mixfont() を使わなくても折り返しはできる (フォントの混在は不可).
 g_  <- g + labs(y = "A海区における\n大中型まき網漁業の\nCPUE (/1000網)")
 
-# フォントを変更すると日本語部分が豆腐化※ --> 上書したフォントが優勢になる.
+# フォントをASCII (シングルバイト文字) に変更すると日本語部分が豆腐化※.
+# フォントが上書きされる.
 # ※ GitHub Pages上では日本語部分が補完されて表示されているかもしれません.
 g__ <- g_ + theme(axis.title.y = element_text(family = "Arial"))
 
@@ -101,39 +106,58 @@ g__ <- g_ + theme(axis.title.y = element_text(family = "Arial"))
 gm4 + gm5 + g_ + g__ + plot_layout(ncol = 2, byrow = TRUE)
 ```
 
-### 使用例2: 凡例
-```{r eg4, fig.asp = 8/10, fig.width = 15/2.54}
+### 例2: 凡例 legend
+```{r eg2-1, fig.asp = 8/10, fig.width = 15/2.54}
 # 仮想データ
-d2 <- tibble::tibble(cpue = c(rnorm(n = 30, mean = 300, sd = 25),
-                              rnorm(n = 30, mean = 500, sd = 35)),
-                     year = rep(seq(1990, length.out = 30, by = 1), times = 2),
-                     age  = rep(c("0歳魚", "1歳魚+"), each = 30))
+d2 <- data.frame(cpue = c(rnorm(n = 30, mean = 300, sd = 25),
+                          rnorm(n = 30, mean = 500, sd = 35)),
+                 year = rep(seq(1990, length.out = 30, by = 1), times = 2),
+                 age  = rep(c("0歳魚", "1歳魚+"), each = 30))
 
-p0 <- ggplot(data = d2, aes(x = year, y = cpue, group = age)) +
-    geom_path(aes(color = age)) +
+pbase <- ggplot(data = d2, aes(x = year, y = cpue, group = age)) +
+    geom_path(aes(color = age))
+
+p0 <- pbase +
     theme(legend.text = element_text(color = "blue")) +
-    labs(title = "混在させない")
+    labs(title = "混在できない")
 
-pm1 <- ggplot(data = d2, aes(x = year, y = cpue, group = age)) +
-    geom_path(aes(color = age)) +
-    scale_color_discrete(labels = label_mixfonts()) +
-    theme(legend.text = ggtext::element_markdown(color = "blue")) +
-    labs(title = "混在 by label_mixfonts()")
-
-pm2 <- ggplot(data = d2, aes(x = year, y = cpue, group = age)) +
-    geom_path(aes(color = age)) +
+# mixfonts()を使う (値の指定が必要 => 値を変更できる利点も)
+pm1 <- pbase +
     scale_color_discrete(labels = mixfonts(c("0歳魚", "1歳魚以上"))) +
     theme(legend.text = ggtext::element_markdown(color = "blue")) +
     labs(title = "混在 by mixfonts()")
 
+# label_mixfonts()を使う (関数を返すので値の指定は不要. dataの値は変更できない)
+pm2 <- pbase +
+    scale_color_discrete(labels = label_mixfonts()) +
+    theme(legend.text = ggtext::element_markdown(color = "blue")) +
+    labs(title = "混在 by label_mixfonts()")
+
 # patchwork
-p0 + pm1 + plot_spacer() + pm2 + plot_layout(ncol = 2, byrow = TRUE)
+p0 + plot_spacer() + pm1 + pm2 + plot_layout(ncol = 2, byrow = TRUE)
+```
+
+### 例3: facetタイトル + パネル内テキスト strip.text & geom_richtext
+パネル内テキストは元のデータ (ラベル部分) を`mixfonts()`で変換します.
+
+```{r eg3-1, fig.width = 15/2.54}
+intext <- data.frame(age = c("0歳魚", "1歳魚+"),
+                     text = mixfonts(c("(1) 0歳魚", "(2) 1歳以上"),
+                                     asciifont = "Arial Rounded MT Bold",
+                                     mbytefont = "HGSSoeiKakugothicUB"))
+
+prich <- 
+    pbase + 
+    facet_wrap(~ age, labeller = labeller(age = label_mixfonts())) + 
+    theme(strip.text = element_markdown(size = 15)) +
+    ggtext::geom_richtext(data = intext, aes(x = 1990, y = 400, label = text),
+                          hjust = 0, label.size = 0, label.color = NA, fill = NA) +
+    labs(title = "facetタイトル + パネル内")
+    
+prich
 ```
 
 ### 参考情報
-- 類似した問題は [stack overflow](https://stackoverflow.com/questions/52852882/use-different-font-sizes-for-different-portions-of-text-in-ggplot2-title) においてすでに解決策が提示されています. これにインスピレーションを受け,
-  この関数を作成しました.
-
 - [**ragg**の紹介ブログ](https://www.tidyverse.org/blog/2021/02/modern-text-features/): 
   fallbackのフォントをどう指定したらよいかがわかりませんが, 指定できるのであれば
   これ以上のパッケージはないと思います. 今後の動向に注目です.
@@ -147,4 +171,5 @@ ggplot() + theme(aspect.ratio = 1/2) +
               size = 3.5)
 ```
 
+#### その他
 - 日本語フォント利用のために[fontregisterer](https://github.com/Gedevan-Aleksizde/fontregisterer)を読み込んでいましたが, 同パッケージの更新が2年前で止まっているため, R4.2.2以降??ではインストールできなくなった模様です. fontregistererについては, [作者のページ](https://ill-identified.hatenablog.com/entry/2021/09/10/231230) に情報があります.
