@@ -1,3 +1,6 @@
+# vignette update 2023/06/06
+- :memo: Revise mixfonts.html
+
 # frabento 0.1.12
 - :truck: Added (imported) and fixed some build errors of `register_all_fonts()` and `get_styles()`, which are originaly created in https://github.com/Gedevan-Aleksizde/fontregisterer .
 - Update vignettes
