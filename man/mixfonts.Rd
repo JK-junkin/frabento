@@ -21,7 +21,7 @@ Put ASCII font family character(s) and multibyte font family
 character(s) into a single string for use in ggplot.
 }
 \details{
-This function is supposed to be used with \code{element_markdown()} in \code{ggtext} package
+This function is supposed to be used with \code{ggtext::element_markdown()}
 }
 \examples{
 \dontrun{
@@ -31,6 +31,5 @@ if(interactive()){
 }
 }
 \seealso{
-\code{\link[stringr]{str_split}},\code{\link[stringr]{str_replace}}
-\code{\link[htmltools]{builder}}
+\code{\link[ggtext]{element_markdown}}
 }

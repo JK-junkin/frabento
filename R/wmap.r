@@ -71,3 +71,5 @@ wmap_sf <- function(sfmap = NULL, sf_resol = 50, pacific_centered = TRUE,
 
     if (as_gg) { ggplot() + lays } else { lays }
 }
+
+utils::globalVariables(".")

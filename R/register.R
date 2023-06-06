@@ -47,38 +47,40 @@ register_all_fonts <- function() {
 #' @details The original function was transferred from \url{https://github.com/Gedevan-Aleksizde/fontregisterer} (Version 0.3) accessed on 2023/06/02 (Fri.).
 #' @export
 get_styles <- function(data) {
-  styles <- c("plain", "normal", "regular", "medium", "bold", "italic",
+    width <- weight <- style <- NULL
+    styles <- c("plain", "normal", "regular", "medium", "bold", "italic",
               "bolditalic", "w3")
-  styles_plain <- c("plain", "normal", "regular", "medium", "w3")
-  data$style <- with(data, factor(tolower(style), styles))
-  plain <- subset(data, width == "normal" | weight == "normal")
-  if(NROW(plain) > 0){
-    plain <- plain
-  } else {
-    plain <- data
-  }
-  if(NROW(subset(plain, style %in% styles_plain)) > 0){
-    plain <- plain[order(plain$style), ]$name[1]
-  } else {
-    plain <- plain$name[1]
-  }
-  bold <- subset(data, style == "bold")
-  if(NROW(bold) > 0){
-    bold <- bold$name[1]
-  } else {
-    bold <- plain
-  }
-  italic <- subset(data, style == "italic" | italic)
-  if(NROW(italic) > 0){
-    italic <- italic$name[1]
-  } else {
-    italic <- plain
-  }
-  bi <- subset(data, style == "bold italic")
-  if(NROW(bi) > 0){
-    bi <- bi$name[1]
-  } else {
-    bi <- italic
-  }
-  return(c(plain = plain, bold = bold, italic = italic, bolditalic = bi))
+    styles_plain <- c("plain", "normal", "regular", "medium", "w3")
+    data$style <- with(data, factor(tolower(style), styles))
+    plain <- subset(data, width == "normal" | weight == "normal")
+
+    if(NROW(plain) > 0){
+        plain <- plain
+    } else {
+        plain <- data
+    }
+    if(NROW(subset(plain, style %in% styles_plain)) > 0){
+        plain <- plain[order(plain$style), ]$name[1]
+    } else {
+        plain <- plain$name[1]
+    }
+    bold <- subset(data, style == "bold")
+    if(NROW(bold) > 0){
+        bold <- bold$name[1]
+    } else {
+        bold <- plain
+    }
+    italic <- subset(data, style == "italic" | italic)
+    if(NROW(italic) > 0){
+        italic <- italic$name[1]
+    } else {
+        italic <- plain
+    }
+    bi <- subset(data, style == "bold italic")
+    if(NROW(bi) > 0){
+        bi <- bi$name[1]
+    } else {
+        bi <- italic
+    }
+    return(c(plain = plain, bold = bold, italic = italic, bolditalic = bi))
 }

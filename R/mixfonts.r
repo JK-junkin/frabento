@@ -5,7 +5,7 @@
 #' @param asciifont ASCII font family, Default: 'Arial'
 #' @param mbytefont Multi byte font family, Default: 'MS Gothic'
 #' @return Character vector of HTML _span_ tag.
-#' @details This function is supposed to be used with `element_markdown()` in `ggtext` package
+#' @details This function is supposed to be used with `ggtext::element_markdown()`
 #' @examples 
 #' \dontrun{
 #' if(interactive()){
@@ -13,13 +13,13 @@
 #'  }
 #' }
 #' @seealso 
-#'  \code{\link[stringr]{str_split}},\code{\link[stringr]{str_replace}}
-#'  \code{\link[htmltools]{builder}}
+#'  \code{\link[ggtext]{element_markdown}}
 #' @rdname mixfonts
 #' @export 
 #' @importFrom foreach %do%
 mixfonts <- function(strs, asciifont = "Arial", mbytefont = "MS Gothic") {
     s <- a <- i <- j <- k <- l <- m <- NULL # for R CMD CHECK
+
     foreach::foreach(s = strs, .combine = "c") %do% {
         atoms <- stringr::str_split(s, pattern = "", simplify = FALSE) %>%
             unlist()

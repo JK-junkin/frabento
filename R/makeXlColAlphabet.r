@@ -127,6 +127,7 @@ index2abc <- function(num, nchar = 4L) {
 #' @rdname abc2index
 #' @export 
 abc2index <- function(abc) {
+    i <- NULL
     nchar_max <- max(nchar(abc), na.rm = TRUE)
     x <- make_abcbase(nchar = nchar_max)
     y <- foreach::foreach(i = abc, .combine = "c") %do% {
@@ -153,7 +154,7 @@ abc2index <- function(abc) {
 #' @rdname shift_abc
 #' @export 
 shift_abc <- function(abc, n_shift = 0L) {
-    newindex <- abc2index(abc) %>% { . + n_shift }
+    newindex <- abc2index(abc) %>% { .data + n_shift }
     index2abc(num = newindex)
 }
 

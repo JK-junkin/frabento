@@ -21,3 +21,6 @@ bold, italic, and bold italic font./長さ4の文字列ベクトル. 要素は�
 \code{systemfonts::system_fonts()} などの結果から4書体のフォントを取
 得する. ただしうまくいくとは限らない.
 }
+\details{
+The original function was transferred from \url{https://github.com/Gedevan-Aleksizde/fontregisterer} (Version 0.3) accessed on 2023/06/02 (Fri.).
+}
