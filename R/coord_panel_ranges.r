@@ -46,10 +46,8 @@
 #' @seealso
 #'  \code{\link[ggplot2]{ggproto}},\code{\link[ggplot2]{coord_cartesian}}
 #' @rdname coord_panel_ranges
-#' @export
 #' @import ggplot2
-#' @keywords internal
-
+#' @export
 coord_panel_ranges <- function(panel_ranges, expand = TRUE, default = FALSE,
                                clip = "on") {
     UniquePanelCoords <- ggplot2::ggproto(

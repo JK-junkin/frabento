@@ -66,4 +66,3 @@ if(interactive()){
 \seealso{
 \code{\link[ggplot2]{ggproto}},\code{\link[ggplot2]{coord_cartesian}}
 }
-\keyword{internal}
