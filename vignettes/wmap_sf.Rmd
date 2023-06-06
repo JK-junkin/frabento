@@ -44,6 +44,7 @@ opts_knit$set(width = 75)
 # devtools::install_github("JK-junkin/frabento")
 library(frabento)
 library(ggplot2)
+library(sf)
 ```
 
 ## 1. 白地図として使用
