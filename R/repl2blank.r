@@ -13,21 +13,18 @@
 #' @return A character vector
 #' @details 例をご覧ください.
 #' @examples
-#' \dontrun{
-#' if(interactive()){
 #'  repl2blank(1:10)
 #'  repl2blank(1:10, nskip = 2)
-#'  }
-#' }
 #' @seealso 
-#'  \code{\link[stringr]{str_detect}}
+#'  \code{\link[frabento]{label_repl2blank}}
 #' @rdname repl2blank
 #' @export
 #' @importFrom stringr str_detect
+#' @importFrom scales comma
 repl2blank <- function(vec, nskip = 1, shift = 0, first = FALSE, last = FALSE, 
                        inverse = FALSE, comma = FALSE) {
 
-    if (comma) vec <- comma(vec)
+    if (comma) vec <- scales::comma(vec)
 
     org <- vec
     index <- seq_along(vec) + (-shift)
@@ -60,10 +57,8 @@ repl2blank <- function(vec, nskip = 1, shift = 0, first = FALSE, last = FALSE,
 #' @param ptime Parse date-time type vector, Default: FALSE
 #' @param ftime Format of date-time, Default: '%Y-%m-%d'
 #' @return A function
-#' @details 例をご覧ください.
+#' @details See example.
 #' @examples
-#' \dontrun{
-#' if(interactive()){
 #' library(dplyr)
 #' library(tibble)
 #' library(ggplot2)
@@ -79,8 +74,6 @@ repl2blank <- function(vec, nskip = 1, shift = 0, first = FALSE, last = FALSE,
 #'     geom_line(size = 0.2) +
 #'     scale_x_continuous(breaks = seq(-6000, 2000, by = 200),
 #'                        labels = label_repl2blank(nskip = 4, comma = TRUE))
-#'  }
-#' }
 #' @rdname label_repl2blank
 #' @export
 label_repl2blank <-

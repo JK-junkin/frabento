@@ -42,13 +42,9 @@ ggplot作図の際に軸ラベルの一部を空白にすることで minor brea
 例をご覧ください.
 }
 \examples{
-\dontrun{
-if(interactive()){
  repl2blank(1:10)
  repl2blank(1:10, nskip = 2)
- }
-}
 }
 \seealso{
-\code{\link[stringr]{str_detect}}
+\code{\link[frabento]{label_repl2blank}}
 }

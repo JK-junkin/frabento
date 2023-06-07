@@ -24,12 +24,15 @@ character(s) into a single string for use in ggplot.
 This function is supposed to be used with \code{ggtext::element_markdown()}
 }
 \examples{
-\dontrun{
 if(interactive()){
- mixfonts(c("全0歳魚", "仔魚を含まない\n0歳魚"))
- }
+ library(frabento)
+ register_all_fonts()
+ 
+ mixfonts(c("仔魚を含まない\n0歳魚", "1歳魚+"))
 }
 }
 \seealso{
+\code{\link[frabento]{label_mixfonts}}
 \code{\link[ggtext]{element_markdown}}
+\code{\link[ggtext]{geom_richtext}}
 }

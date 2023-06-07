@@ -7,13 +7,16 @@
 #' @return Character vector of HTML _span_ tag.
 #' @details This function is supposed to be used with `ggtext::element_markdown()`
 #' @examples 
-#' \dontrun{
 #' if(interactive()){
-#'  mixfonts(c("全0歳魚", "仔魚を含まない\n0歳魚"))
-#'  }
+#'  library(frabento)
+#'  register_all_fonts()
+#'  
+#'  mixfonts(c("仔魚を含まない\n0歳魚", "1歳魚+"))
 #' }
 #' @seealso 
+#'  \code{\link[frabento]{label_mixfonts}}
 #'  \code{\link[ggtext]{element_markdown}}
+#'  \code{\link[ggtext]{geom_richtext}}
 #' @rdname mixfonts
 #' @export 
 #' @importFrom foreach %do%
@@ -61,25 +64,26 @@ mixfonts <- function(strs, asciifont = "Arial", mbytefont = "MS Gothic") {
 #' @return `mixfonts` function
 #' @details See vignettees("mixfonts")
 #' @seealso
+#'  \code{\link[frabento]{mixfonts}}
 #'  \code{\link[ggtext]{element_markdown}}
+#'  \code{\link[ggtext]{geom_richtext}}
 #' @examples 
-#' \dontrun{
 #' if(interactive()){
 #'  library(ggplot2)
 #'  library(dplyr)
-#'  library(tibble)
 #'  library(ggtext)
 #'  library(frabento)
+#'  register_all_fonts()
 #'
-#'  tibble::tibble(cpue = c(rnorm(n = 30, mean = 300, sd = 25),
-#'                          rnorm(n = 30, mean = 500, sd = 35)),
-#'                 year = rep(seq(1990, length.out = 30, by = 1), times = 2),
-#'                 age  = rep(c("0歳魚", "1歳魚+"), each = 30)) %>%
+#'  set.seed(30)
+#'  data.frame(cpue = c(rnorm(n = 30, mean = 300, sd = 25),
+#'                      rnorm(n = 30, mean = 500, sd = 35)),
+#'             year = rep(seq(1990, length.out = 30, by = 1), times = 2),
+#'             age  = rep(c("0歳魚", "1歳魚+"), each = 30)) %>%
 #'      ggplot(aes(x = year, y = cpue, group = age)) +
 #'      geom_path(aes(color = age)) +
 #'      scale_color_discrete(labels = label_mixfonts()) +
 #'      theme(legend.text = element_markdown(color = "blue"))
-#'  }
 #' }
 #' @rdname label_mixfonts
 #' @export 

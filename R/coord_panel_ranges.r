@@ -21,30 +21,27 @@
 #'  \url{https://andburch.github.io/ggplot_facets}
 #'  \url{https://stackoverflow.com/questions/63550588/ggplot2coord-cartesian-on-facets}
 #' @examples
-#' \dontrun{
-#' if(interactive()){
-#'  library(ggplot2)
-#'  library(dplyr)
-#'  library(frabento)
-#'  
-#'  theme_set(theme_linedraw(base_family = "Helvetica", base_line_size = 0.3) +
-#'            theme(aspect.ratio = 1/1, legend.position = c(0.75, 0.25)))
-#'  
-#'  ggplot(iris, aes(x = Sepal.Length, y = Sepal.Width)) +
-#'      geom_point(aes(color = Species)) +
-#'      geom_rect(data = .  %>% dplyr::filter(Species == "versicolor"),
-#'                xmin = 5.5, xmax = 6.5, ymin = 2.5, ymax = 3,
-#'                color = "red", size = 1, fill = NA) +
-#'      facet_wrap(~ Species, scale = "free", ncol = 2) +
-#'      coord_panel_ranges(panel_ranges = list(
-#'          list(NULL),
-#'          list(x = c(5.4, 6.6), y = c(2.4, 3.1)),
-#'          list(NULL)
-#'      ))
-#'  }
-#' }
+#' library(ggplot2)
+#' library(dplyr)
+#' library(frabento)
+#' 
+#' theme_set(theme_linedraw(base_family = "Helvetica", base_line_size = 0.3) +
+#'           theme(aspect.ratio = 1/1, legend.position = c(0.75, 0.25)))
+#' 
+#' ggplot(iris, aes(x = Sepal.Length, y = Sepal.Width)) +
+#'     geom_point(aes(color = Species)) +
+#'     geom_rect(data = .  %>% dplyr::filter(Species == "versicolor"),
+#'               xmin = 5.5, xmax = 6.5, ymin = 2.5, ymax = 3,
+#'               color = "red", size = 1, fill = NA) +
+#'     facet_wrap(~ Species, scale = "free", ncol = 2) +
+#'     coord_panel_ranges(panel_ranges = list(
+#'         list(NULL),
+#'         list(x = c(5.4, 6.6), y = c(2.4, 3.1)),
+#'         list(NULL)
+#'     ))
 #' @seealso
-#'  \code{\link[ggplot2]{ggproto}},\code{\link[ggplot2]{coord_cartesian}}
+#'  \code{\link[ggplot2]{ggproto}}
+#'  \code{\link[ggplot2]{coord_cartesian}}
 #' @rdname coord_panel_ranges
 #' @import ggplot2
 #' @export

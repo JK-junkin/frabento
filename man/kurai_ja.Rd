@@ -22,9 +22,7 @@ Japanese scale units by Kanji
 入力された数値に関して万進法 (中数) での日本語単位を返す関数.
 }
 \examples{
-if(interactive()){
- kurai_ja(c(1, 24, 100, 1000, 11111, 6e18, 1e72, -123489)) 
- }
+kurai_ja(c(1, 24, 100, 1000, 11111, 6e18, 1e72, -123489)) 
 }
 \seealso{
 \code{\link[purrr]{map}}

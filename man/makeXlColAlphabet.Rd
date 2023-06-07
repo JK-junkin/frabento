@@ -2,7 +2,7 @@
 % Please edit documentation in R/makeXlColAlphabet.r
 \name{makeXlColAlphabet}
 \alias{makeXlColAlphabet}
-\title{Make Microsoft Excel's alphabet column names}
+\title{Make Microsoft Excel's alphabetical column names}
 \usage{
 makeXlColAlphabet(start = NULL, len = NULL, nchar = 2L, print_all = FALSE)
 }
@@ -26,15 +26,14 @@ Genarate a character vector such as "A" "B" ... "AA" "AB" ... "ZZZ".
 No description.
 }
 \examples{
-\dontrun{
-if(interactive()){
+makeXlColAlphabet()
 makeXlColAlphabet(nchar = 1)
-makeXlColAlphabet(len = 10, start = 3)
-makeXlColAlphabet(len = length(1978:2020), start = "B", print_all = TRUE)
- }
-}
+makeXlColAlphabet(start = "B", len = length(1978:2020))
+makeXlColAlphabet(start = 23, len = 10, print_all = TRUE)
 }
 \seealso{
-\code{\link[foreach]{foreach}}
-\code{\link[dplyr]{case_when}}
+\code{\link[frabento]{shift_abc}}
+\code{\link[frabento]{make_abcbase}}
+\code{\link[frabento]{index2abc}}
+\code{\link[frabento]{abc2index}}
 }

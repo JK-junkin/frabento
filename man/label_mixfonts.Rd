@@ -21,25 +21,26 @@ Label mixed-fonts HTML strings
 See vignettees("mixfonts")
 }
 \examples{
-\dontrun{
 if(interactive()){
  library(ggplot2)
  library(dplyr)
- library(tibble)
  library(ggtext)
  library(frabento)
+ register_all_fonts()
 
- tibble::tibble(cpue = c(rnorm(n = 30, mean = 300, sd = 25),
-                         rnorm(n = 30, mean = 500, sd = 35)),
-                year = rep(seq(1990, length.out = 30, by = 1), times = 2),
-                age  = rep(c("0歳魚", "1歳魚+"), each = 30)) \%>\%
+ set.seed(30)
+ data.frame(cpue = c(rnorm(n = 30, mean = 300, sd = 25),
+                     rnorm(n = 30, mean = 500, sd = 35)),
+            year = rep(seq(1990, length.out = 30, by = 1), times = 2),
+            age  = rep(c("0歳魚", "1歳魚+"), each = 30)) \%>\%
      ggplot(aes(x = year, y = cpue, group = age)) +
      geom_path(aes(color = age)) +
      scale_color_discrete(labels = label_mixfonts()) +
      theme(legend.text = element_markdown(color = "blue"))
- }
 }
 }
 \seealso{
+\code{\link[frabento]{mixfonts}}
 \code{\link[ggtext]{element_markdown}}
+\code{\link[ggtext]{geom_richtext}}
 }

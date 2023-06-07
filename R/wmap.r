@@ -19,28 +19,28 @@
 #' there are any problems with other coordinate reference systems.
 #' @return list or gg
 #' @examples 
+#' library(ggplot2)
+#' library(frabento)
+#' set.seed(180)
 #'
-#'  library(ggplot2)
-#'  library(frabento)
-#'  df <- data.frame(Long = seq(140, 240, by = 5),
-#'                   Lati = runif(n = 21, min = 40, max = 65),
-#'                   group = c(rep(1:5, each = 4), 6))
-#'  
-#'  # plain world map as pacific centered (default)
-#'  wmap_sf()
-#'  
-#'  # plain world map as Greenwich centered
-#'  wmap_sf(pacific_centered = FALSE)
-#'  
-#'  # Trim worldmap and overlay data points on worldmap
-#'  wmap_sf(lgl = c(135, 245), ltl = c(35, 70)) +
-#'    geom_point(data = df, aes(x = Long, y = Lati, color = as.factor(group)))
+#' df <- data.frame(Long = seq(140, 240, by = 5),
+#'                  Lati = runif(n = 21, min = 40, max = 65),
+#'                  group = c(rep(1:5, each = 4), 6))
+#' 
+#' # plain world map as pacific centered (default)
+#' wmap_sf()
+#' 
+#' # plain world map as Greenwich centered
+#' wmap_sf(pacific_centered = FALSE)
+#' 
+#' # Trim worldmap and overlay data points on worldmap
+#' wmap_sf(lgl = c(135, 245), ltl = c(35, 70)) +
+#'   geom_point(data = df, aes(x = Long, y = Lati, color = as.factor(group)))
 #'
-#'  # Trim world map and overlay worldmap on data points
-#'  ggplot() +
-#'    geom_point(data = df, aes(x = Long, y = Lati, color = as.factor(group))) +
-#'    wmap_sf(as_gg = FALSE, lgl = c(135, 245), ltl = c(35, 70))
-#'
+#' # Trim world map and overlay worldmap on data points
+#' ggplot() +
+#'   geom_point(data = df, aes(x = Long, y = Lati, color = as.factor(group))) +
+#'   wmap_sf(as_gg = FALSE, lgl = c(135, 245), ltl = c(35, 70))
 #' @seealso 
 #'  \code{\link[rnaturalearth]{ne_countries}}
 #'  \code{\link[sf]{st_break_antimeridian}}, \code{\link[sf]{st_shift_longitude}}

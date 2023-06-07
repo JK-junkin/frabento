@@ -1,4 +1,4 @@
-#' @title Make Microsoft Excel's alphabet column names
+#' @title Make Microsoft Excel's alphabetical column names
 #' @description Genarate a character vector such as "A" "B" ... "AA" "AB" ... "ZZZ".
 #' @param start Index or character at start, Default: NULL (to which 'A' is automatically
 #' assigned). `start` larger than `len` will return NA.
@@ -8,16 +8,15 @@
 #' @return A character vector.
 #' @details No description.
 #' @examples
-#' \dontrun{
-#' if(interactive()){
+#' makeXlColAlphabet()
 #' makeXlColAlphabet(nchar = 1)
-#' makeXlColAlphabet(len = 10, start = 3)
-#' makeXlColAlphabet(len = length(1978:2020), start = "B", print_all = TRUE)
-#'  }
-#' }
+#' makeXlColAlphabet(start = "B", len = length(1978:2020))
+#' makeXlColAlphabet(start = 23, len = 10, print_all = TRUE)
 #' @seealso 
-#'  \code{\link[foreach]{foreach}}
-#'  \code{\link[dplyr]{case_when}}
+#'  \code{\link[frabento]{shift_abc}}
+#'  \code{\link[frabento]{make_abcbase}}
+#'  \code{\link[frabento]{index2abc}}
+#'  \code{\link[frabento]{abc2index}}
 #' @rdname makeXlColAlphabet
 #' @importFrom foreach foreach
 #' @importFrom dplyr case_when
@@ -143,18 +142,13 @@ abc2index <- function(abc) {
 #' @param n_shift numbers to shift, Default: 0
 #' @return a character vector
 #' @examples 
-#' \dontrun{
-#' if(interactive()){
-#'  #EXAMPLE1
 #'  shift_abc("a", 3)        # D
 #'  shift_abc(letters, 3)    # D–AC
 #'  shift_abc(letters, 1:26) # B–AZ. skipping ahead one by one.
-#'  }
-#' }
 #' @rdname shift_abc
 #' @export 
 shift_abc <- function(abc, n_shift = 0L) {
-    newindex <- abc2index(abc) %>% { .data + n_shift }
+    newindex <- abc2index(abc) + n_shift
     index2abc(num = newindex)
 }
 

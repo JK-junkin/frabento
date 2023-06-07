@@ -7,9 +7,7 @@
 #'   numeric values in fixed or exponential notation. Default: 108.
 #' @return Japanese scale units by Kanji
 #' @examples 
-#' if(interactive()){
-#'  kurai_ja(c(1, 24, 100, 1000, 11111, 6e18, 1e72, -123489)) 
-#'  }
+#' kurai_ja(c(1, 24, 100, 1000, 11111, 6e18, 1e72, -123489)) 
 #' @seealso 
 #'  \code{\link[purrr]{map}}
 #'  \code{\link[stringr]{str_remove}}

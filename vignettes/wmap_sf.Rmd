@@ -85,8 +85,9 @@ ggplot(data = df) +
 
 ## 3. 任意のsfオブジェクトを使用
 ```{r ex3-1, collapse = TRUE, message = FALSE}
-jpn <- rnaturalearth::ne_countries(scale = 10, country = "japan") %>%
-    sf::st_as_sf()
+jpn <- rnaturalearth::ne_countries(scale = 10, country = "japan", 
+                                   returnclass = "sf") # %>%
+#     sf::st_as_sf()
 
 wmap_sf(sfmap = jpn, aes(geometry = geometry)) +
     theme_void() +

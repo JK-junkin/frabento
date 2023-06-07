@@ -18,12 +18,7 @@ a character vector
 This function is useful for output with openxlsx package.
 }
 \examples{
-\dontrun{
-if(interactive()){
- #EXAMPLE1
  shift_abc("a", 3)        # D
  shift_abc(letters, 3)    # D–AC
  shift_abc(letters, 1:26) # B–AZ. skipping ahead one by one.
- }
-}
 }
