@@ -98,7 +98,12 @@ numeric values in fixed or exponential notation. Default: 108.</p></dd>
     <h2>Value</h2>
     
 
-<p>Japanese scale units by Kanji</p>
+<p>A character vector of Kanji.</p>
+    </div>
+    <div id="details">
+    <h2>Details</h2>
+    <p>Decimal numbers not yet supported such that 0.1 and 0.00001 will be
+converted to "" (default) or '一' (if remove_ichi = FALSE).</p>
     </div>
     <div id="see-also">
     <h2>See also</h2>
@@ -108,9 +113,13 @@ numeric values in fixed or exponential notation. Default: 108.</p></dd>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/interactive.html" class="external-link">interactive</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">{</span></span></span>
-<span class="r-in"><span> <span class="fu">kurai_ja</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">24</span>, <span class="fl">100</span>, <span class="fl">1000</span>, <span class="fl">11111</span>, <span class="fl">6e18</span>, <span class="fl">1e72</span>, <span class="op">-</span><span class="fl">123489</span><span class="op">)</span><span class="op">)</span> </span></span>
-<span class="r-in"><span> <span class="op">}</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">kurai_ja</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">23</span>, <span class="fl">456</span>, <span class="fl">7890</span>, <span class="fl">98765</span>, <span class="fl">4e32</span>, <span class="fl">1e+99</span>, <span class="op">-</span><span class="fl">1234567890</span><span class="op">)</span><span class="op">)</span> </span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Note that decimal portions are rounded off.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] ""          "十"        "百"        "千"        "万"        "溝"       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [7] "桁数: 100" "十億"     </span>
+<span class="r-in"><span><span class="fu">kurai_ja</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">0.05</span><span class="op">)</span>, remove_ichi <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> </span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Note that decimal portions are rounded off.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "一" "一" "一"</span>
 </code></pre></div>
     </div>
   </div>

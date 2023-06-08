@@ -22,10 +22,15 @@ reference:
 - title: Return values
   desc: >
 - contents:
-  - -starts_with("coord_|label_|squash_|wmap_|register_")
+  - -starts_with("coord_|label_|squash_|wmap_|register_|get_")
+
+- title: Return graphic objects (gg or LayerInstance)
+  desc: >
+- contents:
+  - starts_with("wmap_")
 
 - title: Others
   desc: >
 - contents:
-  - starts_with("wmap_|register_")
+  - starts_with("register_|get_")
 
