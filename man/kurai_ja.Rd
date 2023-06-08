@@ -16,13 +16,18 @@ Smaller numbers after decimal point are rounded.}
 numeric values in fixed or exponential notation. Default: 108.}
 }
 \value{
-Japanese scale units by Kanji
+A character vector of Kanji.
 }
 \description{
 入力された数値に関して万進法 (中数) での日本語単位を返す関数.
 }
+\details{
+Decimal numbers not yet supported such that 0.1 and 0.00001 will be
+converted to "" (default) or '一' (if remove_ichi = FALSE).
+}
 \examples{
-kurai_ja(c(1, 24, 100, 1000, 11111, 6e18, 1e72, -123489)) 
+kurai_ja(c(1, 23, 456, 7890, 98765, 4e32, 1e+99, -1234567890)) 
+kurai_ja(c(0, 1, 0.05), remove_ichi = FALSE) 
 }
 \seealso{
 \code{\link[purrr]{map}}

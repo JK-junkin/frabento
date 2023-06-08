@@ -18,7 +18,7 @@ a character vector
 This function is useful for output with openxlsx package.
 }
 \examples{
- shift_abc("a", 3)        # D
- shift_abc(letters, 3)    # D–AC
- shift_abc(letters, 1:26) # B–AZ. skipping ahead one by one.
+shift_abc("a", n_shift = 3)        # D
+shift_abc(letters, n_shift = 3)    # D–AC
+shift_abc(letters, n_shift = 1:26) # B–AZ. skipping ahead one by one.
 }

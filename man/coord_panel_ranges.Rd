@@ -33,12 +33,12 @@ ggproto object
 任意のfacetパネルをズームする.
 }
 \details{
-DETAILS
+See vignette("coord_panel_ranges")
 }
 \examples{
-library(ggplot2)
-library(dplyr)
 library(frabento)
+library(ggplot2)
+library(magrittr)
 
 theme_set(theme_linedraw(base_family = "Helvetica", base_line_size = 0.3) +
           theme(aspect.ratio = 1/1, legend.position = c(0.75, 0.25)))
@@ -47,7 +47,7 @@ ggplot(iris, aes(x = Sepal.Length, y = Sepal.Width)) +
     geom_point(aes(color = Species)) +
     geom_rect(data = .  \%>\% dplyr::filter(Species == "versicolor"),
               xmin = 5.5, xmax = 6.5, ymin = 2.5, ymax = 3,
-              color = "red", size = 1, fill = NA) +
+              color = "red", linewidth = 1, fill = NA) +
     facet_wrap(~ Species, scale = "free", ncol = 2) +
     coord_panel_ranges(panel_ranges = list(
         list(NULL),

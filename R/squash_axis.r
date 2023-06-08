@@ -7,11 +7,11 @@
 #' @param magnif_ratio the compression scale factor of the range between from and to.
 #' @return A transformation called "squash_axis", which is capsulated by trans_new() function
 #' @examples 
-#' \dontrun{
 #' if(interactive()){
-#'  #EXAMPLE1
 #'  library(ggplot2)
-#'  
+#'  library(frabento)
+#'   
+#'  set.seed(123)
 #'  dat <- data.frame(group = rep(c('A', 'B', 'C', 'D'), each = 10), 
 #'                    value = c(rnorm(10), rnorm(10) + 100))
 #'  ggplot(dat,aes(x = group, y = value)) +
@@ -21,7 +21,6 @@
 #'  ggplot(dat,aes(x = group,y = value)) +
 #'    geom_point() +
 #'    scale_y_continuous(trans = squash_axis(5, 95, 10))
-#'   }
 #' }
 #' @seealso 
 #'  \code{\link[scales]{trans_new}}

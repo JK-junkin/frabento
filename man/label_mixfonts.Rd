@@ -7,23 +7,23 @@
 label_mixfonts(asciifont = "Arial", mbytefont = "MS Gothic")
 }
 \arguments{
-\item{asciifont}{ASCII font family, Default: 'Arial'}
+\item{asciifont}{ASCII (Single byte) font family, Default: 'Arial'}
 
 \item{mbytefont}{Multi byte font family, Default: 'MS Gothic'}
 }
 \value{
-\code{mixfonts} function
+Returns \code{mixfonts()}.
 }
 \description{
 Label mixed-fonts HTML strings
 }
 \details{
-See vignettees("mixfonts")
+This function is supposed to be used with \code{ggtext::element_markdown() }. See vignettees("mixfonts")
 }
 \examples{
 if(interactive()){
  library(ggplot2)
- library(dplyr)
+ library(magrittr)
  library(ggtext)
  library(frabento)
  register_all_fonts()
@@ -36,7 +36,8 @@ if(interactive()){
      ggplot(aes(x = year, y = cpue, group = age)) +
      geom_path(aes(color = age)) +
      scale_color_discrete(labels = label_mixfonts()) +
-     theme(legend.text = element_markdown(color = "blue"))
+     theme(legend.text = element_markdown(color = "blue"),
+           legend.position = "right")
 }
 }
 \seealso{

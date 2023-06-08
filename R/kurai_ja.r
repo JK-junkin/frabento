@@ -5,9 +5,12 @@
 #' @param remove_ichi Not print '一' when TRUE (default).
 #' @param scipen An integer. A penalty to be applied when deciding to print
 #'   numeric values in fixed or exponential notation. Default: 108.
-#' @return Japanese scale units by Kanji
+#' @return A character vector of Kanji.
+#' @details Decimal numbers not yet supported such that 0.1 and 0.00001 will be
+#' converted to "" (default) or '一' (if remove_ichi = FALSE).
 #' @examples 
-#' kurai_ja(c(1, 24, 100, 1000, 11111, 6e18, 1e72, -123489)) 
+#' kurai_ja(c(1, 23, 456, 7890, 98765, 4e32, 1e+99, -1234567890)) 
+#' kurai_ja(c(0, 1, 0.05), remove_ichi = FALSE) 
 #' @seealso 
 #'  \code{\link[purrr]{map}}
 #'  \code{\link[stringr]{str_remove}}
@@ -16,6 +19,8 @@
 #' @importFrom purrr map_lgl
 #' @importFrom stringr str_remove
 kurai_ja <- function(num, remove_ichi = TRUE, scipen = 108) {
+    message("Note that decimal portions are rounded off.")
+
     junits <- c("", "\u4e07", "\u5104", "\u5146", "\u4eac", "\u5793", "\u79ed",
                 "\u7a63", "\u6e9d", "\u6f97", "\u6b63", "\u8f09", "\u6975",
                 "\u6052\u6cb3\u6c99", "\u963f\u50e7\u7947",

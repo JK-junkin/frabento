@@ -2,8 +2,7 @@
 % Please edit documentation in R/nfkc_all.r
 \name{nfkc_all}
 \alias{nfkc_all}
-\title{Unicode normalization of colnames and contents of data.frame with
-compatibility equivalence}
+\title{Unicode normalization of data.frame with compatibility equivalence}
 \usage{
 nfkc_all(
   .data,
@@ -22,9 +21,9 @@ column names. Default: FALSE.}
 \item{remove_space_contents}{If TRUE, remove all white spaces from all
 contents. Default: FALSE.}
 
-\item{coln_spc}{Space character to be removed in colnames. Default: "\[:blank:\]"}
+\item{coln_spc}{Space character to be removed in colnames.}
 
-\item{cont_spc}{Space character to be removed in contents. Default: "\[:blank:\]"}
+\item{cont_spc}{Space character to be removed in contents.}
 }
 \value{
 object of the same class as .data

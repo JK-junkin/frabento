@@ -16,13 +16,13 @@ a character vector which length is \code{sum(26^(1:nchar))}.
 Create an alphabet data source according to the given \code{nchar}.
 }
 \examples{
+paste0(
+  head(make_abcbase(nchar = 3)), tail(make_abcbase(nchar = 3)),
+  sep = ", ..., "
+)
+sum(26^(1:5)) # length is 12356630
 \dontrun{
-if(interactive()){
- #EXAMPLE1
- make_abcbase(nchar = 3)
  make_abcbase(nchar = 0) # Error
  make_abcbase(nchar = 5) # Error
- sum(26^(1:5))           # length is 12356630
- }
 }
 }

@@ -16,11 +16,9 @@ an integer vector
 This function supports nchar up to 4, i.e. from "A" to "ZZZZ".
 }
 \examples{
+abc2index(letters)         # 1–26
+abc2index(c("a", NA, "a")) # 1 NA 1
 \dontrun{
-if(interactive()){
- abc2index(letters)         # 1–26
- abc2index(c("a", NA, "a")) # 1 NA 1
  abc2index("zzzza")         # Error
- }
 }
 }

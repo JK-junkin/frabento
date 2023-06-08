@@ -1,13 +1,12 @@
-#' @title Unicode normalization of colnames and contents of data.frame with
-#' compatibility equivalence
+#' @title Unicode normalization of data.frame with compatibility equivalence
 #' @description This is a dplyr-dependent preprocessing function
 #' @param .data data.frame-like object (`tibble`, `data.table`, etc.)
 #' @param remove_space_colnames If TRUE, remove all white spaces from all
 #' column names. Default: FALSE.
 #' @param remove_space_contents If TRUE, remove all white spaces from all
 #' contents. Default: FALSE.
-#' @param coln_spc Space character to be removed in colnames. Default: "\\[:blank:\\]"
-#' @param cont_spc Space character to be removed in contents. Default: "\\[:blank:\\]"
+#' @param coln_spc Space character to be removed in colnames.
+#' @param cont_spc Space character to be removed in contents.
 #' @return object of the same class as .data
 #' @details NULL
 #' @examples 

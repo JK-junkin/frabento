@@ -37,7 +37,7 @@ NULLの場合は range(v, na.rm = TRUE) となる. Default: NULL}
 2軸グラフを描く時は左軸に値をスケーリングし, 右軸は目盛り数値を調整する.
 }
 \details{
-See example.
+See example and also vignette("va_resc")
 }
 \examples{
 if(interactive()){

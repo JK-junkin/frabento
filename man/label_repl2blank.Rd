@@ -42,20 +42,20 @@ ggplot作図の際に軸ラベルの一部を空白にすることで minor brea
 ようにみせかける.
 }
 \details{
-See example.
+See example and also vignette("repl2blank")
 }
 \examples{
-library(dplyr)
-library(tibble)
 library(ggplot2)
+library(magrittr)
+library(frabento)
 
-tibble::tibble(year =  -6000:1979, haba = treering) \%>\%
+data.frame(year =  -6000:1979, haba = treering) \%>\%
     ggplot(aes(x = year, y = haba)) +
     geom_line(size = 0.2) +
     scale_x_continuous(breaks = seq(-6000, 2000, by = 200),
                        labels = label_repl2blank(nskip = 4))
-
-tibble::tibble(year =  -6000:1979, haba = treering) \%>\%
+# label with comma
+data.frame(year =  -6000:1979, haba = treering) \%>\%
     ggplot(aes(x = year, y = haba)) +
     geom_line(size = 0.2) +
     scale_x_continuous(breaks = seq(-6000, 2000, by = 200),

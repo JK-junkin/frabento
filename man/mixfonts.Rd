@@ -21,7 +21,7 @@ Put ASCII font family character(s) and multibyte font family
 character(s) into a single string for use in ggplot.
 }
 \details{
-This function is supposed to be used with \code{ggtext::element_markdown()}
+This function is supposed to be used with \code{ggtext::element_markdown() } and \code{ggtext::geom_richtext()}. See vignette("mixfonts")
 }
 \examples{
 if(interactive()){

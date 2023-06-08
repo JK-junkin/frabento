@@ -5,7 +5,8 @@
 #' @param asciifont ASCII font family, Default: 'Arial'
 #' @param mbytefont Multi byte font family, Default: 'MS Gothic'
 #' @return Character vector of HTML _span_ tag.
-#' @details This function is supposed to be used with `ggtext::element_markdown()`
+#' @details This function is supposed to be used with `ggtext::element_markdown()
+#' ` and `ggtext::geom_richtext()`. See vignette("mixfonts")
 #' @examples 
 #' if(interactive()){
 #'  library(frabento)
@@ -59,10 +60,11 @@ mixfonts <- function(strs, asciifont = "Arial", mbytefont = "MS Gothic") {
 }
 
 #' @title Label mixed-fonts HTML strings
-#' @param asciifont ASCII font family, Default: 'Arial'
+#' @param asciifont ASCII (Single byte) font family, Default: 'Arial'
 #' @param mbytefont Multi byte font family, Default: 'MS Gothic'
-#' @return `mixfonts` function
-#' @details See vignettees("mixfonts")
+#' @return Returns `mixfonts()`.
+#' @details This function is supposed to be used with `ggtext::element_markdown()
+#' `. See vignettees("mixfonts")
 #' @seealso
 #'  \code{\link[frabento]{mixfonts}}
 #'  \code{\link[ggtext]{element_markdown}}
@@ -70,7 +72,7 @@ mixfonts <- function(strs, asciifont = "Arial", mbytefont = "MS Gothic") {
 #' @examples 
 #' if(interactive()){
 #'  library(ggplot2)
-#'  library(dplyr)
+#'  library(magrittr)
 #'  library(ggtext)
 #'  library(frabento)
 #'  register_all_fonts()
@@ -83,7 +85,8 @@ mixfonts <- function(strs, asciifont = "Arial", mbytefont = "MS Gothic") {
 #'      ggplot(aes(x = year, y = cpue, group = age)) +
 #'      geom_path(aes(color = age)) +
 #'      scale_color_discrete(labels = label_mixfonts()) +
-#'      theme(legend.text = element_markdown(color = "blue"))
+#'      theme(legend.text = element_markdown(color = "blue"),
+#'            legend.position = "right")
 #' }
 #' @rdname label_mixfonts
 #' @export 

@@ -22,11 +22,11 @@ This function was transcribed from the post on Stackoverflow.
 //stackoverflow.com/questions/61010786/error-nas-are-not-allowed-in-subscripted-assignments-while-using-squash-axis-i
 }
 \examples{
-\dontrun{
 if(interactive()){
- #EXAMPLE1
  library(ggplot2)
- 
+ library(frabento)
+  
+ set.seed(123)
  dat <- data.frame(group = rep(c('A', 'B', 'C', 'D'), each = 10), 
                    value = c(rnorm(10), rnorm(10) + 100))
  ggplot(dat,aes(x = group, y = value)) +
@@ -36,7 +36,6 @@ if(interactive()){
  ggplot(dat,aes(x = group,y = value)) +
    geom_point() +
    scale_y_continuous(trans = squash_axis(5, 95, 10))
-  }
 }
 }
 \seealso{

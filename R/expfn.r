@@ -1,7 +1,7 @@
 #' @title Convert numbers as expressions of exponential format
 #' @description Modify input numbers to expression class of exponential format like `expression(1.35~'×'~10^{4})`.
 #' @param x numeric vector.
-#' @param digits a number of digits before `\\u00d7`. Default: 3
+#' @param digits a number of digits just before '×'. Default: 3
 #' @param scale a number to multiply x. Default: 1.
 #' @param prefix a character string to paste just before x. Default: ''.
 #' @param suffix a character string to paste just after x. Default: ''.

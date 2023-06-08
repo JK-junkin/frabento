@@ -53,14 +53,14 @@ makeXlColAlphabet <- function(start = NULL, len = NULL, nchar = 2L,
 #' @param nchar an integer, Default: NULL
 #' @return a character vector which length is `sum(26^(1:nchar))`.
 #' @examples 
+#' paste0(
+#'   head(make_abcbase(nchar = 3)), tail(make_abcbase(nchar = 3)),
+#'   sep = ", ..., "
+#' )
+#' sum(26^(1:5)) # length is 12356630
 #' \dontrun{
-#' if(interactive()){
-#'  #EXAMPLE1
-#'  make_abcbase(nchar = 3)
 #'  make_abcbase(nchar = 0) # Error
 #'  make_abcbase(nchar = 5) # Error
-#'  sum(26^(1:5))           # length is 12356630
-#'  }
 #' }
 #' @rdname make_abcbase
 #' @export 
@@ -88,13 +88,10 @@ make_abcbase <- function(nchar = NULL) {
 #' Default: 4L.
 #' @return a character vector
 #' @examples 
+#' index2abc(num = 5)        # "E"
+#' index2abc(num = 10^(1:5)) # "J" "CV" "ALL" "NTP" "EQXD"
 #' \dontrun{
-#' if(interactive()){
-#'  #EXAMPLE1
-#'  index2abc(num = 5)        # "E"
-#'  index2abc(num = 10^(1:5)) # "J" "CV" "ALL" "NTP" "EQXD"
 #'  index2abc(num = 500000)   # Error. due to exceeding sum(26^(1:4))
-#'  }
 #' }
 #' @rdname index2abc
 #' @export 
@@ -116,24 +113,26 @@ index2abc <- function(num, nchar = 4L) {
 #' @param abc a character vector to be converted to numbers (indices).
 #' @return an integer vector
 #' @examples 
+#' abc2index(letters)         # 1–26
+#' abc2index(c("a", NA, "a")) # 1 NA 1
 #' \dontrun{
-#' if(interactive()){
-#'  abc2index(letters)         # 1–26
-#'  abc2index(c("a", NA, "a")) # 1 NA 1
 #'  abc2index("zzzza")         # Error
-#'  }
 #' }
 #' @rdname abc2index
+#' @importFrom foreach foreach
+#' @importFrom stringr str_which
 #' @export 
 abc2index <- function(abc) {
     i <- NULL
     nchar_max <- max(nchar(abc), na.rm = TRUE)
     x <- make_abcbase(nchar = nchar_max)
-    y <- foreach::foreach(i = abc, .combine = "c") %do% {
-        stringr::str_which(x, paste0("^", toupper(i), "$"))
+    foreach::foreach(i = abc, .combine = "c") %do% {
+        if (is.na(i)) {
+            NA
+        } else {
+            stringr::str_which(x, paste0("^", toupper(i), "$"))
+        }
     }
-    y[is.na(abc)] <- NA_integer_
-    y
 }
 
 #' @title Shift n from given alphabetical colname
@@ -142,9 +141,9 @@ abc2index <- function(abc) {
 #' @param n_shift numbers to shift, Default: 0
 #' @return a character vector
 #' @examples 
-#'  shift_abc("a", 3)        # D
-#'  shift_abc(letters, 3)    # D–AC
-#'  shift_abc(letters, 1:26) # B–AZ. skipping ahead one by one.
+#' shift_abc("a", n_shift = 3)        # D
+#' shift_abc(letters, n_shift = 3)    # D–AC
+#' shift_abc(letters, n_shift = 1:26) # B–AZ. skipping ahead one by one.
 #' @rdname shift_abc
 #' @export 
 shift_abc <- function(abc, n_shift = 0L) {

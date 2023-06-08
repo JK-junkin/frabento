@@ -39,7 +39,7 @@ the meridian on Greenwich).}
 \item{...}{Arguments passed to \code{geom_sf}}
 }
 \value{
-list or gg
+gg or a list (LayerInstance)
 }
 \description{
 This function is intended to be used in two ways: first, to
@@ -49,7 +49,8 @@ world map using ggplot2.
 \details{
 If sfmap is NULL, the default map projection system is a geographic
 coordinate system based on the WGS84. It has not yet been checked whether
-there are any problems with other coordinate reference systems.
+there are any problems with other coordinate reference systems.  See example
+and vignette("wmap_sf").
 }
 \examples{
 library(ggplot2)

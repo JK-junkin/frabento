@@ -16,8 +16,9 @@
 #' @param ... Arguments passed to `geom_sf`
 #' @details If sfmap is NULL, the default map projection system is a geographic
 #' coordinate system based on the WGS84. It has not yet been checked whether
-#' there are any problems with other coordinate reference systems.
-#' @return list or gg
+#' there are any problems with other coordinate reference systems.  See example
+#' and vignette("wmap_sf").
+#' @return gg or a list (LayerInstance)
 #' @examples 
 #' library(ggplot2)
 #' library(frabento)

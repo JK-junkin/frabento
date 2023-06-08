@@ -15,7 +15,7 @@ label_expfn(
 )
 }
 \arguments{
-\item{digits}{a number of digits before \verb{\\\\u00d7}. Default: 3}
+\item{digits}{a number of digits just before '×'. Default: 3}
 
 \item{scale}{a number to multiply x. Default: 1.}
 

@@ -20,12 +20,9 @@ This function supports nchar up to 4 (ZZZZ), i.e. the upper
 limit of number is 475,254.
 }
 \examples{
+index2abc(num = 5)        # "E"
+index2abc(num = 10^(1:5)) # "J" "CV" "ALL" "NTP" "EQXD"
 \dontrun{
-if(interactive()){
- #EXAMPLE1
- index2abc(num = 5)        # "E"
- index2abc(num = 10^(1:5)) # "J" "CV" "ALL" "NTP" "EQXD"
  index2abc(num = 500000)   # Error. due to exceeding sum(26^(1:4))
- }
 }
 }

@@ -13,7 +13,7 @@
 #' }
 #' @param return_lims Logical. 変換後の数値の代わりに範囲を出力する (matrix型), Default: FALSE
 #' @return 変換後の数値
-#' @details See example.
+#' @details See example and also vignette("va_resc")
 #' @references
 #' \url{https://blog.statsbeginner.net/entry/2020/09/08/181536}
 #' @examples

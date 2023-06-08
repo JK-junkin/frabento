@@ -16,14 +16,14 @@
 #'   legend, the plot title, or the plot margins. NOTE: This argument explanation
 #'   was cited from ggplot2::coord_cartesian
 #' @return ggproto object
-#' @details DETAILS
+#' @details See vignette("coord_panel_ranges")
 #' @references
 #'  \url{https://andburch.github.io/ggplot_facets}
 #'  \url{https://stackoverflow.com/questions/63550588/ggplot2coord-cartesian-on-facets}
 #' @examples
-#' library(ggplot2)
-#' library(dplyr)
 #' library(frabento)
+#' library(ggplot2)
+#' library(magrittr)
 #' 
 #' theme_set(theme_linedraw(base_family = "Helvetica", base_line_size = 0.3) +
 #'           theme(aspect.ratio = 1/1, legend.position = c(0.75, 0.25)))
@@ -32,7 +32,7 @@
 #'     geom_point(aes(color = Species)) +
 #'     geom_rect(data = .  %>% dplyr::filter(Species == "versicolor"),
 #'               xmin = 5.5, xmax = 6.5, ymin = 2.5, ymax = 3,
-#'               color = "red", size = 1, fill = NA) +
+#'               color = "red", linewidth = 1, fill = NA) +
 #'     facet_wrap(~ Species, scale = "free", ncol = 2) +
 #'     coord_panel_ranges(panel_ranges = list(
 #'         list(NULL),

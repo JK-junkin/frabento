@@ -39,11 +39,12 @@ ggplot作図の際に軸ラベルの一部を空白にすることで minor brea
 ようにみせかける.
 }
 \details{
-例をご覧ください.
+See example and also vignette("repl2blank")
 }
 \examples{
- repl2blank(1:10)
- repl2blank(1:10, nskip = 2)
+repl2blank(1:10)
+repl2blank(1:10, nskip = 2)
+repl2blank(1:10, nskip = 2, shift = 1)
 }
 \seealso{
 \code{\link[frabento]{label_repl2blank}}
