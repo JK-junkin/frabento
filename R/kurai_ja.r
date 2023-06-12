@@ -11,9 +11,6 @@
 #' @examples 
 #' kurai_ja(c(1, 23, 456, 7890, 98765, 4e32, 1e+99, -1234567890)) 
 #' kurai_ja(c(0, 1, 0.05), remove_ichi = FALSE) 
-#' @seealso 
-#'  \code{\link[purrr]{map}}
-#'  \code{\link[stringr]{str_remove}}
 #' @rdname kurai_ja
 #' @export 
 #' @importFrom purrr map_lgl

@@ -1,6 +1,6 @@
 Package: frabento
 Title: FRAgmentary BENri TOols
-Version: 0.1.12
+Version: 0.1.13
 Authors@R: 
     person(given = "Junji",
            family = "Kinoshita",
