@@ -42,6 +42,7 @@ See example
 if(interactive()){
  numx <- c(34.30, 34.3, 34.03)
  conv_dm2dd(numx) # 34.50 34.50 34.05
+ conv_dm2dd(numx, out_original_D = TRUE, out_original_M = TRUE)
  
  x <- c("35.30", "35.3", "35.03", "35", "30.30", "30.30.750")
  conv_dm2dd(x) # Make sure the last value equals (30 + 0.30750 / 60 * 100)
@@ -50,6 +51,5 @@ if(interactive()){
  conv_dm2dd(x2)
  
  conv_dm2dd(x2, out_original = TRUE, out_original_D = TRUE, out_original_M = TRUE)
- conv_dm2dd(numx, out_original = TRUE, out_original_D = TRUE, out_original_M = TRUE)
 }
 }
