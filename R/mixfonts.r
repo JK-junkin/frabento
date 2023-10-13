@@ -54,8 +54,8 @@ mixfonts <- function(strs, asciifont = "Arial", mbytefont = "MS Gothic") {
             stringr::str_replace_all(" (?=\\<)", "&emsp;") %>%
             stringr::str_replace_all("_\\{", "<sub>") %>%
             stringr::str_replace_all("\\^\\{", "<sup>") %>%
-            stringr::str_replace_all("(?<=<sub>[:alnum:]{0,30})\\}", "</sub>") %>%
-            stringr::str_replace_all("(?<=<sup>[:alnum:]{0,30})\\}", "</sup>")
+            stringr::str_replace_all("(?<=<sub>[:graph:]{0,30})\\}", "</sub>") %>%
+            stringr::str_replace_all("(?<=<sup>[:graph:]{0,30})\\}", "</sup>")
     }
 }
 

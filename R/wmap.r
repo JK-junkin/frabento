@@ -70,7 +70,7 @@ wmap_sf <- function(sfmap = NULL, sf_resol = 50, pacific_centered = TRUE,
              scale_y_continuous(breaks = ltb),
              coord_sf(xlim = lgl, ylim = ltl, expand = FALSE))
 
-    sf::sf_use_s2(FALSE) # XXXX:
+#     sf::sf_use_s2(FALSE) # XXXX:
     if (as_gg) { ggplot() + lays } else { lays }
 }
 
