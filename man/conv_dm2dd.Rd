@@ -4,13 +4,7 @@
 \alias{conv_dm2dd}
 \title{Convert DM coordinates values (sexagesimal) to DD (decimal degree)}
 \usage{
-conv_dm2dd(
-  dm60,
-  sep_marks = c(".", "-", "_", "u00b0"),
-  out_original = FALSE,
-  out_original_D = FALSE,
-  out_original_M = FALSE
-)
+conv_dm2dd(dm60, original_value = TRUE, num_as_dm = FALSE)
 }
 \arguments{
 \item{dm60}{sexagesimal numbers of character / numeric class.}
@@ -40,16 +34,16 @@ See example
 }
 \examples{
 if(interactive()){
- numx <- c(34.30, 34.3, 34.03)
- conv_dm2dd(numx) # 34.50 34.50 34.05
- conv_dm2dd(numx, out_original_D = TRUE, out_original_M = TRUE)
+ dmx <- c("35", "35.30", "35.3", "35.03", "35. 3", "35.    3", "30.30.750")
+ conv_dm2dd(dmx)
+ dmx2 <- c("35°30′", "30°30′750″", "30°30.750′", "-35-30", "-30-  3")
+ conv_dm2dd(dmx2)
+ conv_dm2dd(dmx2, original_value = FALSE)
+
+ dmnum <- c(34.30, 34.3, 34.03, 34, -120.5, -30.8)
+ conv_dm2dd(dmnum)
+ conv_dm2dd(dmnum, num_as_dm = TRUE)
  
- x <- c("35.30", "35.3", "35.03", "35", "30.30", "30.30.750")
- conv_dm2dd(x) # Make sure the last value equals (30 + 0.30750 / 60 * 100)
- 
- x2 <- c("35°30′", "30°30.750′", NA, "35-30", "30-30.750", NA, "30_03")
- conv_dm2dd(x2)
- 
- conv_dm2dd(x2, out_original = TRUE, out_original_D = TRUE, out_original_M = TRUE)
+ conv_dm2dd("-135°30′")
 }
 }

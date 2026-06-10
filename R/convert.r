@@ -15,62 +15,96 @@
 #' @details See example
 #' @examples 
 #' if(interactive()){
-#'  numx <- c(34.30, 34.3, 34.03)
-#'  conv_dm2dd(numx) # 34.50 34.50 34.05
-#'  conv_dm2dd(numx, out_original_D = TRUE, out_original_M = TRUE)
+#'  dmx <- c("35", "35.30", "35.3", "35.03", "35. 3", "35.    3", "30.30.750")
+#'  conv_dm2dd(dmx)
+#'  dmx2 <- c("35°30′", "30°30′750″", "30°30.750′", "-35-30", "-30-  3")
+#'  conv_dm2dd(dmx2)
+#'  conv_dm2dd(dmx2, original_value = FALSE)
+#'
+#'  dmnum <- c(34.30, 34.3, 34.03, 34, -120.5, -30.8)
+#'  conv_dm2dd(dmnum)
+#'  conv_dm2dd(dmnum, num_as_dm = TRUE)
 #'  
-#'  x <- c("35.30", "35.3", "35.03", "35", "30.30", "30.30.750")
-#'  conv_dm2dd(x) # Make sure the last value equals (30 + 0.30750 / 60 * 100)
-#'  
-#'  x2 <- c("35°30′", "30°30.750′", NA, "35-30", "30-30.750", NA, "30_03")
-#'  conv_dm2dd(x2)
-#'  
-#'  conv_dm2dd(x2, out_original = TRUE, out_original_D = TRUE, out_original_M = TRUE)
+#'  conv_dm2dd("-135°30′")
 #' }
 #' @rdname conv_dm2dd
-#' @export 
 #' @importFrom stringr str_extract str_remove str_detect
 #' @importFrom dplyr if_else
-conv_dm2dd <- function(dm60, sep_marks = c(".", "-", "_", "u00b0"),
-                       out_original = FALSE,
-                       out_original_D = FALSE, out_original_M = FALSE) {
+#' @export 
+conv_dm2dd <- function(dm60, original_value = TRUE, num_as_dm = FALSE) {
+  assertthat::assert_that(is.numeric(dm60) || is.character(dm60))
+  if (is.character(dm60)) {
+    out <- vapply(
+      dm60,
+      FUN.VALUE = numeric(1),
+      FUN = function(x) {
+        if (is.na(x)) { return(NA_real_) }
 
-    assertthat::assert_that(
-        any(class(dm60) %in% c("numeric", "character")),
-        msg = paste("Class of `dm60` should be numeric or character.",
-                    "See help(conv_dm2dd).")
+        # preserve sign
+        sgn <- ifelse(stringr::str_detect(x, "^\\s*-\\s*"), -1, 1)
+        # remove sign character
+        x <- stringr::str_remove(x, "^\\s*[+-]\\s*")
+
+        # normalize consecutive spaces
+        x <- stringr::str_squish(x)
+        # detect explicit space after separator
+        has_space <- stringr::str_detect(x, "[^0-9]\\s+")
+
+        x <- stringr::str_replace_all(x, "[^0-9]+", ".")
+        x <- stringr::str_remove_all(x, "\\.$")
+        sp <- strsplit(x, "\\.")[[1]]
+
+        if (length(sp) == 1) { return(sgn * as.numeric(sp[1])) }
+        if (length(sp) == 2) {
+          if (has_space) { # 35. 3 -> 35.03
+            if (nchar(sp[2]) == 1) {
+              sp[2] <- paste0("0", sp[2])
+            }
+          } else { # 35.3 -> 35.30
+            if (nchar(sp[2]) == 1) {
+              sp[2] <- paste0(sp[2], "0")
+            }
+          }
+        }
+        deg <- as.numeric(sp[1])
+        minute <- as.numeric(paste(sp[-1], collapse = "."))
+        minute <- validate_minute(minute = minute, original_x = x)
+        sgn * (deg + minute / 60)
+      }
     )
-
-    if (is.numeric(dm60)) {
-        # Separate dm60 into D and M part
-        nx1 <- floor(dm60)
-        nx2 <- (dm60 - nx1)
-        out <- data.frame(value = nx1 + (nx2 / 60 * 100), org = dm60,
-                          org_D = nx1, org_M = nx2)
+  } else { # numeric
+    if (!num_as_dm) {
+      out  <- dm60
     } else {
-        # extract D part (until first occurrence of sep_marks)
-        spm1 <- paste0(rep("^\\", length(sep_marks)), sep_marks, collapse = "")
-        pat1 <- paste0("[", spm1, "]+")
-        x1 <- stringr::str_extract(dm60, pat1)
-        nx1 <- as.numeric(x1)
-
-        # extract M part (everything after first occurence of sep_marks)
-        spm2 <- paste0(rep("\\", length(sep_marks)), sep_marks, collapse = "")
-        x1s <- paste0("^(", paste0(x1, collapse = "|"), ")")
-        x20 <- stringr::str_remove(dm60, x1s) %>%
-            stringr::str_remove(paste0("[", spm2, "]+")) %>%
-            stringr::str_extract("\\d*\\.?\\d*")
-        nx20 <- dplyr::if_else(x20 != "", as.numeric(x20), 0)
-
-        ## identify the devisor unit (decadal)
-        devi <- 10^as.integer(nchar(x20))
-        has_dec <- stringr::str_detect(x20, "\\.") & !is.na(x20)
-        devi[has_dec] <- 10^as.integer(nchar(floor(nx20[has_dec])))
-        nx2 <- nx20 / devi
-
-        out <- data.frame(value = nx1 + (nx2 / 60 * 100), org = dm60,
-                          org_D = x1, org_M = x20)
+      deg <- trunc(dm60)
+      minute <- abs(dm60 - deg) * 100
+      minute <- validate_minute(minute = minute, original_x = dm60)
+      out <- sign(dm60) * (abs(deg) + minute / 60)
     }
-    return(out[, c(TRUE, out_original, out_original_D, out_original_M),
-               drop = TRUE])
+  }
+
+  if (original_value) {
+    names(out) <- as.character(dm60)
+    return(out)
+  } else {
+    return(unname(out))
+  }
+}
+
+#' @keywords inner function
+validate_minute <- function(minute, original_x) {
+  invalid <- minute >= 60
+  invalid[is.na(invalid)] <- FALSE
+  if (any(invalid)) {
+    warning(
+      paste0(
+        "Invalid minute value detected in: ",
+        paste(original_x[invalid], collapse = ", "),
+        " (minute >= 60). Returning NA."
+      ),
+      call. = FALSE
+    )
+    minute[invalid] <- NA_real_
+  }
+  minute
 }
