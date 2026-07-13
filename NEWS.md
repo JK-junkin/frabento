@@ -1,3 +1,18 @@
+# frabento 0.1.15
+Breaking changes
+- Longitude and latitude breaks are now managed automatically by
+  `ggplot2::coord_sf()`.
+- Arguments `lgb` and `ltb` are no longer supported.
+
+Bug fixes
+- Fixed an issue where longitude and latitude axes could be displayed
+  incorrectly when using sf world maps.
+
+Documentation
+- Updated `conv_dm2dd()` documentation.
+- Clarified supported coordinate formats and parsing rules for
+  non-numeric separators.
+
 # frabento 0.1.14
 - :bug::robot: Bug fix `conv_dm2dd()`
 
