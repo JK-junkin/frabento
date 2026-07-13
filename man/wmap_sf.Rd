@@ -17,7 +17,9 @@ wmap_sf(
 )
 }
 \arguments{
-\item{sfmap}{World map data in sf format, Default: NULL}
+\item{sfmap}{World map data as an \code{sf} object. If \code{NULL},
+country polygons are obtained from
+\code{rnaturalearth::ne_countries()}.}
 
 \item{sf_resol}{Resolution of sf world map data passed to
 \code{rnaturalearth::ne_countries(scale)}, Default: 50 (medium).}
@@ -32,25 +34,27 @@ the meridian on Greenwich).}
 
 \item{ltl}{Latitude limits, Default: NULL}
 
-\item{lgb}{Longitude breaks, Default: NULL}
+\item{lgb}{Deprecated. No longer supported as of frabento 0.1.15.}
 
-\item{ltb}{Latitude breaks, Default: NULL}
+\item{ltb}{Deprecated. No longer supported as of frabento 0.1.15.}
 
 \item{...}{Arguments passed to \code{geom_sf}}
 }
 \value{
-gg or a list (LayerInstance)
+A \code{ggplot} object if \code{as_gg = TRUE}; otherwise a list of ggplot2
+layers that can be added to an existing plot.
 }
 \description{
-This function is intended to be used in two ways: first, to
-overlay a world map on an existing gg object, and second, to create a base
-world map using ggplot2.
+Create a world map based on \code{sf} and \code{ggplot2}, either as a
+standalone \code{ggplot} object or as a layer that can be added to an existing
+plot.
 }
 \details{
 If sfmap is NULL, the default map projection system is a geographic
-coordinate system based on the WGS84. It has not yet been checked whether
-there are any problems with other coordinate reference systems.  See example
-and vignette("wmap_sf").
+coordinate system based on WGS84.
+Longitude and latitude breaks are managed automatically by
+\code{ggplot2::coord_sf()}. The deprecated arguments \code{lgb} and \code{ltb}
+are no longer supported as of frabento 0.1.15.
 }
 \examples{
 library(ggplot2)
