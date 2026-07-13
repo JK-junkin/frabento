@@ -1,8 +1,10 @@
 #' @title create an sf worldmap layer or gg
-#' @description This function is intended to be used in two ways: first, to
-#' overlay a world map on an existing gg object, and second, to create a base
-#' world map using ggplot2.
-#' @param sfmap World map data in sf format, Default: NULL
+#' @description Create a world map based on `sf` and `ggplot2`, either as a
+#' standalone `ggplot` object or as a layer that can be added to an existing
+#' plot.
+#' @param sfmap World map data as an `sf` object. If `NULL`,
+#'   country polygons are obtained from
+#'   `rnaturalearth::ne_countries()`.
 #' @param sf_resol Resolution of sf world map data passed to 
 #' `rnaturalearth::ne_countries(scale)`, Default: 50 (medium).
 #' @param pacific_centered If TRUE (default), the world map is centred on the
@@ -11,14 +13,17 @@
 #' @param as_gg Whether or not to make a gg object, Default: TRUE
 #' @param lgl Longitude limits, Default: NULL
 #' @param ltl Latitude limits, Default: NULL
-#' @param lgb Longitude breaks, Default: NULL
-#' @param ltb Latitude breaks, Default: NULL
+#' @param lgb Deprecated. No longer supported as of frabento 0.1.15.
+#' @param ltb Deprecated. No longer supported as of frabento 0.1.15.
 #' @param ... Arguments passed to `geom_sf`
-#' @details If sfmap is NULL, the default map projection system is a geographic
-#' coordinate system based on the WGS84. It has not yet been checked whether
-#' there are any problems with other coordinate reference systems.  See example
-#' and vignette("wmap_sf").
-#' @return gg or a list (LayerInstance)
+#' @details
+#' If sfmap is NULL, the default map projection system is a geographic
+#' coordinate system based on WGS84.
+#' Longitude and latitude breaks are managed automatically by
+#' `ggplot2::coord_sf()`. The deprecated arguments `lgb` and `ltb`
+#' are no longer supported as of frabento 0.1.15.
+#' @return A `ggplot` object if `as_gg = TRUE`; otherwise a list of ggplot2
+#' layers that can be added to an existing plot.
 #' @examples 
 #' library(ggplot2)
 #' library(frabento)
@@ -51,27 +56,37 @@
 #' @rdname wmap_sf
 #' @export 
 wmap_sf <- function(sfmap = NULL, sf_resol = 50, pacific_centered = TRUE, 
-                    as_gg = TRUE, lgl = NULL, ltl = NULL, lgb = NULL, ltb = NULL, ...) {
+                    as_gg = TRUE, lgl = NULL, ltl = NULL,
+                    lgb = NULL, ltb = NULL, ...) {
 
-    if (is.null(sfmap)) {
-        sfmap <-
-            rnaturalearth::ne_countries(scale = sf_resol, returnclass = "sf")
-        if (pacific_centered) {
-            sfmap <- sfmap %>%
-                sf::st_break_antimeridian(., lon_0 = 180) %>%
-                sf::st_shift_longitude(.)
-        }
+  if (!is.null(lgb) || !is.null(ltb)) {
+    stop(
+      paste(
+        "Arguments 'lgb' and 'ltb' are no longer supported.",
+        "Axis breaks are now automatically managed by coord_sf()."
+      ),
+      call. = FALSE
+    )
+  }
+
+  if (!is.null(sfmap) && !inherits(sfmap, "sf")) {
+    stop("sfmap must be an sf object.", call. = FALSE)
+  }
+
+  if (is.null(sfmap)) {
+    sfmap <- rnaturalearth::ne_countries(scale = sf_resol, returnclass = "sf")
+      if (pacific_centered) {
+        sfmap <- sfmap |>
+          sf::st_break_antimeridian(lon_0 = 180) |>
+          sf::st_shift_longitude()
     }
+  }
 
-    lays <- 
-        list(geom_sf(data = sfmap,
-                     inherit.aes = FALSE, show.legend = FALSE, ...),
-             scale_x_continuous(breaks = lgb),
-             scale_y_continuous(breaks = ltb),
-             coord_sf(xlim = lgl, ylim = ltl, expand = FALSE))
+  lays <- list(
+      geom_sf(data = sfmap, inherit.aes = FALSE, show.legend = FALSE, ...),
+      coord_sf(xlim = lgl, ylim = ltl, expand = FALSE, default_crs = sf::st_crs(4326))
+  )
 
-#     sf::sf_use_s2(FALSE) # XXXX:
-    if (as_gg) { ggplot() + lays } else { lays }
+#   sf::sf_use_s2(FALSE) # XXXX:
+  if (as_gg) { ggplot() + lays } else { lays }
 }
-
-utils::globalVariables(".")
