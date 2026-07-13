@@ -1,37 +1,69 @@
-#' @title Convert DM coordinates values (sexagesimal) to DD (decimal degree)
-#' @description This function is used to convert latitude and longitude from
-#' degrees, minutes format to decimal degree format, which is useful for map
-#' drawing.
-#' @param dm60 sexagesimal numbers of character / numeric class.
-#' @param sep_marks a separation character between D and M part. Default: c(".",
-#' "-", "_", "u00b0")
-#' @param out_original include original values to output. Default: FALSE.
-#' @param out_original_D D (degrees) part on console to make sure the
-#' conversion is correct. Default: FALSE.
-#' @param out_original_M print M (minutes) part on console to make sure the
-#' conversion is correct. Default: FALSE.
-#' @return a vector of numeric class (default) or a data.frame if any output
-#' options are TRUE.
-#' @details See example
-#' @examples 
-#' if(interactive()){
-#'  dmx <- c("35", "35.30", "35.3", "35.03", "35. 3", "35.    3", "30.30.750")
-#'  conv_dm2dd(dmx)
-#'  dmx2 <- c("35°30′", "30°30′750″", "30°30.750′", "-35-30", "-30-  3")
-#'  conv_dm2dd(dmx2)
-#'  conv_dm2dd(dmx2, original_value = FALSE)
+#' @title Convert degree-minute coordinates to decimal degrees
+#' @description
+#' Convert latitude and longitude values from degree-minute (DM) format
+#' to decimal degrees (DD). Both character and numeric inputs are supported.
 #'
-#'  dmnum <- c(34.30, 34.3, 34.03, 34, -120.5, -30.8)
-#'  conv_dm2dd(dmnum)
-#'  conv_dm2dd(dmnum, num_as_dm = TRUE)
-#'  
-#'  conv_dm2dd("-135°30′")
-#' }
+#' Character inputs may contain separators such as periods, spaces, hyphens,
+#' degree symbols, minute symbols, and second symbols.
+#'
+#' Numeric inputs are treated as decimal degrees by default. Set
+#' `num_as_dm = TRUE` to interpret numeric values as degree-minute
+#' coordinates.
+#'
+#' @param dm60 A character or numeric vector containing coordinates in
+#'   degree-minute format.
+#' @param original_value Logical. If `TRUE`, the original input values are
+#'   retained as names of the returned vector. Default: `FALSE`.
+#' @param num_as_dm Logical. If `TRUE`, numeric inputs are interpreted as
+#'   degree-minute values rather than decimal degrees. Default: `FALSE`.
+#'
+#' @return
+#' A numeric vector of decimal degree values.
+#' If `original_value = TRUE`, the original input values are attached as
+#' names to the output vector.
+#'
+#' @details
+#' Character inputs are automatically parsed from common degree-minute
+#' notations. One or more consecutive non-numeric separator characters are
+#' collapsed into a single delimiter.
+#'
+#' Supported examples include:
+#'
+#' * `"35.30"`
+#' * `"35. 3"`
+#' * `"35°30′"`
+#' * `"30°30′750″"` (degree-minute-second style)
+#' * `"30°30.750′"` (fractional minutes)
+#' * `"-135°30′"`
+#' * `"35...30"`
+#'
+#' Minute values greater than or equal to 60 are considered invalid and
+#' converted to `NA` with a warning.
+#' @examples
+#' dmx <- c(
+#'   "35",
+#'   "35.30",
+#'   "35.3",
+#'   "35.03",
+#'   "35. 3",
+#'   "35°30′",
+#'   "30°30′750″",
+#'   "30°30.750′",
+#'   "-135°30′",
+#'   "35...---30",
+#'   "35...   3"
+#' )
+#' conv_dm2dd(dmx)
+#' conv_dm2dd(dmx, original_value = TRUE)
+#'
+#' dmnum <- c(34.30, 34.3, 34.03, 34, -120.5)
+#' conv_dm2dd(dmnum)
+#' conv_dm2dd(dmnum, num_as_dm = TRUE)
+#'
 #' @rdname conv_dm2dd
-#' @importFrom stringr str_extract str_remove str_detect
-#' @importFrom dplyr if_else
-#' @export 
-conv_dm2dd <- function(dm60, original_value = TRUE, num_as_dm = FALSE) {
+#' @importFrom stringr str_detect str_remove str_replace_all str_remove_all str_squish
+#' @export
+conv_dm2dd <- function(dm60, original_value = FALSE, num_as_dm = FALSE) {
   assertthat::assert_that(is.numeric(dm60) || is.character(dm60))
   if (is.character(dm60)) {
     out <- vapply(
